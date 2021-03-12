@@ -1,0 +1,93 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+{% block title %}Manage Vendor{% endblock %}
+{% block content %}
+
+<!--Vendor management DataTales  -->
+<div class="card shadow mb-4 mt-4 col-md-6 ml-auto mr-auto">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center">Vendors</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Vendor username</th>
+                        <th>Company Email</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vendor in vendors %}
+                    <tr>
+                        <td>{{vendor.username}}</td>
+                        <td>{{vendor.email}}</td>
+
+                        <td>
+                        {% if vendor.is_active == True %}
+                            <a href="{% url 'block-unblock-vendor' pk=vendor.id %}" class="btn btn-danger btn-xs"><span
+                                    class="glyphicon glyphicon-remove"></span> Block</a>
+                        {% else %}
+                            <a href="{% url 'block-unblock-vendor' pk=vendor.id %}" class="btn btn-success btn-xs"><span
+                                    class="glyphicon glyphicon-remove"></span> Unblock</a>
+                        {% endif %}
+                            <a href="{% url 'delete-vendor' pk=vendor.id %}"
+                                onclick="return confirm('Are you sure you want to delete this?')"
+                                class="btn btn-danger btn-xs mt-2"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+<script>
+
+    $().ready(function () {
+        var pk = "{{category.id}}"
+        console.log(pk)
+        console.log('d')
+        $("#editcategory").validate({
+            rules: {
+                category: {
+                    required: true, minlength: 3
+
+                },
+            },
+            messages: {
+                category: {
+                    required: "Enter category name..",
+                    minlength: "Category name should be 3 charecter"
+                },
+            },
+            submitHandler: (editcategory, e) => {
+
+                e.preventDefault()
+                $.ajax({
+                    url: "edit-category/" + pk + "/",
+                    data: $("#addcategory").serialize(),
+                    method: "post",
+
+                    success: function (response) {
+                        if (response == 'true') {
+                            window.location.replace('manage-category')
+                        }
+                        if (response == 'false') {
+                            $("#error1").html("This Category already added!!")
+                        }
+                    },
+
+                })
+            }
+        });
+    });
+</script>
+
+{% endblock %}

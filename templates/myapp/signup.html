@@ -1,0 +1,67 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block title %}PORTO || signup{% endblock %}
+{% block content %}
+
+<main class="main">
+	<!-- <nav aria-label="breadcrumb" class="breadcrumb-nav">
+		<div class="container">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Men</a></li>
+				<li class="breadcrumb-item"><a href="#">Accessories</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Classic Crew Neck Sweatshirt</li>
+			</ol>
+		</div>End .container
+	</nav> -->
+
+	<div class="page-header">
+		<div class="container">
+			<br>
+			<h1>Create An Account</h1>
+		</div><!-- End .container -->
+	</div><!-- End .page-header -->
+
+	<div class="container">
+		<div class="row row-sparse">
+			<div class="col-md-6 ml-auto mr-auto">
+				<div class="heading">
+					<h2 class="title">Create An Account</h2>
+					<p>By creating an account with our store, you will be able to move through the checkout process
+						faster, store multiple shipping addresses, view and track your orders in your account and more.
+					</p>
+				</div><!-- End .heading -->
+
+				<form id="signupform" >{% csrf_token %}
+					<input type="text" class="form-control" name="firstname"placeholder="First Name" >
+					<input type="text" class="form-control" name="lastname" placeholder="Last Name">
+					<input type="text" class="form-control" name="username" placeholder="User Name" >
+
+
+					<h2>Login information</h2>
+					<input type="email" class="form-control" name="email" placeholder="Email Address" >
+ 
+					<input type="password" class="form-control" name="password" id="password"  placeholder="Password" >
+					<input type="password" class="form-control" name="cpassword" placeholder="Confirm Password">
+                    <span id="error1"></span>
+
+					<!-- <div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="newsletter-signup">
+						<label class="custom-control-label" for="newsletter-signup">Sing up our Newsletter</label>
+					</div>End .custom-checkbox -->
+
+					<div class="form-footer">
+						<button type="submit" id="signupBtn"  class="btn btn-primary">Create Account</button>
+						 <a href="#" class="forget-pass"> Have An Account?</a>
+
+					</div><!-- End .form-footer -->
+				</form>
+			</div><!-- End .col-md-6 -->
+		</div><!-- End .row -->
+	</div><!-- End .container -->
+
+	<div class="mb-5"></div><!-- margin -->
+</main><!-- End .main -->
+
+
+{% endblock %}

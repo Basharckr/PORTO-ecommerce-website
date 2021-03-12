@@ -18,7 +18,7 @@
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="{% static 'myapp/images/icons/favicon.ico' %}">
-
+<!-- 
 	<script type="text/javascript">
 		WebFontConfig = {
 			google: { families: ['Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700'] }
@@ -29,12 +29,13 @@
 			wf.async = true;
 			s.parentNode.insertBefore(wf, s);
 		})(document);
-	</script>
+	</script> -->
 
 	<!-- Plugins CSS File -->
 	<link rel="stylesheet" href="{% static 'myapp/css/bootstrap.min.css' %}">
 
 	<!-- Main CSS File -->
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/css/style.css' %}">
 	<link rel="stylesheet" href="{% static 'myapp/css/style.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'myapp/vendor/fontawesome-free/css/all.min.css' %}">
 </head>
@@ -541,11 +542,14 @@
 
 	<!-- Plugins JS File -->
 	<script src="{% static 'myapp/js/jquery.min.js'%}"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
 	<script src="{% static 'myapp/js/bootstrap.bundle.min.js'%}"></script>
 	<script src="{% static 'myapp/js/plugins.min.js' %}"></script>
 
 	<!-- Main JS File -->
 	<script src="{% static 'myapp/js/main.min.js' %}"></script>
+	<script src="{% static 'myapp/js/scripts.js' %}"></script>
 </body>
 
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/demo_1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Mar 2021 05:11:03 GMT -->
