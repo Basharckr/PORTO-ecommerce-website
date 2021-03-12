@@ -52,4 +52,19 @@ def veLogout(request):
     logout(request)
     return redirect('ve-login')
 
+def manage_product(request):
+    if request.user.is_authenticated and request.user.is_staff == True:
+        return render(request, 'vendor/manage-product.html')
+    else:
+        return redirect('ve-login')
+
+
+
+def create_product(request):
+    if request.user.is_authenticated and request.user.is_staff == True:
+        
+        return render(request, 'vendor/add-product.html')
+
+    else:
+        return redirect('ve-login')
 

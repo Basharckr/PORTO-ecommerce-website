@@ -27,14 +27,14 @@
                         <td>
                         {% if vendor.is_active == True %}
                             <a href="{% url 'block-unblock-vendor' pk=vendor.id %}" class="btn btn-danger btn-xs"><span
-                                    class="glyphicon glyphicon-remove"></span> Block</a>
+                                    class="glyphicon glyphicon-remove"></span>Block</a>
                         {% else %}
                             <a href="{% url 'block-unblock-vendor' pk=vendor.id %}" class="btn btn-success btn-xs"><span
-                                    class="glyphicon glyphicon-remove"></span> Unblock</a>
+                                    class="glyphicon glyphicon-remove"></span>Unblock</a>
                         {% endif %}
                             <a href="{% url 'delete-vendor' pk=vendor.id %}"
                                 onclick="return confirm('Are you sure you want to delete this?')"
-                                class="btn btn-danger btn-xs mt-2"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                                class="btn btn-danger btn-xs mt-2"><span class="glyphicon glyphicon-remove"></span>Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

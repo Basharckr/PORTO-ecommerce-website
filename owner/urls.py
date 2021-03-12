@@ -14,7 +14,6 @@ urlpatterns = [
     path('manage-vendor', views.manage_vendor, name='manage-vendor'),
     path('delete-vendor/<int:pk>/', views.delete_vendor, name='delete-vendor'),
     path('block-unblock-vendor/<int:pk>/', views.block_unblock_vendor, name='block-unblock-vendor'),
-    # path('unblock-vendor/<int:pk>/', views.unblock_vendor, name='unblock-vendor'),
 
 
 
