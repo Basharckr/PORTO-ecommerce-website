@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, response
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
-from .models import Category, Gender
+from .models import Category
 
 # Create your views here.
 

@@ -20,7 +20,13 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'vendor/css/sb-admin-2.min.css'%}" rel="stylesheet">
-
+<style>
+    .error{
+        color: red;
+        font-size:medium;
+        width: 100%;
+    }
+</style>
 
 </head>
 
@@ -413,6 +419,8 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'vendor/vendor/jquery/jquery.min.js'%}"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
     <script src="{% static 'vendor/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -420,6 +428,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'vendor/js/sb-admin-2.min.js'%}"></script>
+    <script src="{% static 'vendor/js/scripts.js' %}"></script>
+
 
 </body>
 
