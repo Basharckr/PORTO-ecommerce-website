@@ -74,7 +74,6 @@ def add_product(request):
             product_id = request.POST['product_id']
             product_name = request.POST['product_name']
             product_categorie = request.POST['product_categorie']
-            print(product_categorie)
             product_price = request.POST['product_price']
             quantity = request.POST['quantity']
             product_weight = request.POST['product_weight']
@@ -89,11 +88,12 @@ def add_product(request):
                 print('This product name is already taken')
                 return JsonResponse('false2', safe=False)
             else:
-                print('heyyy')
+         
                 obj_category = Category.objects.get(id=product_categorie)
                 Products.objects.create(product_id=product_id, product_name=product_name,category=obj_category, 
                                         product_price=product_price, product_quantity=quantity,product_weight=product_weight,
-                                         product_description=product_description, image1=image1, image2=image2, image3=image3)
+                                         proudct_description=product_description, image1=image1, image2=image2, image3=image3)
+                print('product added successfully')                         
                 return JsonResponse('true', safe=False)
 
         context = {
