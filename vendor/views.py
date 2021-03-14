@@ -5,6 +5,8 @@ from .models import Products
 # from django.core.files import File
 from owner.models import Category
 from django.contrib.auth import logout
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -81,20 +83,24 @@ def add_product(request):
             image1 = request.FILES.get('image1')
             image2 = request.FILES.get('image2')
             image3 = request.FILES.get('image3')
+            print(image1)
             if Products.objects.filter(product_id=product_id).exists():
                 print('product already exists')
-                return JsonResponse('false1', safe=False)
+                # return JsonResponse('false1', safe=False)
+                pass
             elif Products.objects.filter(product_name=product_name).exists():
                 print('This product name is already taken')
-                return JsonResponse('false2', safe=False)
+                # return JsonResponse('false2', safe=False)
+                pass
             else:
          
                 obj_category = Category.objects.get(id=product_categorie)
                 Products.objects.create(product_id=product_id, product_name=product_name,category=obj_category, 
                                         product_price=product_price, product_quantity=quantity,product_weight=product_weight,
                                          proudct_description=product_description, image1=image1, image2=image2, image3=image3)
-                print('product added successfully')                         
-                return JsonResponse('true', safe=False)
+                print('product added successfully')
+                messages.success(request, 'Product added successfully')                         
+                return redirect('add-product')
 
         context = {
             'categorys': category

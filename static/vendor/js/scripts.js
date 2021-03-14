@@ -185,28 +185,43 @@ $().ready(function () {
                 required: "Please upload the alternate product image",
             },
         },
-        submitHandler: (addproduct, e) => {
+        // submitHandler: (addproduct, e) => {
 
-            e.preventDefault()
-            $.ajax({
-                url: "add-product",
-                data: $("#addproduct").serialize(),
-                method: "post",
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url: "add-product",
+        //         data: $("#addproduct").serialize(),
+        //         method: "post",
+      
 
-                success: function (response) {
-                    if (response == 'true') {
-                        window.location.replace('add-product')
-                        $("#success1").html("The product success fully added")
-                    }
-                    if (response == 'false1') {
-                        $("#error1").html(" This product ID already taken!!!!")
-                    }
-                    if (response == 'false2') {
-                        $("#error1").html(" This product name already taken!!!!")
-                    }
-                },
+        //         success: function (response) {
+        //             if (response == 'true') {
+        //                 window.location.replace('add-product')
+        //                 $("#success1").html("The product success fully added")
+        //             }
+        //             if (response == 'false1') {
+        //                 $("#error1").html(" This product ID already taken!!!!")
+        //             }
+        //             if (response == 'false2') {
+        //                 $("#error1").html(" This product name already taken!!!!")
+        //             }
+        //         },
 
-            })
-        }
+        //     })
+        // }
     });
 });
+
+//  ===========================================================================================
+//  ================================message-hide===================================================
+
+
+var message_ele = document.getElementById("success1");
+setTimeout(function(){ 
+    message_ele.style.display = "none"; 
+ }, 3000);
+
+
+//  ===========================================================================================
+//  ================================Manage-Product===================================================
+

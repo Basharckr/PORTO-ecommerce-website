@@ -2,13 +2,16 @@
 {% load static %}
 {% block title %}Add Product{% endblock %}
 {% block content %}
-<form id="addproduct" class="form-horizontalv ml-5">{% csrf_token %}
+<form id="addproduct" action="{% url 'add-product' %}" method="POST" act class="form-horizontalv ml-5" enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
-
+        
         <!-- Form Name -->
         <legend class="ml-3">ADD PRODUCTS</legend>
-        <span id="success1"></span>
-
+        {% if messages %}
+        {% for message in messages %}
+        <span id="success1" class="ml-3">{{message}}</span>
+        {% endfor %}
+        {% endif %}
 
         <!-- Text input-->
         <div class="form-group">
