@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
 from django.contrib.auth import logout
+from vendor.models import Products
 
 # Create your views here.
 
@@ -53,10 +54,26 @@ def signup(request):
 
 def landing(request):
     if request.user.is_authenticated:
-        return render(request, 'myapp/landing.html')
+        product = Products.objects.all()
+        
+        context = {
+            'products': product
+        }
+        return render(request, 'myapp/landing.html', context)
     else:
         return redirect("login")
 
 def userlogout(request):
     logout(request)
     return redirect('login')
+
+
+def product(request,pk):
+    if request.user.is_authenticated:
+        product = Products.objects.get(id=pk) 
+        context = {
+            'products':product
+        }   
+        return render(request, 'myapp/product_detail.html', context)
+    else:
+        return redirect("login")

@@ -8,7 +8,6 @@ from django.contrib.auth import logout
 from django.contrib import messages
 
 
-
 # Create your views here.
 
 def veIndex(request):
@@ -63,7 +62,12 @@ def veLogout(request):
 
 def manage_product(request):
     if request.user.is_authenticated and request.user.is_staff == True:
-        return render(request, 'vendor/manage-product.html')
+        product = Products.objects.all()
+        # print(product.image1)
+        context = {
+            'products': product
+        }
+        return render(request, 'vendor/manage-product.html', context)
     else:
         return redirect('ve-login')
 
@@ -93,13 +97,13 @@ def add_product(request):
                 # return JsonResponse('false2', safe=False)
                 pass
             else:
-         
+
                 obj_category = Category.objects.get(id=product_categorie)
-                Products.objects.create(product_id=product_id, product_name=product_name,category=obj_category, 
-                                        product_price=product_price, product_quantity=quantity,product_weight=product_weight,
-                                         proudct_description=product_description, image1=image1, image2=image2, image3=image3)
+                Products.objects.create(product_id=product_id, product_name=product_name, category=obj_category,
+                                        product_price=product_price, product_quantity=quantity, product_weight=product_weight,
+                                        proudct_description=product_description, image1=image1, image2=image2, image3=image3)
                 print('product added successfully')
-                messages.success(request, 'Product added successfully')                         
+                messages.success(request, 'Product added successfully')
                 return redirect('add-product')
 
         context = {
@@ -109,3 +113,61 @@ def add_product(request):
 
     else:
         return redirect('ve-login')
+
+
+def edit_product(request, pk):
+    if request.user.is_authenticated and request.user.is_staff == True:
+        edit = Products.objects.get(id=pk)
+        if request.method == 'POST':
+            edit.product_id = request.POST['product_id']
+            edit.product_name = request.POST['product_name']
+            edit.product_categorie = request.POST['product_categorie']
+            edit.product_price = request.POST['product_price']
+            edit.quantity = request.POST['quantity']
+            edit.product_weight = request.POST['product_weight']
+            edit.product_description = request.POST['product_description']
+            edit.image1 = request.FILES.get('image1')
+            edit.image2 = request.FILES.get('image2')
+            edit.image3 = request.FILES.get('image3')
+            if Products.objects.filter(product_id=edit.product_id, product_name=edit.product_name).exclude(id=pk).exists():
+                print('this product already exist')
+            else:
+                edit.save()
+                print('the product successfully updated')
+                return redirect('manage-product')
+        category = Category.objects.all()
+        context = {
+            'products': edit, 'category': category,
+        }
+        return render(request, 'vendor/edit-product.html', context)
+
+    else:
+        return redirect('ve-login')
+
+
+def delete_product(request, pk):
+    if request.user.is_authenticated and request.user.is_staff == True:
+
+        del_product = Products.objects.get(id=pk)
+        del_product.delete()
+        return redirect('manage-product')
+
+    else:
+        return redirect('ve-login')
+
+
+def block_unblock_product(request, pk):
+    if request.user.is_authenticated and request.user.is_staff == True:
+        product = Products.objects.get(id=pk)
+        if product.product_value == True:
+            product.product_value = False
+            print('vendor is blocked')
+        else:
+            product.product_value = True
+            print('vendor is unblocked')
+        product.save()
+
+        return redirect('manage-product')
+
+    else:
+        return redirect('ad-login')

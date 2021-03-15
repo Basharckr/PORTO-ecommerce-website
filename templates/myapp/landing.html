@@ -169,227 +169,46 @@
 
 	<section class="container pb-3 mb-1">
 		<h2 class="section-title ls-n-10 text-center pb-2 m-b-4">Featured Products</h2>
-
-		<div class="row py-4">
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-10.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-sale">-30%</span>
+    	<div class="row">
+		{% for product in products%}
+		<div class="col-md-3">
+			<div class="product-default inner-quickview inner-icon">
+				<figure>
+					<a href="{% url 'product' pk=product.id %}">
+						<img src="{{product.image1.url}}">
+					</a>
+					<div class="btn-icon-group">
+						<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
+								class="icon-shopping-cart"></i></button>
+					</div>
+					<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+				</figure>
+				<div class="product-details">
+					<div class="category-wrap">
+						<div class="category-list">
+							<a href="category.html" class="product-category">{{product.category.category_name}}</a>
 						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-11.jpg' %}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-hot">HOT</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-12.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-sale">-20%</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-1.jpg'%}">
-						</a>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-2.jpg'%}">
-						</a>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-3.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-hot">HOT</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
+					</div>
+					<h3 class="product-title">
+						<a href="{% url 'product' pk=product.id %}">{{product.product_name}}</a>
+					</h3>
+					<div class="ratings-container">
+						<div class="product-ratings">
+							<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+							<span class="tooltiptext tooltip-top"></span>
+						</div><!-- End .product-ratings -->
+					</div><!-- End .product-container -->
+					<div class="price-box">
+						<span class="old-price">$59.00</span>
+						<span class="product-price">{{product.product_price}}</span>
+					</div><!-- End .price-box -->
+				</div><!-- End .product-details -->
 			</div>
 
 		</div>
+		{% endfor %}
 
+		</div>
 		<hr class="mt-3 mb-6">
 
 		<div class="row feature-boxes-container pt-2">

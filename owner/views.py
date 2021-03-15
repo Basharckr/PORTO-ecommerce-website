@@ -121,13 +121,42 @@ def block_unblock_vendor(request, pk):
         user = User.objects.get(id=pk)
         if user.is_active == True:
             user.is_active = False
+            print('vendor is blocked')
+        else:
+            user.is_active = True
+            print('vendor is unblocked')
+        user.save()
+
+        return redirect('manage-vendor')
+
+    else:
+        return redirect('ad-login')
+
+
+def manage_user(request):
+    if request.user.is_authenticated and request.user.is_superuser == True:
+        user = User.objects.filter(is_staff=False, is_superuser=False)
+        context = {
+            'users': user,
+        }
+        return render(request, 'owner/manage-user.html', context)
+
+    else:
+        return redirect('ad-login')
+
+
+def block_unblock_user(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser == True:
+        user = User.objects.get(id=pk)
+        if user.is_active == True:
+            user.is_active = False
             print('user is blocked')
         else:
             user.is_active = True
             print('user is unblocked')
         user.save()
 
-        return redirect('manage-vendor')
+        return redirect('manage-user')
 
     else:
         return redirect('ad-login')

@@ -1,0 +1,49 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+
+<!--Vendor management DataTales  -->
+<div class="card shadow mb-4 mt-4 col-md-12 ml-auto mr-auto">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center">Users</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>First name</th>
+                        <th>User username</th>
+                        <th>User Email</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+
+                        <td>
+                        {% if user.is_active == True %}
+                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-danger btn-xs"><span
+                                    class="glyphicon glyphicon-remove"></span>Block</a>
+                        {% else %}
+                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-success btn-xs"><span
+                                    class="glyphicon glyphicon-remove"></span>Unblock</a>
+                        {% endif %}
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

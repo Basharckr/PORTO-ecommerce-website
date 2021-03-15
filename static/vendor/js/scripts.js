@@ -119,34 +119,34 @@ $().ready(function () {
     $("#addproduct").validate({
         rules: {
             product_id: {
-                required:true, minlength:4
+                required: true, minlength: 4
             },
             product_name: {
-                required:true, minlength:4
+                required: true, minlength: 4
             },
             product_categorie: {
-                required:true,
+                required: true,
             },
             product_price: {
-                required:true,
+                required: true,
             },
             quantity: {
-                required:true,
+                required: true,
             },
             product_weight: {
-                required:true,
+                required: true,
             },
             product_description: {
                 required: true, minlength: 6
             },
             image1: {
-                required:true,
+                required: true,
             },
             image2: {
-                required:true,
+                required: true,
             },
             image3: {
-                required:true,
+                required: true,
             },
         },
         messages: {
@@ -192,7 +192,7 @@ $().ready(function () {
         //         url: "add-product",
         //         data: $("#addproduct").serialize(),
         //         method: "post",
-      
+
 
         //         success: function (response) {
         //             if (response == 'true') {
@@ -217,11 +217,110 @@ $().ready(function () {
 
 
 var message_ele = document.getElementById("success1");
-setTimeout(function(){ 
-    message_ele.style.display = "none"; 
- }, 3000);
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
 
 
 //  ===========================================================================================
-//  ================================Manage-Product===================================================
+//  ================================Edit-Product===================================================
+
+$().ready(function () {
+
+    console.log('d')
+    $("#editproduct").validate({
+        rules: {
+            product_id: {
+                required: true, minlength: 4
+            },
+            product_name: {
+                required: true, minlength: 4
+            },
+            product_categorie: {
+                required: true,
+            },
+            product_price: {
+                required: true,
+            },
+            quantity: {
+                required: true,
+            },
+            product_weight: {
+                required: true,
+            },
+            product_description: {
+                required: true, minlength: 6
+            },
+            image1: {
+                required: true,
+            },
+            image2: {
+                required: true,
+            },
+            image3: {
+                required: true,
+            },
+        },
+        messages: {
+            product_id: {
+                required: "Please enter Product id",
+                minlength: "Product ID should be minimum 4 digit number"
+            },
+            product_name: {
+                required: "Please enter Product name",
+            },
+            product_categorie: {
+                required: "Please select any category",
+            },
+            product_price: {
+                required: "Please Enter product price",
+            },
+
+            quantity: {
+                required: "Please Enter the available quantity",
+            },
+            product_weight: {
+                required: "Please enter the product weight",
+            },
+            product_description: {
+                required: "Please enter the product description",
+                minlength: "Product description should be minimum 6 character"
+
+            },
+            image1: {
+                required: "Please upload the product image",
+            },
+            image2: {
+                required: "Please upload the alternate product image",
+            },
+            image3: {
+                required: "Please upload the alternate product image",
+            },
+        },
+        // submitHandler: (addproduct, e) => {
+
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url: "add-product",
+        //         data: $("#addproduct").serialize(),
+        //         method: "post",
+
+
+        //         success: function (response) {
+        //             if (response == 'true') {
+        //                 window.location.replace('add-product')
+        //                 $("#success1").html("The product success fully added")
+        //             }
+        //             if (response == 'false1') {
+        //                 $("#error1").html(" This product ID already taken!!!!")
+        //             }
+        //             if (response == 'false2') {
+        //                 $("#error1").html(" This product name already taken!!!!")
+        //             }
+        //         },
+
+        //     })
+        // }
+    });
+});
 

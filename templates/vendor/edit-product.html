@@ -1,24 +1,18 @@
 {% extends 'vendor/base.html' %}
 {% load static %}
-{% block title %}Add Product{% endblock %}
+{% block title %}Edit Product{% endblock %}
 {% block content %}
-<form id="addproduct" runat="server" action="{% url 'add-product' %}" method="POST" act class="form-horizontalv ml-5"
-    enctype="multipart/form-data">{% csrf_token %}
+<form id="editproduct" action="" method="POST" act class="form-horizontalv ml-5" enctype="multipart/form-data">{%csrf_token %}
     <fieldset>
 
         <!-- Form Name -->
         <legend class="ml-3">ADD PRODUCTS</legend>
-        {% if messages %}
-        {% for message in messages %}
-        <span id="success1" class="ml-3">{{message}}</span>
-        {% endfor %}
-        {% endif %}
 
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_id">PRODUCT ID</label>
             <div class="col-md-6">
-                <input name="product_id" placeholder="Product id" class="form-control input-md" type="number">
+                <input name="product_id" value="{{products.product_id}}" class="form-control input-md" type="number">
             </div>
         </div>
 
@@ -26,7 +20,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
             <div class="col-md-6">
-                <input name="product_name" placeholder="Product name" class="form-control input-md" type="text">
+                <input name="product_name" value="{{products.product_name}}" class="form-control input-md" type="text">
 
             </div>
         </div>
@@ -36,8 +30,13 @@
             <label class="col-md-4 control-label" for="product_categorie">PRODUCT CATEGORY</label>
             <div class="col-md-6">
                 <select name="product_categorie" placeholder="Select product category" class="form-control">
-                    {% for category in categorys %}
-                    <option value="{{category.id}}">{{ category.category_name }}</option>
+
+                    {% for category in category %}
+                    {% if category.category_name == products.category.category_name %}
+                    <option value="{{category.id}}" selected>{{ category.category_name }}</option>
+                    {% else %}
+                    <option>{{ category.category_name }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -46,7 +45,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">PRICE</label>
             <div class="col-md-6">
-                <input name="product_price" placeholder="Price" class="form-control input-md" type="number">
+                <input name="product_price" value="{{products.product_price}}" class="form-control input-md"
+                    type="number">
 
             </div>
         </div>
@@ -55,7 +55,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">QUANTITY</label>
             <div class="col-md-6">
-                <input name="quantity" placeholder="Quantity" class="form-control input-md" type="number">
+                <input name="quantity" value="{{products.product_quantity}}" class="form-control input-md"
+                    type="number">
 
             </div>
         </div>
@@ -65,7 +66,8 @@
             <label class="col-md-4 control-label" for="product_weight">PRODUCT WEIGHT (weight in gram)</label>
             <div class="col-md-6">
 
-                <input name="product_weight" placeholder="Product weight" class="form-control input-md" type="number">
+                <input name="product_weight" value="{{products.product_weight}}" class="form-control input-md"
+                    type="number">
 
             </div>
         </div>
@@ -74,7 +76,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
             <div class="col-md-6">
-                <textarea class="form-control" name="product_description"></textarea>
+                <textarea class="form-control" value=""
+                    name="product_description">{{products.proudct_description}}</textarea>
             </div>
         </div>
 
@@ -85,7 +88,7 @@
 
                 <input type="file" name="image1"
                     onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah" alt="your image" width="100" height="100" />
+                <img id="blah" src="{{products.image1url}}" alt="your image" width="100" height="100" />
 
             </div>
         </div>
@@ -95,7 +98,7 @@
             <div class="col-md-6">
                 <input type="file" name="image1"
                     onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah2" alt="your image" width="100" height="100" />
+                <img id="blah2" src="{{products.image2url}}"alt="your image" width="100" height="100" />
 
             </div>
         </div>
@@ -105,7 +108,7 @@
             <div class="col-md-6">
                 <input type="file" name="image1"
                     onchange="document.getElementById('blah3').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah3" alt="your image" width="100" height="100" />
+                <img id="blah3" src="{{products.image1url}}" alt="your image" width="100" height="100" />
 
             </div>
         </div>
@@ -117,9 +120,8 @@
                 <button type="submit" name="singlebutton" class="btn btn-primary">Add Product</button>
             </div>
         </div>
+
     </fieldset>
 </form>
-<!-- =========================================================================================== -->
-<!-- ================================Preview-Image=================================================== -->
 
 {%endblock%}
