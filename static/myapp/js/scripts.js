@@ -109,7 +109,15 @@ $().ready(function (){
                         window.location.replace('landing')
                     }
                     if(response == 'false'){
-                        $("#error1").html(" Incorrect username OR password")
+                        $("#block").html('<div class="alert alert-info text-center" id="block"><strong>Incorrect password!!</strong> </div>')
+                    }
+                    if (response == 'blocked') {
+                        $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
+
+                    }
+                    if (response == 'nouser') {
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This username not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
+
                     }
                 },
 
@@ -117,3 +125,45 @@ $().ready(function (){
         }
     });
 });
+
+//  ===========================================================================================
+//  ================================Add to cart===================================================
+
+function addToCart(id){
+    let qty = $('#quantity').val()
+    data={
+        'count': qty,     
+    }
+    $.ajax({
+        url: '/add-to-cart/'+id+'/',
+        data: data,
+        method: 'post',
+        success: function(response){
+            if(response == 'true'){
+                window.location.replace('/cart')
+            }
+            if(response == 'false'){
+                window.location.replace('/')
+            }
+        }
+    })
+}
+
+//  ===========================================================================================
+//  ================================remove product from cart===================================================
+function removeProduct(id){
+    data = {
+        
+    }
+    $.ajax({
+        url:'/remove-from-cart/'+id+'/',
+        data:data,
+        method:'get',
+        success: function(response){
+        if(response == 'true'){
+            window.location.replace('/cart')
+        }
+
+    }
+    })
+}

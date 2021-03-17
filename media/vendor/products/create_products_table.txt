@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS products (
+  id int(6)  NOT NULL,
+  brand varchar(200) NOT NULL,
+  name varchar(200) NOT NULL,
+  price decimal(10,2) NOT NULL,
+  class_id int(6)  NOT NULL
+);
+
+
+INSERT INTO products (id, brand, name, price, class_id) VALUES
+(1, "Pepsi", "Cola", .99, 1),
+(2, "Pepsi", "Diet Cola", .99, 2),
+(3, "Pepsi", "MtDew", .99, 2),
+(4, "CocaCola", "Coke", 4.99,1),
+(5, "CocaCola", "Diet Coke", 4.99,2),
+(6, "CocaCola", "Sprite", 4.99,3),
+(7, "Natural", " BestCola", 4.99,1),
+(8, "Natural", "Diet Cola", 4.99,2),
+(9, "Natural", "Mr Pepper", 4.99,3),
+(10, "Natural", "Morning Dew", 4.99,3),
+(11, "Natural", "Sparkle Water", 4.99,3),
+(12, "Natural", "Water", 4.99,2);

@@ -105,10 +105,12 @@
 
 							<div class="product-action">
 								<div class="product-single-qty">
-									<input class="horizontal-quantity form-control" type="text">
+									<input class="horizontal-quantity form-control" id="quantity"  type="text">
 								</div><!-- End .product-single-qty -->
 
-								<a href="cart.html" class="btn btn-dark add-cart" title="Add to Cart">Add to Cart</a>
+
+								<button class="btn btn-dark add-cart" onclick="addToCart('{{products.id}}')"
+									title="Add to Cart">Add to Cart</button>
 							</div><!-- End .product-action -->
 
 							<hr class="divider mb-1">

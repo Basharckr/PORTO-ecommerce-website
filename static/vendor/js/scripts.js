@@ -101,7 +101,16 @@ $().ready(function () {
                         window.location.replace('/vendor/')
                     }
                     if (response == 'false') {
-                        $("#error1").html(" Incorrect username OR password")
+                        $("#block").html('<div class="alert alert-info text-center" id="block"><strong>Incorrect password!!</strong> </div>')
+
+                    }
+                    if (response == 'blocked') {
+                        $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
+
+                    }
+                    if (response == 'nouser') {
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This username not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
+
                     }
                 },
 
@@ -141,12 +150,15 @@ $().ready(function () {
             },
             image1: {
                 required: true,
+                extension: "jpg|jpeg|png"
             },
             image2: {
                 required: true,
+                extension: "jpg|jpeg|png"
             },
             image3: {
                 required: true,
+                extension: "jpg|jpeg|png"
             },
         },
         messages: {
@@ -176,13 +188,13 @@ $().ready(function () {
 
             },
             image1: {
-                required: "Please upload the product image",
+                required: "Please upload the product image", extension:"Only accept jpg/jpeg/png formats!!"
             },
             image2: {
-                required: "Please upload the alternate product image",
+                required: "Required", extension:"Only accept jpg/jpeg/png formats!!"
             },
             image3: {
-                required: "Please upload the alternate product image",
+                required: "Required", extension:"Only accept jpg/jpeg/png formats!!"
             },
         },
         // submitHandler: (addproduct, e) => {
@@ -211,6 +223,76 @@ $().ready(function () {
         // }
     });
 });
+
+//  ===========================================================================================
+//  ================================Product name checking===================================================
+$(document).ready(function () {
+    // catch the form's submit event
+    
+    $('#product_name').on("change",function () {
+        // create an AJAX call
+        $.ajax({
+            data: $(this).serialize(), // get the form data
+            url: "check-product-name",
+            // on success
+            success: function (response) {
+                if (response.is_taken == true) {
+                    $('#product_name').removeClass('is-valid').addClass('is-invalid');
+                    $('#product_name').after('<div class="invalid-feedback d-block" id="productnameError">This Product name available!</div>')
+                }
+                else {
+                    $('#product_name').removeClass('is-invalid').addClass('is-valid');
+                    $('#productnameError').remove();
+
+                }
+
+            },
+            // on error
+            error: function (response) {
+                // alert the error if any error occured
+                console.log(response.responseJSON.errors)
+            }
+        });
+
+        return false;
+    });
+})
+
+//  ===========================================================================================
+//  ================================Product ID checking===================================================
+
+$(document).ready(function () {
+    // catch the form's submit event
+    $('#productidError').remove();
+    $('#product_id').on("change",function () {
+        // create an AJAX call
+        $.ajax({
+            data: $(this).serialize(), // get the form data
+            url: "check-product-id",
+            // on success
+            success: function (response) {
+                if (response.is_taken == true) {
+                    $('#product_id').removeClass('is-valid').addClass('is-invalid');
+                    $('#product_id').after('<div class="invalid-feedback d-block" id="productidError">This Product ID available!</div>')
+                }
+                else {
+                    $('#product_id').removeClass('is-invalid').addClass('is-valid');
+                    $('#productidError').remove();
+
+                }
+
+            },
+            // on error
+            error: function (response) {
+                // alert the error if any error occured
+                console.log(response.responseJSON.errors)
+            }
+        });
+
+        return false;
+    });
+})
+
 
 //  ===========================================================================================
 //  ================================message-hide===================================================
@@ -253,12 +335,18 @@ $().ready(function () {
             },
             image1: {
                 required: true,
+                extension: "jpg|jpeg|png"
+
             },
             image2: {
                 required: true,
+                extension: "jpg|jpeg|png"
+
             },
             image3: {
                 required: true,
+                extension: "jpg|jpeg|png"
+
             },
         },
         messages: {
@@ -288,13 +376,14 @@ $().ready(function () {
 
             },
             image1: {
-                required: "Please upload the product image",
+                required: "Please upload the product image", extension:"Only accept jpg/jpeg/png formats!!"
+                
             },
             image2: {
-                required: "Please upload the alternate product image",
+                required: "Please upload the alternate product image", extension:"Only accept jpg/jpeg/png formats!!"
             },
             image3: {
-                required: "Please upload the alternate product image",
+                required: "Please upload the alternate product image", extension:"Only accept jpg/jpeg/png formats!!"
             },
         },
         // submitHandler: (addproduct, e) => {
@@ -323,4 +412,8 @@ $().ready(function () {
         // }
     });
 });
+
+
+//  ===========================================================================================
+//  ================================Image croping===================================================
 

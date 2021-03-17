@@ -3,6 +3,7 @@ from django.http import JsonResponse, response
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 from .models import Category
+from vendor.models import Products
 
 # Create your views here.
 
@@ -119,11 +120,19 @@ def delete_vendor(request, pk):
 def block_unblock_vendor(request, pk):
     if request.user.is_authenticated and request.user.is_superuser == True:
         user = User.objects.get(id=pk)
+        product = Products.objects.filter(vendor=pk)
         if user.is_active == True:
             user.is_active = False
+            for product in product:
+                product.product_value = False
+                product.save()
+
             print('vendor is blocked')
         else:
             user.is_active = True
+            for product in product:
+                product.product_value = True
+                product.save()
             print('vendor is unblocked')
         user.save()
 
@@ -160,3 +169,7 @@ def block_unblock_user(request, pk):
 
     else:
         return redirect('ad-login')
+
+
+
+

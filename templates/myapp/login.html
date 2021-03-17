@@ -21,6 +21,7 @@
 			<h1>Login Your Account</h1>
 		</div><!-- End .container -->
 	</div><!-- End .page-header -->
+	<span class="alert-danger" id="block" role="alert"></span>
 
 	<div class="container">
 		<div class="row row-sparse">
@@ -29,7 +30,6 @@
 					<h2 class="title">Login</h2>
 					<p>If you have an account with us, please log in.</p>
 				</div><!-- End .heading -->
-
 				<form action="#" id="loginform">{% csrf_token %}
 					<input type="text" class="form-control" name ="username"placeholder="Username" required>
 					<input type="password" class="form-control" name="password" placeholder="Password" required>

@@ -1,17 +1,19 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
 from django.contrib.auth import logout
 from vendor.models import Products
+from .models import Cart
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+
 
 def index(request):
     if request.user.is_authenticated:
         return redirect("landing")
     else:
         return render(request, 'myapp/index.html')
-
 
 
 def login(request):
@@ -21,19 +23,26 @@ def login(request):
         if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user is not None:
-                print('goto home')
-                auth.login(request, user)
-                return JsonResponse('true', safe=False)
+            if User.objects.filter(username=username).exists():
+                user = User.objects.get(username=username)
+                if user.is_active:        
+                    user = auth.authenticate(username=username, password=password)
+                    if user is not None:     
+                        print('goto user home')
+                        auth.login(request, user)
+                        return JsonResponse('true', safe=False)             
+                    else:
+                        print("incorrect password")
+                        return JsonResponse('false', safe=False)
+                else:
+                    return JsonResponse('blocked', safe=False)
             else:
-                print("incorrect username or password")
-                return JsonResponse('false', safe=False)
+                return JsonResponse('nouser', safe=False) 
         return render(request, 'myapp/login.html')
-
+    return render(request, 'myapp/login.html')
 
 def signup(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         firstname = request.POST['firstname']
         lastname = request.POST['lastname']
         username = request.POST['username']
@@ -46,7 +55,8 @@ def signup(request):
             print('email is already taken')
             return JsonResponse('false2', safe=False)
         else:
-            user =  User.objects.create_user(first_name = firstname, last_name = lastname, username = username, email = email, password = password)
+            user = User.objects.create_user(
+                first_name=firstname, last_name=lastname, username=username, email=email, password=password)
             print('user is created')
             return JsonResponse('true', safe=False)
     return render(request, 'myapp/signup.html')
@@ -54,8 +64,7 @@ def signup(request):
 
 def landing(request):
     if request.user.is_authenticated:
-        product = Products.objects.all()
-        
+        product = Products.objects.filter(product_value=True)
         context = {
             'products': product
         }
@@ -63,17 +72,77 @@ def landing(request):
     else:
         return redirect("login")
 
+
 def userlogout(request):
     logout(request)
     return redirect('login')
 
 
-def product(request,pk):
+def product(request, pk):
     if request.user.is_authenticated:
-        product = Products.objects.get(id=pk) 
+        product = Products.objects.get(id=pk)
         context = {
-            'products':product
-        }   
+            'products': product
+        }
         return render(request, 'myapp/product_detail.html', context)
+    else:
+        return redirect("login")
+
+def user_cart(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user.id)
+            context = {
+                'cart': cart
+            }
+            return render(request, 'myapp/cart.html', context)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+@csrf_exempt
+def add_to_cart(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                count = request.POST['count']
+                obj_product = Products.objects.get(id=id)
+                if Cart.objects.filter(user_product=obj_product, user=request.user).exists():
+                    add = Cart.objects.get(user_product=obj_product)           
+                    add.product_count = add.product_count + int(count)    
+                    add.save()
+                    return JsonResponse('true', safe=False)
+                else:
+                    cart = Cart.objects.create(user_product=obj_product, user=request.user, product_count=count)
+                    return JsonResponse('true', safe=False)
+            else:
+                return JsonResponse('false', safe=False)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def remove_from_cart(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            product = Cart.objects.get(id=id)
+            product.delete()
+            return JsonResponse('true', safe=False) 
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def clear_all_cart(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            product = Cart.objects.filter(user=request.user)
+            print(product)
+            product.delete()
+
+            return redirect('cart')
+        else:
+            return redirect('login')
     else:
         return redirect("login")

@@ -4,7 +4,7 @@
 {% block content %}
 
 <!--Category management DataTales  -->
-<div class="card shadow mb-4 mt-4 col-md-6 ml-auto mr-auto">
+<div class="card shadow mb-4 mt-4 col-md-12">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary text-center">Categories</h6>
     </div>
@@ -13,7 +13,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Category name</th>
+                        <th class="text-center">Category name</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -24,7 +24,7 @@
                       
                             <td class="text-center"><a class='btn btn-info btn-xs' href="{% url 'edit-category' pk=category.id %}"><span
                                 class="glyphicon glyphicon-edit"></span> Edit</a>
-
+                       
 
                             <a href="{% url 'delete-category' pk=category.id %}"
                                 onclick="return confirm('Are you sure you want to delete this?')"

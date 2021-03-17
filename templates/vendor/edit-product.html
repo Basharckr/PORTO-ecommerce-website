@@ -7,6 +7,12 @@
 
         <!-- Form Name -->
         <legend class="ml-3">ADD PRODUCTS</legend>
+        {% if messages %}
+        {% for message in messages %}
+        <span id="error1" class="ml-3">{{message}}</span>
+        {% endfor %}
+        {% endif %}
+
 
         <!-- Text input-->
         <div class="form-group">
@@ -96,7 +102,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">extra_images</label>
             <div class="col-md-6">
-                <input type="file" name="image1"
+                <input type="file" name="image2"
                     onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
                 <img id="blah2" src="{{products.image2url}}"alt="your image" width="100" height="100" />
 
@@ -106,7 +112,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">extra_images</label>
             <div class="col-md-6">
-                <input type="file" name="image1"
+                <input type="file" name="image3"
                     onchange="document.getElementById('blah3').src = window.URL.createObjectURL(this.files[0])">
                 <img id="blah3" src="{{products.image1url}}" alt="your image" width="100" height="100" />
 

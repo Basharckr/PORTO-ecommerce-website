@@ -50,6 +50,9 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Vendors!</h1>
                                     </div>
+                                    <span class="alert-danger" id="block" role="alert"></span>
+                                      
+                                    
                                     <form class="user" id="vendorloginform">{% csrf_token %}
                                         <div class="form-group">
                                             <input type="text" name="username" class="form-control form-control-user"
@@ -59,7 +62,7 @@
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">
-                                                   <span id="error1"></span> 
+                                                   
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
