@@ -169,44 +169,175 @@
 
 	<section class="container pb-3 mb-1">
 		<h2 class="section-title ls-n-10 text-center pb-2 m-b-4">Featured Products</h2>
-    	<div class="row">
-		{% for product in products%}
-		<div class="col-md-3">
-			<div class="product-default inner-quickview inner-icon">
-				<figure>
-					<a href="{% url 'product' pk=product.id %}">
-						<img src="{{product.image1.url}}">
-					</a>
-					<div class="btn-icon-group">
-						<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-								class="icon-shopping-cart"></i></button>
-					</div>
-					<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-				</figure>
-				<div class="product-details">
-					<div class="category-wrap">
-						<div class="category-list">
-							<a href="category.html" class="product-category">{{product.category.category_name}}</a>
-						</div>
-					</div>
-					<h3 class="product-title">
-						<a href="{% url 'product' pk=product.id %}">{{product.product_name}}</a>
-					</h3>
-					<div class="ratings-container">
-						<div class="product-ratings">
-							<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-							<span class="tooltiptext tooltip-top"></span>
-						</div><!-- End .product-ratings -->
-					</div><!-- End .product-container -->
-					<div class="price-box">
-						<span class="old-price">$59.00</span>
-						<span class="product-price">{{product.product_price}}</span>
-					</div><!-- End .price-box -->
-				</div><!-- End .product-details -->
-			</div>
+		<div class="row">
+			{% for product in products%}
+			<div class="col-md-3">
+				<div class="product-default inner-quickview inner-icon">
+					<figure>
+						<a href="{% url 'product' pk=product.id %}">
+							<img src="{{product.image1.url}}">
+						</a>
+						<!-- <div class="btn-icon-group">
+							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal">
+								<i
+									class="icon-shopping-cart"></i></button>
 
-		</div>
-		{% endfor %}
+
+						</div> -->
+						<button type="button" class="btn-quickview" data-toggle="modal"
+							data-target="#exampleModal-{{product.id}}">
+							Quick View
+						</button>
+
+						<!-- ---------------------------------------------------------------------------------------- -->
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal-{{product.id}}" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="close ml-auto mr-4 mt-1" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<div class="modal-body">
+										<div class="product-single-container product-single-default product-quick-view">
+											<div class="row row-sparse">
+												<div class="col-lg-6 product-single-gallery">
+													<div class="product-slider-container">
+														<div class="product-single-carousel owl-carousel owl-theme">
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image1url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-1-big.jpg" />
+															</div>
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image2url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-2-big.jpg" />
+															</div>
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image3url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-3-big.jpg" />
+															</div>
+
+														</div>
+														<!-- End .product-single-carousel -->
+													</div>
+													<div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
+														<div class="owl-dot">
+															<img src="{{product.image1url}}" />
+														</div>
+														<div class="owl-dot">
+															<img src="{{product.image2url}}" />
+														</div>
+														<div class="owl-dot">
+															<img src="{{product.image3url}}" />
+														</div>
+
+													</div>
+												</div><!-- End .product-single-gallery -->
+
+												<div class="col-lg-6 product-single-details">
+													<h1 class="product-title">{{product.product_name}}</h1>
+
+													<div class="ratings-container">
+														<div class="product-ratings">
+															<span class="ratings" style="width:60%"></span>
+															<!-- End .ratings -->
+														</div><!-- End .product-ratings -->
+
+														<a href="#" class="rating-link">( 6 Reviews )</a>
+													</div><!-- End .product-container -->
+
+													<div class="price-box">
+														<span class="old-price">$81.00</span>
+														<span class="product-price">{{product.product_price}}</span>
+													</div><!-- End .price-box -->
+
+													<div class="product-desc">
+														<p>{{product.proudct_description}}</p>
+													</div><!-- End .product-desc -->
+
+													<div class="product-filters-container">
+														<div class="product-single-filter">
+															<label>Colors:</label>
+															<ul class="config-swatch-list">
+																<li class="active">
+																	<a href="#" style="background-color: #0188cc;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #ab6e6e;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #ddb577;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #6085a5;"></a>
+																</li>
+															</ul>
+														</div><!-- End .product-single-filter -->
+													</div><!-- End .product-filters-container -->
+
+													<hr class="divider">
+
+													<div class="product-action">
+														<div class="product-single-qty">
+															<input class="horizontal-quantity form-control"
+																id="quantity" type="text">
+														</div><!-- End .product-single-qty -->
+
+														<button class="btn btn-dark add-cart"
+															onclick="addToCart('{{product.id}}')"
+															title="Add to Cart">Add to
+															Cart</button>
+													</div><!-- End .product-action -->
+
+													<hr class="divider">
+
+													<div class="product-single-share">
+														<label class="sr-only">Share:</label>
+
+														<!-- www.addthis.com share plugin-->
+														<div class="addthis_inline_share_toolbox"></div>
+
+														<a href="#" class="add-wishlist" title="Add to Wishlist">Add to
+															Wishlist</a>
+													</div><!-- End .product single-share -->
+												</div><!-- End .product-single-details -->
+											</div><!-- End .row -->
+										</div><!-- End .product-single-container -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End-modal -->
+					</figure>
+					<div class="product-details">
+						<div class="category-wrap">
+							<div class="category-list">
+								<a href="category.html" class="product-category">{{product.category.category_name}}</a>
+							</div>
+						</div>
+						<h3 class="product-title">
+							<a href="{% url 'product' pk=product.id %}">{{product.product_name}}</a>
+						</h3>
+						<div class="ratings-container">
+							<div class="product-ratings">
+								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
+								<span class="tooltiptext tooltip-top"></span>
+							</div><!-- End .product-ratings -->
+						</div><!-- End .product-container -->
+						<div class="price-box">
+							<span class="old-price">$59.00</span>
+							<span class="product-price">{{product.product_price}}</span>
+						</div><!-- End .price-box -->
+					</div><!-- End .product-details -->
+				</div>
+
+			</div>
+			{% endfor %}
 
 		</div>
 		<hr class="mt-3 mb-6">
@@ -270,4 +401,6 @@
 		</div><!-- End .row .feature-boxes-container-->
 	</section>
 </main><!-- End .main -->
+
+
 {% endblock %}

@@ -142,7 +142,7 @@ function addToCart(id){
             if(response == 'true'){
                 window.location.replace('/cart')
             }
-            if(response == 'false'){
+            if(response == 'nothing'){
                 window.location.replace('/')
             }
         }
@@ -152,6 +152,7 @@ function addToCart(id){
 //  ===========================================================================================
 //  ================================remove product from cart===================================================
 function removeProduct(id){
+    
     data = {
         
     }
@@ -167,3 +168,97 @@ function removeProduct(id){
     }
     })
 }
+
+//  ===========================================================================================
+//  ================================Edit product Quantity===================================================
+function editQuantity(id,cou){
+    console.log(id)
+    var newquantity = $('#newquantity-'+cou).val()
+    data = {
+        'quantity' : newquantity,
+    }
+    $.ajax({
+        url:'/edit-quantity/'+id+'/',
+        data: data,
+        method: 'post',
+        success: function(response){
+            if(response == 'true'){
+                window.location.replace('/cart')
+            }
+            if(response == 'nothing'){
+                console.log('no change in quantity')
+            }
+        }
+    })
+}
+
+
+//  ===========================================================================================
+//  ================================Shipping address===================================================
+$().ready(function (){
+    
+    console.log('d')
+    $("#shippaddress").validate({
+        rules:{
+            firstname:{
+                required:true, minlength: 3
+            },
+            lastname:{
+                required:true, minlength: 1
+            },
+            street:{
+                required:true, minlength: 3
+            },
+            city:{
+                required:true, minlength: 3
+            },
+            state:{
+                required:true, minlength: 3
+            },
+            pincode:{
+                required:true, minlength: 6
+            },
+            number:{
+                required:true, minlength: 10, maxlength: 12
+            },
+        },
+        messages: {
+            firstname: "Please enter your first name",
+            lastname: "Please enter your last name",
+            street: "Please enter your street name",
+            city: "Please enter your city",
+            state: "Please enter your state",
+            pincode: {
+                required: "Please enter your postal code",
+                minlength: "Must have 6 digit"
+            },
+            number: {
+                required: "Please enter your mobile number",
+                minlength: "Must have 10 digit"
+            },
+
+        },
+        submitHandler: (shippaddress, e) => {
+            
+            e.preventDefault()
+            $.ajax({
+                url: "add-address",
+                data:$("#shippaddress").serialize(),
+                method: "post",
+        
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('checkout')
+                    }
+                    if (response == 'false') {
+                        window.location.replace('checkout')
+                    }
+
+                },
+
+            })
+        }
+    });
+});
+//  ===========================================================================================
+//  ================================Edit address===================================================

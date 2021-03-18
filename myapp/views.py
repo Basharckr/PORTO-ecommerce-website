@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
 from django.contrib.auth import logout
 from vendor.models import Products
-from .models import Cart
+from .models import Cart, ShipAddress
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -92,8 +92,13 @@ def user_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id)
+            total = 0.00
+            for item in cart:
+                total = total + int(item.user_product.product_price) * int(item.product_count)
+            tot = []
+            tot.append(total)
             context = {
-                'cart': cart
+                'cart': cart, 'grant': tot
             }
             return render(request, 'myapp/cart.html', context)
         else:
@@ -142,6 +147,79 @@ def clear_all_cart(request):
             product.delete()
 
             return redirect('cart')
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+@csrf_exempt
+def edit_quantity(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            quantity = request.POST['quantity']
+            print(quantity)
+            edit = Cart.objects.get(id=id)
+            print(edit)
+            if edit.product_count == quantity:
+                print(edit.product_count)
+                print(quantity)
+                return JsonResponse('nothing', safe=False)
+            else:
+                edit.product_count = quantity
+                edit.save()
+                return JsonResponse('true', safe=False) 
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def checkout(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:                
+            address = ShipAddress.objects.filter(user=request.user)
+            print(address)
+            context = {
+                'address': address
+            }
+            return render(request, 'myapp/checkout.html', context)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def add_address(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                firstname = request.POST['firstname']
+                lastname = request.POST['lastname']
+                organization = request.POST['organization']
+                street = request.POST['street']
+                city = request.POST['city']
+                state = request.POST['state']
+                pincode = request.POST['pincode']
+                country = request.POST['country']
+                number = request.POST['number']
+                ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
+                                           organization=organization, streetaddress=street, city=city,
+                                           state=state, pincode=pincode, country=country, number=number)          
+                return JsonResponse('true', safe=False)
+            else:  
+                return JsonResponse('false', safe=False)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def edit_address(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:                
+            address = ShipAddress.objects.filter(user=request.user)
+            print(address)
+            context = {
+                'address': address
+            }
+            return render(request, 'myapp/checkout.html', context)
         else:
             return redirect('login')
     else:

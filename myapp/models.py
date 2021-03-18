@@ -10,14 +10,18 @@ class Cart(models.Model):
 
 
     @property
-    def subtotal(self):
+    def subtotal(self):     
         return self.product_count * self.user_product.product_price
 
-    @property
-    def granttotal(self):
-        user = Cart.objects.filter(id=id)
-        for item in user:
-            total = self.product_count * self.user_product.product_price
-
-        return self.total
- 
+   
+class ShipAddress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=150, null=True, blank=True)
+    lastname = models.CharField(max_length=150, null=True, blank=True)
+    organization = models.CharField(max_length=200, null=True, blank=True)
+    streetaddress = models.CharField(max_length=200, null=True, blank=True)
+    pincode = models.CharField(max_length=20, null=True, blank=True)
+    city = models.CharField(max_length=150, null=True, blank=True)
+    state = models.CharField(max_length=150, null=True, blank=True)
+    country = models.CharField(max_length=150, null=True, blank=True)
+    number = models.CharField(max_length=20, null=True, blank=True)
