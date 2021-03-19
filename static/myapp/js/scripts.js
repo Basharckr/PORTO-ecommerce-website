@@ -2,28 +2,28 @@
 //  ===========================================================================================
 //  ================================User-Signup===================================================
 
-$().ready(function (){
-    
+$().ready(function () {
+
     console.log('d')
     $("#signupform").validate({
-        rules:{
-            firstname:{
-                required:true, minlength: 3
+        rules: {
+            firstname: {
+                required: true, minlength: 3
             },
-            lastname:{
-                required:true, minlength: 1
+            lastname: {
+                required: true, minlength: 1
             },
-            username:{
-                required:true, minlength: 5
+            username: {
+                required: true, minlength: 5
             },
-            email:{
-                required:true, email:true
+            email: {
+                required: true, email: true
             },
-            password:{
-                required:true, minlength: 5
+            password: {
+                required: true, minlength: 5
             },
-            cpassword:{
-                required:true, minlength: 5, equalTo:'#password',
+            cpassword: {
+                required: true, minlength: 5, equalTo: '#password',
             },
         },
         messages: {
@@ -47,21 +47,21 @@ $().ready(function (){
             },
         },
         submitHandler: (signupform, e) => {
-            
+
             e.preventDefault()
             $.ajax({
                 url: "signup",
-                data:$("#signupform").serialize(),
+                data: $("#signupform").serialize(),
                 method: "post",
-        
+
                 success: function (response) {
                     if (response == 'true') {
                         window.location.replace('login')
                     }
-                    if(response == 'false1'){
+                    if (response == 'false1') {
                         $("#error1").html(" Username already taken!!!!")
                     }
-                    if(response == 'false2'){
+                    if (response == 'false2') {
                         $("#error1").html(" Email already taken!!!!")
                     }
                 },
@@ -75,16 +75,16 @@ $().ready(function (){
 //  ===========================================================================================
 //  ================================User-Login===================================================
 
-$().ready(function (){
-    
+$().ready(function () {
+
     console.log('d')
     $("#loginform").validate({
-        rules:{
-            username:{
-                required:true
+        rules: {
+            username: {
+                required: true
             },
-            password:{
-                required:true
+            password: {
+                required: true
             },
         },
         messages: {
@@ -97,18 +97,18 @@ $().ready(function (){
 
         },
         submitHandler: (loginform, e) => {
-            
+
             e.preventDefault()
             $.ajax({
                 url: "login",
-                data:$("#loginform").serialize(),
+                data: $("#loginform").serialize(),
                 method: "post",
-        
+
                 success: function (response) {
                     if (response == 'true') {
                         window.location.replace('landing')
                     }
-                    if(response == 'false'){
+                    if (response == 'false') {
                         $("#block").html('<div class="alert alert-info text-center" id="block"><strong>Incorrect password!!</strong> </div>')
                     }
                     if (response == 'blocked') {
@@ -129,20 +129,20 @@ $().ready(function (){
 //  ===========================================================================================
 //  ================================Add to cart===================================================
 
-function addToCart(id){
+function addToCart(id) {
     let qty = $('#quantity').val()
-    data={
-        'count': qty,     
+    data = {
+        'count': qty,
     }
     $.ajax({
-        url: '/add-to-cart/'+id+'/',
+        url: '/add-to-cart/' + id + '/',
         data: data,
         method: 'post',
-        success: function(response){
-            if(response == 'true'){
+        success: function (response) {
+            if (response == 'true') {
                 window.location.replace('/cart')
             }
-            if(response == 'nothing'){
+            if (response == 'nothing') {
                 window.location.replace('/')
             }
         }
@@ -151,75 +151,75 @@ function addToCart(id){
 
 //  ===========================================================================================
 //  ================================remove product from cart===================================================
-function removeProduct(id){
-    
+function removeProduct(id) {
+
     data = {
-        
-    }
-    $.ajax({
-        url:'/remove-from-cart/'+id+'/',
-        data:data,
-        method:'get',
-        success: function(response){
-        if(response == 'true'){
-            window.location.replace('/cart')
-        }
 
     }
+    $.ajax({
+        url: '/remove-from-cart/' + id + '/',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response == 'true') {
+                window.location.replace('/cart')
+            }
+
+        }
     })
 }
 
 //  ===========================================================================================
 //  ================================Edit product Quantity===================================================
-function editQuantity(id,cou){
+function editQuantity(id, cou) {
     console.log(id)
-    var newquantity = $('#newquantity-'+cou).val()
+    var newquantity = $('#newquantity-' + cou).val()
     data = {
-        'quantity' : newquantity,
+        'quantity': newquantity,
     }
     $.ajax({
-        url:'/edit-quantity/'+id+'/',
+        url: '/edit-quantity/' + id + '/',
         data: data,
         method: 'post',
-        success: function(response){
-            if(response == 'true'){
+        success: function (response) {
+            if (response == 'true') {
                 window.location.replace('/cart')
             }
-            if(response == 'nothing'){
+            if (response == 'nothing') {
                 console.log('no change in quantity')
             }
         }
     })
-}
+};
+
 
 
 //  ===========================================================================================
 //  ================================Shipping address===================================================
-$().ready(function (){
-    
-    console.log('d')
+$(document).ready(function () {
+
     $("#shippaddress").validate({
-        rules:{
-            firstname:{
-                required:true, minlength: 3
+        rules: {
+            firstname: {
+                required: true, minlength: 3
             },
-            lastname:{
-                required:true, minlength: 1
+            lastname: {
+                required: true, minlength: 1
             },
-            street:{
-                required:true, minlength: 3
+            street: {
+                required: true, minlength: 3
             },
-            city:{
-                required:true, minlength: 3
+            city: {
+                required: true, minlength: 3
             },
-            state:{
-                required:true, minlength: 3
+            state: {
+                required: true, minlength: 3
             },
-            pincode:{
-                required:true, minlength: 6
+            pincode: {
+                required: true, minlength: 6
             },
-            number:{
-                required:true, minlength: 10, maxlength: 12
+            number: {
+                required: true, minlength: 10, maxlength: 12
             },
         },
         messages: {
@@ -239,13 +239,13 @@ $().ready(function (){
 
         },
         submitHandler: (shippaddress, e) => {
-            
+
             e.preventDefault()
             $.ajax({
                 url: "add-address",
-                data:$("#shippaddress").serialize(),
+                data: $("#shippaddress").serialize(),
                 method: "post",
-        
+
                 success: function (response) {
                     if (response == 'true') {
                         window.location.replace('checkout')
@@ -260,5 +260,72 @@ $().ready(function (){
         }
     });
 });
+
+$(document).ready(function () {
+
+
+    $("#editaddress").validate({
+        rules: {
+            firstname1: {
+                required: true, minlength: 3
+            },
+            lastname1: {
+                required: true, minlength: 1
+            },
+            street1: {
+                required: true, minlength: 3
+            },
+            city1: {
+                required: true, minlength: 3
+            },
+            state1: {
+                required: true, minlength: 3
+            },
+            pincode1: {
+                required: true, minlength: 6
+            },
+            number1: {
+                required: true, minlength: 10, maxlength: 12
+            },
+        },
+        messages: {
+            firstname1: "Please enter your first name",
+            lastname1: "Please enter your last name",
+            street1: "Please enter your street name",
+            city1: "Please enter your city",
+            state1: "Please enter your state",
+            pincode1: {
+                required: "Please enter your postal code",
+                minlength: "Must have 6 digit"
+            },
+            number1: {
+                required: "Please enter your mobile number",
+                minlength: "Must have 10 digit"
+            },
+
+        },
+        submitHandler: (editaddress, e) => {
+
+            e.preventDefault()
+            console.log($("#editaddress").data("id"));
+        }
+    });
+});
+
 //  ===========================================================================================
-//  ================================Edit address===================================================
+//  ================================Shipping here===================================================
+function shipHere(id){
+    $.ajax({
+        url:"/set-address/"+id+"/",
+        method:'post',
+        success: function(response){
+            if(response == 'true'){
+                $("div").removeClass("active");
+                var element =   document.getElementById("set-add-"+id);
+                element.classList.add("active");
+            }
+        }
+
+    })
+}
+

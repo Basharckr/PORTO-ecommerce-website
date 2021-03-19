@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'myapp',
     'vendor',
     'owner',
+    'paypal.standard.ipn',
 
 ]
 
@@ -134,3 +135,8 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
+
+#----------paypal--------
+PAYPAL_RECEIVER_EMAIL = 'basharpmr@mail.com'
+
+PAYPAL_TEST = True

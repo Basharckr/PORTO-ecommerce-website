@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
     path('vendor/', include('vendor.urls')),
-    path('owner/', include('owner.urls'))
+    path('owner/', include('owner.urls')),
+    path('paypal/', include('paypal.standard.ipn.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

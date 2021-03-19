@@ -211,15 +211,61 @@ def add_address(request):
     else:
         return redirect("login")
 
-def edit_address(request):
+def edit_address(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            if request.method == 'POST':                
+                address = ShipAddress.objects.filter(user=request.user, id=id)
+                address.firstname = request.POST['firstname1']
+                address.lastname = request.POST['lastname1']
+                address.organization = request.POST['organization1']
+                address.street = request.POST['street1']
+                address.city = request.POST['city1']
+                address.state = request.POST['state1']
+                address.pincode = request.POST['pincode1']
+                address.country = request.POST['country1']
+                address.number = request.POST['number1']
+                address.save()
+                return JsonResponse('true', safe=False)
+            else:
+                return JsonResponse('false', safe=False)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def delete_address(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            address = ShipAddress.objects.get(id=id)
+            address.delete()
+            return redirect('checkout')      
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+
+
+@csrf_exempt
+def set_address(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            request.session['address-id'] = id
+
+            return JsonResponse('true', safe=False)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def placeorder(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:                
-            address = ShipAddress.objects.filter(user=request.user)
-            print(address)
-            context = {
-                'address': address
-            }
-            return render(request, 'myapp/checkout.html', context)
+            id = request.session['address-id']
+            address = ShipAddress.objects.get(id=id)
+                
+            return render(request, 'myapp/placeorder.html', {'address':address})
         else:
             return redirect('login')
     else:

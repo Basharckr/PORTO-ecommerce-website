@@ -34,10 +34,17 @@ urlpatterns = [
     # ==============================Shipp Address===========================================
     
     path('add-address', views.add_address, name='add-address'),
-    path('edit-address', views.edit_address, name='edit-address'),
+    path('edit-address/<int:id>/', views.edit_address, name='edit-address'),
+    path('delete-address/<int:id>/', views.delete_address, name='delete-address'),
 
+    # ==============================Placeorder===========================================
+
+    path('placeorder', views.placeorder, name='placeorder'),
     
+    # ==============================Sett address===========================================
 
+    path('set-address/<int:id>/', views.set_address, name='set-address'),
+    
 
     
 

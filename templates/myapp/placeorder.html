@@ -1,0 +1,171 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block title %}PORTO||Placeorder{% endblock %}
+{% block content %}
+
+<main class="main">
+	<nav aria-label="breadcrumb" class="breadcrumb-nav">
+		<div class="container">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Men</a></li>
+				<li class="breadcrumb-item"><a href="#">Accessories</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Classic Crew Neck Sweatshirt</li>
+			</ol>
+		</div><!-- End .container -->
+	</nav>
+
+	<div class="page-header">
+		<div class="container">
+			<h1>Place order</h1>
+		</div><!-- End .container -->
+	</div><!-- End .page-header -->
+
+	<div class="container">
+		<ul class="checkout-progress-bar">
+			<li>
+				<span>Shipping</span>
+			</li>
+			<li class="active">
+				<span>Review &amp; Payments</span>
+			</li>
+		</ul>
+		<div class="row row-sparse">
+			<div class="col-lg-4">
+				<div class="order-summary">
+					<h3>Summary</h3>
+
+					<h4>
+						<a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
+							aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
+					</h4>
+
+					<div class="collapse" id="order-cart-section">
+						<table class="table table-mini-cart">
+							<tbody>
+								<tr>
+									<td class="product-col">
+										<figure class="product-image-container">
+											<a href="product.html" class="product-image">
+												<img src="{% static 'myapp/images/products/product-1.jpg' %}"
+													alt="product">
+											</a>
+										</figure>
+										<div>
+											<h2 class="product-title">
+												<a href="product.html">Running Sneakers</a>
+											</h2>
+
+											<span class="product-qty">Qty: 4</span>
+										</div>
+									</td>
+									<td class="price-col">$17.90</td>
+								</tr>
+
+								<tr>
+									<td class="product-col">
+										<figure class="product-image-container">
+											<a href="product.html" class="product-image">
+												<img src="{% static 'myapp/images/products/product-2.jpg'%}"
+													alt="product">
+											</a>
+										</figure>
+										<div>
+											<h2 class="product-title">
+												<a href="product.html">Men's Apt</a>
+											</h2>
+
+											<span class="product-qty">Qty: 4</span>
+										</div>
+									</td>
+									<td class="price-col">$7.90</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!-- End #order-cart-section -->
+				</div><!-- End .order-summary -->
+
+				<div class="checkout-info-box">
+					<h3 class="step-title">Ship To:
+						<a href="#" title="Edit" class="step-title-edit"><span class="sr-only">Edit</span><i
+								class="icon-pencil"></i></a>
+					</h3>
+
+					<address>
+						{{address.firstname}} <br>
+						{{address.organization}},<br>
+						{{address.streetaddress}}, {{address.pincode}}<br>
+						{{address.city}},{{address.country}} <br>
+						{{address.number}}
+					</address>
+				</div><!-- End .checkout-info-box -->
+
+				<!-- <div class="checkout-info-box">
+					<h3 class="step-title">Shipping Method:
+						<a href="#" title="Edit" class="step-title-edit"><span class="sr-only">Edit</span><i
+								class="icon-pencil"></i></a>
+					</h3>
+
+					<p>Flat Rate - Fixed</p>
+				</div>End .checkout-info-box -->
+			</div><!-- End .col-lg-4 -->
+
+			<div class="col-lg-8 order-lg-first padding-right-lg">
+				<div class="checkout-payment">
+					<h2 class="step-title">Payment Method:</h2>
+
+					<div class="checkout-step-shipping">
+
+						<table class="table table-step-shipping">
+							<tbody>
+								<tr>
+									<td><input type="radio" name="shipping-method" value="flat"></td>
+									<td><strong>Paypal</strong></td>
+									<!-- <td>Fixed</td>
+									<td>Flat Rate</td> -->
+								</tr>
+
+								<tr>
+									<td><input type="radio" name="shipping-method" value="best"></td>
+									<td><strong>Razorpay</strong></td>
+									<!-- <td>Table Rate</td>
+									<td>Best Way</td> -->
+								</tr>
+								<tr>
+									<td><input type="radio" name="shipping-method" value="best"></td>
+									<td><strong>Cash on delivery</strong></td>
+									<!-- <td>Table Rate</td>
+									<td>Best Way</td> -->
+								</tr>
+							</tbody>
+						</table>
+					</div>  <!-- End .checkout-step-shipping -->
+					 
+
+
+					<div class="clearfix" >
+						<a href="#" class="btn btn-primary float-right">Make payment</a>
+					</div><!-- End .clearfix -->
+				</div><!-- End .checkout-payment -->
+
+				<div class="checkout-discount">
+					<h4>
+						<a data-toggle="collapse" href="#checkout-discount-section" class="collapsed" role="button"
+							aria-expanded="false" aria-controls="checkout-discount-section">Apply Discount Code</a>
+					</h4>
+
+					<div class="collapse" id="checkout-discount-section">
+						<form action="#">
+							<input type="text" class="form-control form-control-sm" placeholder="Enter discount code"
+								required>
+							<button class="btn btn-sm btn-outline-secondary" type="submit">Apply Discount</button>
+						</form>
+					</div><!-- End .collapse -->
+				</div><!-- End .checkout-discount -->
+			</div><!-- End .col-lg-8 -->
+		</div><!-- End .row -->
+	</div><!-- End .container -->
+
+	<div class="mb-6"></div><!-- margin -->
+</main><!-- End .main -->
+{% endblock %}
