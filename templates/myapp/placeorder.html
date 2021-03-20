@@ -119,34 +119,37 @@
 						<table class="table table-step-shipping">
 							<tbody>
 								<tr>
-									<td><input type="radio" name="shipping-method" value="flat"></td>
+									<td><input type="radio" name="shipping-method" value="paypal"></td>
 									<td><strong>Paypal</strong></td>
 									<!-- <td>Fixed</td>
 									<td>Flat Rate</td> -->
 								</tr>
 
 								<tr>
-									<td><input type="radio" name="shipping-method" value="best"></td>
+									<td><input type="radio" name="shipping-method" value="razorpay"></td>
 									<td><strong>Razorpay</strong></td>
 									<!-- <td>Table Rate</td>
 									<td>Best Way</td> -->
 								</tr>
 								<tr>
-									<td><input type="radio" name="shipping-method" value="best"></td>
+									<td><input type="radio" name="shipping-method" value="cod"></td>
 									<td><strong>Cash on delivery</strong></td>
 									<!-- <td>Table Rate</td>
 									<td>Best Way</td> -->
 								</tr>
 							</tbody>
 						</table>
-					</div>  <!-- End .checkout-step-shipping -->
-					 
+					</div> <!-- End .checkout-step-shipping -->
 
 
-					<div class="clearfix" >
-						<a href="#" class="btn btn-primary float-right">Make payment</a>
+
+					<div class="clearfix">
+						<button type="button" onclick="payment()" class="btn btn-primary float-right">Make
+							payment</button>
 					</div><!-- End .clearfix -->
 				</div><!-- End .checkout-payment -->
+				<!-- Set up a container element for the button -->
+				<div id="paypal-button-container"></div>
 
 				<div class="checkout-discount">
 					<h4>
@@ -168,4 +171,43 @@
 
 	<div class="mb-6"></div><!-- margin -->
 </main><!-- End .main -->
+
+<!-- =========================payment================================ -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ab-q1BgDNubz-ZL1syCXflGT8WqmSO9uEVZNoUqA1QPIIsmc62FisqAA2XsJqVFydca0sZpK8vf_qQVb&currency=USD"></script>
+<script>
+	function payment() {
+		var pay = $("input[type='radio'][name='shipping-method']:checked").val();
+		if (pay == 'paypal') {
+
+			//Include the PayPal JavaScript SDK
+
+			// Render the PayPal button into #paypal-button-container
+			paypal.Buttons({
+
+				// Set up the transaction
+				createOrder: function (data, actions) {
+					return actions.order.create({
+						purchase_units: [{
+							amount: {
+								value: '9'
+							}
+						}]
+					});
+				},
+
+				// Finalize the transaction
+				onApprove: function (data, actions) {
+					return actions.order.capture().then(function (details) {
+						// Show a success message to the buyer
+						window.location.replace('success')
+					});
+				}
+
+
+			}).render('#paypal-button-container');
+
+
+		}
+	}
+</script>
 {% endblock %}

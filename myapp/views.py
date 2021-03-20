@@ -270,3 +270,14 @@ def placeorder(request):
             return redirect('login')
     else:
         return redirect("login")
+
+
+def success(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:                
+                
+            return render(request, 'myapp/success.html')
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")

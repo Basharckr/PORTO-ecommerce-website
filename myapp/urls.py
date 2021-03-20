@@ -45,8 +45,9 @@ urlpatterns = [
 
     path('set-address/<int:id>/', views.set_address, name='set-address'),
     
-
+    # ==============================Payment success===========================================
     
+    path('success', views.success, name='success'),
 
 
 
