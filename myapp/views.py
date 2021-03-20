@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
 from django.contrib.auth import logout
 from vendor.models import Products
-from .models import Cart, ShipAddress
+from .models import Cart, ShipAddress, Order
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -97,6 +97,7 @@ def user_cart(request):
                 total = total + int(item.user_product.product_price) * int(item.product_count)
             tot = []
             tot.append(total)
+            request.session['total'] = tot
             context = {
                 'cart': cart, 'grant': tot
             }
@@ -112,7 +113,7 @@ def add_to_cart(request, id):
         if request.user.is_authenticated:
             if request.method == 'POST':
                 count = request.POST['count']
-                obj_product = Products.objects.get(id=id)
+                obj_product = Products.objects.filter(id=id)
                 if Cart.objects.filter(user_product=obj_product, user=request.user).exists():
                     add = Cart.objects.get(user_product=obj_product)           
                     add.product_count = add.product_count + int(count)    
@@ -261,11 +262,12 @@ def set_address(request, id):
 
 def placeorder(request):
     if request.user.is_active == True:
-        if request.user.is_authenticated:                
+        if request.user.is_authenticated:
+            total = request.session['total']                  
             id = request.session['address-id']
             address = ShipAddress.objects.get(id=id)
                 
-            return render(request, 'myapp/placeorder.html', {'address':address})
+            return render(request, 'myapp/placeorder.html', {'address':address, 'grant_total':total})
         else:
             return redirect('login')
     else:
@@ -275,8 +277,38 @@ def placeorder(request):
 def success(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:                
-                
             return render(request, 'myapp/success.html')
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+@csrf_exempt
+def order(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            id = request.session['address-id']
+            print(id)
+            grant_total = request.session['total']
+            print(grant_total)
+            cart = Cart.objects.filter(user=request.user)
+            print(cart)
+            ship_id = ShipAddress.objects.get(id=id)
+            if request.method == 'POST':
+                for item in cart:
+                    Order.objects.create(user=request.user, user_cart=item,
+                                        quantity=item.product_count, amount=item.user_product.product_price, 
+                                        ship_id=ship_id, payment_status=False)
+                    item.delete()
+                    item.save()
+                    return JsonResponse('true', safe=False)
+            else:
+                for item in cart:
+                    Order.objects.create(user=request.user, user_cart=item,
+                                        quantity=item.product_count, amount=item.user_product.product_price, 
+                                        ship_id=ship_id, payment_status=True)
+                    item.delete
+                    item.save()
+                    return JsonResponse('cod', safe=False)                 
         else:
             return redirect('login')
     else:

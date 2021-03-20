@@ -49,7 +49,9 @@ urlpatterns = [
     
     path('success', views.success, name='success'),
 
+    # ==============================Order===========================================
 
+    path('order', views.order, name='order'),
 
 
     

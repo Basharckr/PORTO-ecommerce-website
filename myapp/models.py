@@ -7,7 +7,7 @@ class Cart(models.Model):
     user_product = models.ForeignKey(Products, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product_count = models.IntegerField(default=1)
-    checkedout = models.BooleanField(default=False)
+
 
 
     @property
@@ -31,5 +31,8 @@ class ShipAddress(models.Model):
 class Order(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE)
     user_cart = models.name = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)
+    ship_id = models.ForeignKey(ShipAddress, on_delete=models.CASCADE, null=True, blank=True)
+    amount = models.IntegerField(null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+    ordered_date = models.DateTimeField(auto_now_add=True)
+    payment_status = models.BooleanField(default=False)

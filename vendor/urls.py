@@ -24,7 +24,9 @@ urlpatterns = [
     path('check-product-name', views.check_poructname, name='check-product-name'),
     path('check-product-id', views.check_poruct_id, name='check-product-id'),
 
+    # ==============================Order====================================
 
+    # path('orders', views.orders, name='orders'),
 
 
 
