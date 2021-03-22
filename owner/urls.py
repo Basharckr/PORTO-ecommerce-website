@@ -28,7 +28,9 @@ urlpatterns = [
     path('manage-user', views.manage_user, name='manage-user'),
     path('block-unblock-user/<int:pk>/', views.block_unblock_user, name='block-unblock-user'),
 
+    # =============================All orders=============================================
 
+    path('all-orders', views.all_orders, name='all-orders'),
 
 
 

@@ -91,7 +91,7 @@ def product(request, pk):
 def user_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            cart = Cart.objects.filter(user=request.user.id)
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
             total = 0.00
             for item in cart:
                 total = total + int(item.user_product.product_price) * int(item.product_count)
@@ -113,10 +113,10 @@ def add_to_cart(request, id):
         if request.user.is_authenticated:
             if request.method == 'POST':
                 count = request.POST['count']
-                obj_product = Products.objects.filter(id=id)
-                if Cart.objects.filter(user_product=obj_product, user=request.user).exists():
+                obj_product = Products.objects.get(id=id)
+                if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
                     add = Cart.objects.get(user_product=obj_product)           
-                    add.product_count = add.product_count + int(count)    
+                    add.product_count = add.product_count + int(count)
                     add.save()
                     return JsonResponse('true', safe=False)
                 else:
@@ -143,7 +143,7 @@ def remove_from_cart(request, id):
 def clear_all_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            product = Cart.objects.filter(user=request.user)
+            product = Cart.objects.filter(user=request.user, checkedout=False)
             print(product)
             product.delete()
 
@@ -282,6 +282,8 @@ def success(request):
             return redirect('login')
     else:
         return redirect("login")
+
+
 @csrf_exempt
 def order(request):
     if request.user.is_active == True:
@@ -290,7 +292,7 @@ def order(request):
             print(id)
             grant_total = request.session['total']
             print(grant_total)
-            cart = Cart.objects.filter(user=request.user)
+            cart = Cart.objects.filter(user=request.user, checkedout=False)
             print(cart)
             ship_id = ShipAddress.objects.get(id=id)
             if request.method == 'POST':
@@ -298,17 +300,28 @@ def order(request):
                     Order.objects.create(user=request.user, user_cart=item,
                                         quantity=item.product_count, amount=item.user_product.product_price, 
                                         ship_id=ship_id, payment_status=False)
-                    item.delete()
-                    item.save()
-                    return JsonResponse('true', safe=False)
+                    item.checkedout=True
+                    item.save()   
+                return JsonResponse('cod', safe=False)
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
                                         quantity=item.product_count, amount=item.user_product.product_price, 
                                         ship_id=ship_id, payment_status=True)
-                    item.delete
-                    item.save()
-                    return JsonResponse('cod', safe=False)                 
+                    item.checkedout=True
+                    item.save()                      
+                return JsonResponse('true', safe=False)                 
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+
+def dashbaord(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+                
+            return render(request, 'myapp/dashboard.html')
         else:
             return redirect('login')
     else:

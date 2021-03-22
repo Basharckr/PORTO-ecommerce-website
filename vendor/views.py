@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from .models import Products
 # from django.core.files import File
 from owner.models import Category
+from myapp.models import Cart, ShipAddress, Order
 from django.contrib.auth import logout
 from django.contrib import messages
 
@@ -14,8 +15,8 @@ def veIndex(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
             return render(request, 'vendor/ve-index.html')
-    else:
-        
+    else: 
+        print('helloo')    
         return redirect('ve-login')
 
 
@@ -78,6 +79,9 @@ def manage_product(request):
                 'products': product
             }
             return render(request, 'vendor/manage-product.html', context)
+        else:
+            return redirect('ve-login')
+
     else:
         return redirect('ve-login')
 
@@ -109,7 +113,8 @@ def add_product(request):
                 'categorys': category
             }
             return render(request, 'vendor/add-product.html', context)
-
+        else:
+            return redirect('ve-login')
     else:
         return redirect('ve-login')
 
@@ -144,6 +149,9 @@ def edit_product(request, pk):
                 'products': edit, 'category': category,
             }
             return render(request, 'vendor/edit-product.html', context)
+        else:
+            return redirect('ve-login')
+
     else:
         return redirect('ve-login')
 
@@ -154,6 +162,8 @@ def delete_product(request, pk):
             del_product = Products.objects.get(id=pk)
             del_product.delete()
             return redirect('manage-product')
+        else:
+            return redirect('ve-login')
     else:
         return redirect('ve-login')
 
@@ -171,21 +181,79 @@ def block_unblock_product(request, pk):
             product.save()
             return redirect('manage-product')
 
+        else:
+            return redirect('ad-login')
     else:
         return redirect('ad-login')
 
 
 def check_poructname(request):
-    product_name = request.GET.get('product_name', None)
-    response = {
-        'is_taken': Products.objects.filter(product_name__iexact=product_name).exists()
-    }
-    return JsonResponse(response)
-
-
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            product_name = request.GET.get('product_name', None)
+            response = {
+                'is_taken': Products.objects.filter(product_name__iexact=product_name).exists()
+            }
+            return JsonResponse(response)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
 def check_poruct_id(request):
-    product_id = request.GET.get('product_id', None)
-    response = {
-        'is_taken': Products.objects.filter(product_id__iexact=product_id).exists()
-    }
-    return JsonResponse(response)
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            product_id = request.GET.get('product_id', None)
+            response = {
+                'is_taken': Products.objects.filter(product_id__iexact=product_id).exists()
+            }
+            return JsonResponse(response)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+def vendor_orders(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            print(request.user.id)
+            order = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
+            print(order)
+            context = {
+                'orders': order
+            }
+            return render(request, 'vendor/vendor-orders.html', context)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+
+def ship_status(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            print(request.user.id)
+            order = Order.objects.get(id=id)
+            print(order)
+            if order.shipped == False:
+                order.shipped = True         
+                order.save()
+                return JsonResponse('shipped', safe=False)
+            else:
+                order.shipped = False
+                order.save()
+                return JsonResponse('ship', safe=False)
+            return render(request, 'vendor/vendor-orders.html')
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+
+def delete_orders(request, pk):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            print(request.user.id)
+            order = Order.objects.get(id=pk)
+            order.delete()
+            return redirect('vendor-orders')
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')

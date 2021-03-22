@@ -26,9 +26,12 @@ urlpatterns = [
 
     # ==============================Order====================================
 
-    # path('orders', views.orders, name='orders'),
+    path('vendor-orders', views.vendor_orders, name='vendor-orders'),
+    path('delete-orders/<int:pk>/', views.delete_orders, name='delete-orders'),
+    
+    # ==============================Changin ship status====================================
 
-
+    path('change-ship-status/<int:pk>/', views.ship_status, name='change-ship-status'),
 
    
 

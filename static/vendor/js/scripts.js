@@ -98,7 +98,7 @@ $().ready(function () {
 
                 success: function (response) {
                     if (response == 'true') {
-                        window.location.replace('/vendor/')
+                        window.location.replace('/vendor')
                     }
                     if (response == 'false') {
                         $("#block").html('<div class="alert alert-info text-center" id="block"><strong>Incorrect password!!</strong> </div>')
@@ -415,5 +415,20 @@ $().ready(function () {
 
 
 //  ===========================================================================================
-//  ================================Image croping===================================================
+//  ================================ship-status===================================================
 
+function shipStatus(id){
+    $.ajax({
+        url:'change-ship-status/'+id+'/',
+        method: 'get',
+        success: function(response){
+            if(response == 'shipped'){
+                window.location.replace('vendor-orders')
+            }
+            if(response == 'ship'){
+   
+                window.location.replace('vendor-orders')
+            }
+        } 
+    })
+}

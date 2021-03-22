@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 from .models import Category
 from vendor.models import Products
+from myapp.models import Cart, Order, ShipAddress
 
 # Create your views here.
 
@@ -171,5 +172,14 @@ def block_unblock_user(request, pk):
         return redirect('ad-login')
 
 
+def all_orders(request):
+    if request.user.is_authenticated and request.user.is_superuser == True:
+        all_order = Order.objects.all()
+        context = {
+            'all_orders': all_order
+        }
+        return render(request, 'owner/all-orders.html', context)
 
+    else:
+        return redirect('ad-login')
 

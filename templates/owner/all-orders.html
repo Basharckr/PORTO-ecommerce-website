@@ -1,0 +1,55 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+{% block title %}All orders{% endblock %}
+{% block content %}
+
+<!--Vendor management DataTales  -->
+<div class="card shadow mb-4 mt-4 col-md-12 ml-auto mr-auto">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center">All Orders</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>SI</th>
+                        <th>Vendor</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Shipping Address</th>
+                        <th>Order Date</th>
+                        <th>Payment Status</th>
+                        <th>Shipping Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in all_orders %}
+                    <tr> 
+                        <th>{{forloop.counter}}</th>
+                        <td>{{item.user_cart.user_product.vendor}}</td>
+                        <td>{{item.user_cart.user_product.product_name}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.user_cart.subtotal}}</td>
+                        <td>{{item.ship_id.firstname}}{{item.ship_id.firstname}},
+                            {{item.ship_id.organization}},{{item.ship_id.streetaddress}},
+                            {{item.ship_id.pincode}},{{item.ship_id.city}},   
+                            {{item.ship_id.state}},{{item.ship_id.country}},
+                            {{item.ship_id.number}}
+                        </td>
+                        <td>{{item.ordered_date|date:'Y-m-d'}}</td>
+                        <td>{{item.payment_status}}</td>
+                        <th>{{item.shipped}}</th>
+           
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

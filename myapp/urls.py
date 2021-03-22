@@ -53,6 +53,7 @@ urlpatterns = [
 
     path('order', views.order, name='order'),
 
+    # ==============================User dashboard===========================================
 
-    
+    path('dashboard', views.dashbaord, name='dashboard'),
 ]
