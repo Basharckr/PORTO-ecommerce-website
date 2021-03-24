@@ -211,6 +211,8 @@ def check_poruct_id(request):
             return redirect('ad-login')
     else:
         return redirect('ad-login')
+
+
 def vendor_orders(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
@@ -226,11 +228,11 @@ def vendor_orders(request):
     else:
         return redirect('ad-login')
 
-def ship_status(request, id):
+def ship_status(request, pk):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
             print(request.user.id)
-            order = Order.objects.get(id=id)
+            order = Order.objects.get(id=pk)
             print(order)
             if order.shipped == False:
                 order.shipped = True         
@@ -253,6 +255,21 @@ def delete_orders(request, pk):
             order = Order.objects.get(id=pk)
             order.delete()
             return redirect('vendor-orders')
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+
+
+def purchased_customers(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            customer = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
+            print(customer)
+            context = {
+                'customer': customer
+            }
+            return render(request, 'vendor/customers.html', context)
         else:
             return redirect('ad-login')
     else:

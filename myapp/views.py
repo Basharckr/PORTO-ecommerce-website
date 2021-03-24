@@ -320,6 +320,7 @@ def order(request):
 def dashbaord(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
+           
                 
             return render(request, 'myapp/dashboard.html')
         else:

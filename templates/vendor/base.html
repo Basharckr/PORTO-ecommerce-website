@@ -21,13 +21,13 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'vendor/css/sb-admin-2.min.css'%}" rel="stylesheet">
     <link href="{% static 'vendor/css/style.css'%}" rel="stylesheet">
-<style>
-    .error{
-        color: red;
-        font-size:medium;
-        width: 100%;
-    }
-</style>
+    <style>
+        .error {
+            color: red;
+            font-size: medium;
+            width: 100%;
+        }
+    </style>
 
 </head>
 
@@ -91,11 +91,27 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="{% url 'vendor-orders' %}">Orders</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Orders:</h6>
+                        <a class="collapse-item" href="{% url 'vendor-orders' %}">All Orders</a>
+                        <!-- <a class="collapse-item" href="utilities-border.html">Borders</a> -->
+                   
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Customers</span>
+                </a>
+                <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">All Customers</h6>
+                        <a class="collapse-item" href="{% url 'purchased-customers' %}">Purchsed customers</a>
+                   
                     </div>
                 </div>
             </li>
@@ -333,7 +349,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.user.username}}</span>
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.user.username}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{% static 'vendor/img/undraw_profile.svg'%}">
                             </a>
@@ -423,6 +440,7 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 
+
     <script src="{% static 'vendor/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -430,7 +448,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'vendor/js/sb-admin-2.min.js'%}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ -->
+
     <script src="{% static 'vendor/js/scripts.js' %}"></script>
+
 
 
 </body>

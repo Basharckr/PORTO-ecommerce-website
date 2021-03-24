@@ -197,6 +197,7 @@ $().ready(function () {
                 required: "Required", extension:"Only accept jpg/jpeg/png formats!!"
             },
         },
+
         // submitHandler: (addproduct, e) => {
 
         //     e.preventDefault()
@@ -228,8 +229,8 @@ $().ready(function () {
 //  ================================Product name checking===================================================
 $(document).ready(function () {
     // catch the form's submit event
-    
-    $('#product_name').on("change",function () {
+
+    $('#product_name').on("change", function () {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
@@ -264,7 +265,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     // catch the form's submit event
     $('#productidError').remove();
-    $('#product_id').on("change",function () {
+    $('#product_id').on("change", function () {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
@@ -376,14 +377,14 @@ $().ready(function () {
 
             },
             image1: {
-                required: "Please upload the product image", extension:"Only accept jpg/jpeg/png formats!!"
-                
+                required: "Please upload the product image", extension: "Only accept jpg/jpeg/png formats!!"
+
             },
             image2: {
-                required: "Please upload the alternate product image", extension:"Only accept jpg/jpeg/png formats!!"
+                required: "Please upload the alternate product image", extension: "Only accept jpg/jpeg/png formats!!"
             },
             image3: {
-                required: "Please upload the alternate product image", extension:"Only accept jpg/jpeg/png formats!!"
+                required: "Please upload the alternate product image", extension: "Only accept jpg/jpeg/png formats!!"
             },
         },
         // submitHandler: (addproduct, e) => {
@@ -417,18 +418,81 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================ship-status===================================================
 
-function shipStatus(id){
+function shipStatus(id) {
     $.ajax({
-        url:'change-ship-status/'+id+'/',
+        url: 'change-ship-status/' + id + '/',
         method: 'get',
-        success: function(response){
-            if(response == 'shipped'){
+        success: function (response) {
+            if (response == 'shipped') {
                 window.location.replace('vendor-orders')
             }
-            if(response == 'ship'){
-   
+            if (response == 'ship') {
+
                 window.location.replace('vendor-orders')
             }
-        } 
+        }
     })
 }
+
+
+// Start upload preview image
+$(".gambar").attr("src", "https://user.gadjian.com/static/images/personnel_boy.png");
+var $uploadCrop,
+    tempFilename,
+    rawImg,
+    imageId;
+function readFile(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.upload-demo').addClass('ready');
+            $('#cropImagePop').modal('show');
+            rawImg = e.target.result;
+
+        }
+        reader.readAsDataURL(input.files[0]);
+
+    }
+    else {
+        swal("Sorry - you're browser doesn't support the FileReader API");
+    }
+}
+
+//  ===========================================================================================
+//  ================================image croping===================================================
+
+// $uploadCrop = $('#upload-demo').croppie({
+//     viewport: {
+//         width: 150,
+//         height: 200,
+//     },
+//     enforceBoundary: false,
+//     enableExif: true
+// });
+// $('#cropImagePop').on('shown.bs.modal', function () {
+//     // alert('Shown pop');
+//     $uploadCrop.croppie('bind', {
+//         url: rawImg
+//     }).then(function () {
+//         console.log('jQuery bind complete');
+//     });
+// });
+
+// $('.item-img').on('change', function () {
+//     console.log($(this).data('id'))
+//     console.log($(this).val())
+//     imageId = $(this).data('id'); tempFilename = $(this).val();
+//     console.log(imageId)
+//     $('#cancelCropBtn').data('id', imageId); readFile(this);
+// });
+// $('#cropImageBtn').on('click', function (ev) {
+//     $uploadCrop.croppie('result', {
+//         type: 'base64',
+//         format: 'jpeg',
+//         size: { width: 150, height: 200 }
+//     }).then(function (resp) {
+//         $('#item-img-output').attr('src', resp);
+//         $('#cropImagePop').modal('hide');
+//     });
+// });
+//  // End upload preview image

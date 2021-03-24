@@ -33,6 +33,8 @@ urlpatterns = [
 
     path('change-ship-status/<int:pk>/', views.ship_status, name='change-ship-status'),
 
-   
+    # ==============================Purchased customers====================================
+
+    path('purchased-customers', views.purchased_customers, name='purchased-customers'),
 
 ] 
