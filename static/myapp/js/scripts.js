@@ -19,6 +19,9 @@ $().ready(function () {
             email: {
                 required: true, email: true
             },
+            number: {
+                required: true, minlength: 10, maxlength: 12
+            },
             password: {
                 required: true, minlength: 5
             },
@@ -35,6 +38,9 @@ $().ready(function () {
             },
             email: {
                 required: "Please enter your email",
+            },
+            number: {
+                required: "Please enter your Mobile number",
             },
             password: {
                 required: "Please enter your password",

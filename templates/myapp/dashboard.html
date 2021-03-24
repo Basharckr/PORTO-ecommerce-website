@@ -37,15 +37,16 @@
 					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header">
-								Contact Information
-								<a href="#" class="card-edit">Edit</a>
+								Account Information
+								<a href="{% url 'edit-user-account' %}" class="card-edit">Edit</a>
 							</div><!-- End .card-header -->
 
 							<div class="card-body">
 								<p>
-									{{request.user.firstname}}<br>
-									{{request.user.username}}<br>
-									{{request.user.email}}<br>
+									<strong>Firstname:</strong>{{request.user.firstname}}<br>
+									<strong>Last name:</strong>{{request.user.lastname}}<br>
+									<strong>Username:</strong>{{request.user.username}}<br>
+									<strong>Email:</strong>{{request.user.email}}<br>
 							
 									<!-- <a href="#">Change Password</a> -->
 								</p>
@@ -53,47 +54,9 @@
 						</div><!-- End .card -->
 					</div><!-- End .col-md-6 -->
 
-					<div class="col-md-6">
-						<div class="card">
-							<div class="card-header">
-								newsletters
-								<a href="#" class="card-edit">Edit</a>
-							</div><!-- End .card-header -->
-
-							<div class="card-body">
-								<p>
-									You are currently not subscribed to any newsletter.
-								</p>
-							</div><!-- End .card-body -->
-						</div><!-- End .card -->
-					</div><!-- End .col-md-6 -->
+				
 				</div><!-- End .row -->
-<!-- 
-				<div class="card">
-					<div class="card-header">
-						Address Book
-						<a href="#" class="card-edit">Edit</a>
-					</div>End .card-header
 
-					<div class="card-body">
-						<div class="row row-sparse">
-							<div class="col-md-6">
-								<h4 class="">Default Billing Address</h4>
-								<address>
-									You have not set a default billing address.<br>
-									<a href="#">Edit Address</a>
-								</address>
-							</div>
-							<div class="col-md-6">
-								<h4 class="">Default Shipping Address</h4>
-								<address>
-									You have not set a default shipping address.<br>
-									<a href="#">Edit Address</a>
-								</address>
-							</div>
-						</div>
-					</div>End .card-body
-				</div>End .card -->
 			</div><!-- End .col-lg-9 -->
 
 			<aside class="sidebar col-lg-3">
@@ -102,11 +65,11 @@
 
 					<ul class="list">
 						<li class="active"><a href="#">Account Dashboard</a></li>
-						<li><a href="#">Account Information</a></li>
+						<li><a href="{% url 'edit-user-account' %}">Edit Account Information</a></li>
 						<li><a href="#">Address Book</a></li>
 						<li><a href="#">My Orders</a></li>
-						<li><a href="#">My Product Reviews</a></li>
-						<li><a href="#">My Wishlist</a></li>
+						<!-- <li><a href="#">My Product Reviews</a></li>
+						<li><a href="#">My Wishlist</a></li> -->
 					</ul>
 				</div><!-- End .widget -->
 			</aside><!-- End .col-lg-3 -->

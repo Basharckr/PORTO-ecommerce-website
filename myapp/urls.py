@@ -56,4 +56,6 @@ urlpatterns = [
     # ==============================User dashboard===========================================
 
     path('dashboard', views.dashbaord, name='dashboard'),
+    path('edit-user-account', views.edit_user_account, name='edit-user-account'),
+
 ]

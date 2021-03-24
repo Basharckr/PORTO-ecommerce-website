@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
 from django.contrib.auth import logout
 from vendor.models import Products
-from .models import Cart, ShipAddress, Order
+from .models import Cart, ShipAddress, Order, Profile
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -47,6 +47,7 @@ def signup(request):
         lastname = request.POST['lastname']
         username = request.POST['username']
         email = request.POST['email']
+        number = request.POST['number']
         password = request.POST['password']
         if User.objects.filter(username=username).exists():
             print('username is alredy is taken')
@@ -57,6 +58,7 @@ def signup(request):
         else:
             user = User.objects.create_user(
                 first_name=firstname, last_name=lastname, username=username, email=email, password=password)
+            Profile.objects.create(user=user, phone=number)
             print('user is created')
             return JsonResponse('true', safe=False)
     return render(request, 'myapp/signup.html')
@@ -327,3 +329,15 @@ def dashbaord(request):
             return redirect('login')
     else:
         return redirect("login")
+
+def edit_user_account(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            profile =  Profile.objects.get(user=request.user.id)
+     
+            return render(request, 'myapp/edit-user-account.html', {'profile': profile})
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
