@@ -19,30 +19,36 @@
 		<div class="row row-sparse">
 			<div class="col-lg-9 order-lg-last dashboard-content">
 				<h2 class="text-primary">Edit Account Information</h2>
-
-				<form action="#">
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert text-center {{ message.tags }}" class=""><strong>{{message}}</strong> </div>
+				{% endfor %}
+				{% endif %}
+				<form action="{% url 'edit-user-account' %}" method="POST" id="editaccount" enctype="multipart/form-data">{% csrf_token %}
 					<div class="row row-sparse">
 						<div class="col-sm-11">
 							<div class="row row-sparse">
 								<div class="col-md-4">
 									<div class="form-group required-field">
 										<label for="acc-name">First Name</label>
-										<input type="text" class="form-control" id="acc-name" name="firstname" value="{{request.user.first_name}}">
+										<input type="text" class="form-control" id="firstname" name="firstname"
+											value="{{request.user.first_name}}">
 									</div><!-- End .form-group -->
 								</div><!-- End .col-md-4 -->
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="acc-mname">Last Name</label>
-										<input type="text" class="form-control" id="acc-mname" name="lastname" value="{{request.user.last_name}}">
+										<input type="text" class="form-control" id="lastname" name="lastname"
+											value="{{request.user.last_name}}">
 									</div><!-- End .form-group -->
 								</div><!-- End .col-md-4 -->
 
 								<div class="col-md-4">
 									<div class="form-group required-field">
 										<label for="acc-lastname">Username</label>
-										<input type="text" class="form-control" id="acc-lastname" name="acc-lastname"
-										value="{{request.user.username}}">
+										<input type="text" class="form-control" id="username" name="username"
+											value="{{request.user.username}}">
 									</div><!-- End .form-group -->
 								</div><!-- End .col-md-4 -->
 							</div><!-- End .row -->
@@ -51,55 +57,32 @@
 
 					<div class="form-group required-field">
 						<label for="acc-email">Email</label>
-						<input type="email" class="form-control" id="acc-email" name="acc-email" value="{{request.user.email}}">
+						<input type="email" class="form-control" id="email" name="email"
+							value="{{request.user.email}}">
 					</div><!-- End .form-group -->
 
 					<div class="form-group required-field">
 						<label for="acc-email">Number</label>
-						<input type="number" class="form-control" id="acc-email" name="acc-email" value="{{profile.phone}}">
+						<input type="number" class="form-control" id="number" name="number"
+							value="{{profile.phone}}">
 					</div><!-- End .form-group -->
 
-					 <!-- File Button -->
-					 <div class="form-group">
+					<!-- File Button -->
+					<div class="form-group">
 						<label class="col-md-4 control-label" for="filebutton">Profile picture</label>
 						<div class="col-md-6">
-			
 							<input type="file" name="image1"
 								onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
 							<img id="blah" alt="your image" width="100" height="100" value="{{profile.imageurl}}" />
-			
+
 						</div>
 					</div>
 					<div class="form-group required-field">
 						<label for="acc-password">Password</label>
-						<input type="password" class="form-control" id="acc-password" name="acc-password" >
+						<input type="password" class="form-control" id="orginalpassword" name="orginalpassword">
 					</div><!-- End .form-group -->
 
 					<div class="mb-2"></div><!-- margin -->
-
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1">
-						<label class="custom-control-label" for="change-pass-checkbox">Change Password</label>
-					</div><!-- End .custom-checkbox -->
-
-					<div id="account-chage-pass">
-						<h3 class="mb-2">Change Password</h3>
-						<div class="row row-sparse">
-							<div class="col-md-6">
-								<div class="form-group required-field">
-									<label for="acc-pass2">Password</label>
-									<input type="password" class="form-control" id="acc-pass2" name="acc-pass2">
-								</div><!-- End .form-group -->
-							</div><!-- End .col-md-6 -->
-
-							<div class="col-md-6">
-								<div class="form-group required-field">
-									<label for="acc-pass3">Confirm Password</label>
-									<input type="password" class="form-control" id="acc-pass3" name="acc-pass3">
-								</div><!-- End .form-group -->
-							</div><!-- End .col-md-6 -->
-						</div><!-- End .row -->
-					</div><!-- End #account-chage-pass -->
 
 					<div class="required text-right">* Required Field</div>
 					<div class="form-footer">

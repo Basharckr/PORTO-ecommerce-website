@@ -42,19 +42,27 @@
 							</div><!-- End .card-header -->
 
 							<div class="card-body">
-								<p>
-									<strong>Firstname:</strong>{{request.user.firstname}}<br>
-									<strong>Last name:</strong>{{request.user.lastname}}<br>
-									<strong>Username:</strong>{{request.user.username}}<br>
-									<strong>Email:</strong>{{request.user.email}}<br>
+								<div class="col-xs-8 " style="float: left;">
+									<p>
+										<strong>Firstname:</strong>{{request.user.firstname}}<br><br>
+										<strong>Last name:</strong>{{request.user.lastname}}<br><br>
+										<strong>Username:</strong>{{request.user.username}}<br><br>
+										<strong>Email:</strong>{{request.user.email}}<br><br>
+										<strong>Phone number:</strong>{{profile.phone}}<br><br>
+
+										<a href="{% url 'change-user-password' %}" class="mt-4">Change Password</a>
+									</p>
+								
+								</div>
+								<div class="col-xs-4" style="float: left; margin-left: 30px;">
+									<img style="height: 80px;width: 80px;border-radius: 50%;" src="{{profile.imageurl}}" />
+								</div>
 							
-									<!-- <a href="#">Change Password</a> -->
-								</p>
 							</div><!-- End .card-body -->
 						</div><!-- End .card -->
 					</div><!-- End .col-md-6 -->
 
-				
+
 				</div><!-- End .row -->
 
 			</div><!-- End .col-lg-9 -->

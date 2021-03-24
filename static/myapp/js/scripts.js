@@ -320,14 +320,14 @@ $(document).ready(function () {
 
 //  ===========================================================================================
 //  ================================Shipping here===================================================
-function shipHere(id){
+function shipHere(id) {
     $.ajax({
-        url:"/set-address/"+id+"/",
-        method:'post',
-        success: function(response){
-            if(response == 'true'){
+        url: "/set-address/" + id + "/",
+        method: 'post',
+        success: function (response) {
+            if (response == 'true') {
                 $("div").removeClass("active");
-                var element =   document.getElementById("set-add-"+id);
+                var element = document.getElementById("set-add-" + id);
                 element.classList.add("active");
             }
         }
@@ -335,3 +335,107 @@ function shipHere(id){
     })
 }
 
+
+//  ===========================================================================================
+//  ================================Edi user account===================================================
+
+$().ready(function () {
+
+    console.log('d')
+    $("#editaccount").validate({
+        rules: {
+            firstname: {
+                required: true, minlength: 3
+            },
+            lastname: {
+                required: true, minlength: 1
+            },
+            username: {
+                required: true, minlength: 5
+            },
+            email: {
+                required: true, email: true
+            },
+            number: {
+                required: true, minlength: 10, maxlength: 12
+            },
+            image1: {
+                extension: "jpg|jpeg|png"
+            },
+            orginalpassword: {
+                required: true
+            },
+        },
+        messages: {
+            firstname: "Please enter your first name",
+            lastname: "Please enter your last name",
+            username: {
+                required: "Please enter your username",
+                minlength: "Your username must consist of at least 5 characters"
+            },
+            email: {
+                required: "Please enter your email",
+            },
+            number: {
+                required: "Please enter your Mobile number",
+                minlength: "At least 10 digit required",
+                maxlength: "At most 12 digit",
+
+            },
+            image1: {
+                extension: "Only accept jpg/jpeg/png formats!!"
+            },
+        },
+    });
+});
+
+//  ===========================================================================================
+//  ================================Change user password===================================================
+
+$().ready(function () {
+
+    $("#changuserpassword").validate({
+        rules: {
+            orginalpassword: {
+                required: true
+            },
+            password: {
+                required: true, minlength: 5
+            },
+            cpassword: {
+                required: true, minlength: 5, equalTo: '#password',
+            },
+        },
+        messages: {
+            password: {
+                required: "Please enter your password",
+                minlength: "Your password must consist of at least 5 characters"
+            },
+            cpassword: {
+                required: "Please enter your password",
+                minlength: "Your password must consist of at least 5 characters",
+                equalTo: "Please enter same password as above"
+            },
+        },
+        submitHandler: (changuserpassword, e) => {
+
+            e.preventDefault()
+            $.ajax({
+                url: "change-user-password",
+                data: $("#changuserpassword").serialize(),
+                method: "post",
+
+                success: function (response) {
+                    if (response == 'true') {
+                        $("#block").html('<div class="alert alert-success text-center" id="block"><strong>Password changed successfully.</strong> </div>')
+                    }
+                    if (response == 'false') {
+                        $("#block").html('<div class="alert alert-danger text-center" id="block"><strong>Old password is incorrect..!!</strong> </div>')
+                    }
+
+                },
+
+            })
+        }
+    });
+});

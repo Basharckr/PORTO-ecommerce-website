@@ -5,6 +5,9 @@ from django.contrib.auth import logout
 from vendor.models import Products
 from .models import Cart, ShipAddress, Order, Profile
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password, make_password
+
 
 # Create your views here.
 
@@ -25,21 +28,23 @@ def login(request):
             password = request.POST['password']
             if User.objects.filter(username=username).exists():
                 user = User.objects.get(username=username)
-                if user.is_active:        
-                    user = auth.authenticate(username=username, password=password)
-                    if user is not None:     
+                if user.is_active:
+                    user = auth.authenticate(
+                        username=username, password=password)
+                    if user is not None:
                         print('goto user home')
                         auth.login(request, user)
-                        return JsonResponse('true', safe=False)             
+                        return JsonResponse('true', safe=False)
                     else:
                         print("incorrect password")
                         return JsonResponse('false', safe=False)
                 else:
                     return JsonResponse('blocked', safe=False)
             else:
-                return JsonResponse('nouser', safe=False) 
+                return JsonResponse('nouser', safe=False)
         return render(request, 'myapp/login.html')
     return render(request, 'myapp/login.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -90,13 +95,16 @@ def product(request, pk):
     else:
         return redirect("login")
 
+
 def user_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
             total = 0.00
             for item in cart:
-                total = total + int(item.user_product.product_price) * int(item.product_count)
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
             tot = []
             tot.append(total)
             request.session['total'] = tot
@@ -109,6 +117,7 @@ def user_cart(request):
     else:
         return redirect("login")
 
+
 @csrf_exempt
 def add_to_cart(request, id):
     if request.user.is_active == True:
@@ -117,12 +126,13 @@ def add_to_cart(request, id):
                 count = request.POST['count']
                 obj_product = Products.objects.get(id=id)
                 if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
-                    add = Cart.objects.get(user_product=obj_product)           
+                    add = Cart.objects.get(user_product=obj_product)
                     add.product_count = add.product_count + int(count)
                     add.save()
                     return JsonResponse('true', safe=False)
                 else:
-                    cart = Cart.objects.create(user_product=obj_product, user=request.user, product_count=count)
+                    cart = Cart.objects.create(
+                        user_product=obj_product, user=request.user, product_count=count)
                     return JsonResponse('true', safe=False)
             else:
                 return JsonResponse('false', safe=False)
@@ -131,16 +141,18 @@ def add_to_cart(request, id):
     else:
         return redirect("login")
 
+
 def remove_from_cart(request, id):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             product = Cart.objects.get(id=id)
             product.delete()
-            return JsonResponse('true', safe=False) 
+            return JsonResponse('true', safe=False)
         else:
             return redirect('login')
     else:
         return redirect("login")
+
 
 def clear_all_cart(request):
     if request.user.is_active == True:
@@ -154,6 +166,7 @@ def clear_all_cart(request):
             return redirect('login')
     else:
         return redirect("login")
+
 
 @csrf_exempt
 def edit_quantity(request, id):
@@ -170,15 +183,16 @@ def edit_quantity(request, id):
             else:
                 edit.product_count = quantity
                 edit.save()
-                return JsonResponse('true', safe=False) 
+                return JsonResponse('true', safe=False)
         else:
             return redirect('login')
     else:
         return redirect("login")
 
+
 def checkout(request):
     if request.user.is_active == True:
-        if request.user.is_authenticated:                
+        if request.user.is_authenticated:
             address = ShipAddress.objects.filter(user=request.user)
             print(address)
             context = {
@@ -189,6 +203,7 @@ def checkout(request):
             return redirect('login')
     else:
         return redirect("login")
+
 
 def add_address(request):
     if request.user.is_active == True:
@@ -205,19 +220,20 @@ def add_address(request):
                 number = request.POST['number']
                 ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
                                            organization=organization, streetaddress=street, city=city,
-                                           state=state, pincode=pincode, country=country, number=number)          
+                                           state=state, pincode=pincode, country=country, number=number)
                 return JsonResponse('true', safe=False)
-            else:  
+            else:
                 return JsonResponse('false', safe=False)
         else:
             return redirect('login')
     else:
         return redirect("login")
 
+
 def edit_address(request, id):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            if request.method == 'POST':                
+            if request.method == 'POST':
                 address = ShipAddress.objects.filter(user=request.user, id=id)
                 address.firstname = request.POST['firstname1']
                 address.lastname = request.POST['lastname1']
@@ -237,17 +253,17 @@ def edit_address(request, id):
     else:
         return redirect("login")
 
+
 def delete_address(request, id):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             address = ShipAddress.objects.get(id=id)
             address.delete()
-            return redirect('checkout')      
+            return redirect('checkout')
         else:
             return redirect('login')
     else:
         return redirect("login")
-
 
 
 @csrf_exempt
@@ -262,14 +278,15 @@ def set_address(request, id):
     else:
         return redirect("login")
 
+
 def placeorder(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            total = request.session['total']                  
+            total = request.session['total']
             id = request.session['address-id']
             address = ShipAddress.objects.get(id=id)
-                
-            return render(request, 'myapp/placeorder.html', {'address':address, 'grant_total':total})
+
+            return render(request, 'myapp/placeorder.html', {'address': address, 'grant_total': total})
         else:
             return redirect('login')
     else:
@@ -278,7 +295,7 @@ def placeorder(request):
 
 def success(request):
     if request.user.is_active == True:
-        if request.user.is_authenticated:                
+        if request.user.is_authenticated:
             return render(request, 'myapp/success.html')
         else:
             return redirect('login')
@@ -300,19 +317,19 @@ def order(request):
             if request.method == 'POST':
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
-                                        quantity=item.product_count, amount=item.user_product.product_price, 
-                                        ship_id=ship_id, payment_status=False)
-                    item.checkedout=True
-                    item.save()   
+                                         quantity=item.product_count, amount=item.user_product.product_price,
+                                         ship_id=ship_id, payment_status=False)
+                    item.checkedout = True
+                    item.save()
                 return JsonResponse('cod', safe=False)
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
-                                        quantity=item.product_count, amount=item.user_product.product_price, 
-                                        ship_id=ship_id, payment_status=True)
-                    item.checkedout=True
-                    item.save()                      
-                return JsonResponse('true', safe=False)                 
+                                         quantity=item.product_count, amount=item.user_product.product_price,
+                                         ship_id=ship_id, payment_status=True)
+                    item.checkedout = True
+                    item.save()
+                return JsonResponse('true', safe=False)
         else:
             return redirect('login')
     else:
@@ -322,22 +339,70 @@ def order(request):
 def dashbaord(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-           
-                
-            return render(request, 'myapp/dashboard.html')
+            profile = Profile.objects.get(user=request.user.id)
+            return render(request, 'myapp/dashboard.html', {'profile': profile})
         else:
             return redirect('login')
     else:
         return redirect("login")
 
+
 def edit_user_account(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            profile =  Profile.objects.get(user=request.user.id)
-     
+            profile = Profile.objects.get(user=request.user.id)
+            edit = User.objects.get(id=request.user.id)
+            if request.method == 'POST':
+                edit.firstname = request.POST['firstname']
+                edit.lastname = request.POST['lastname']
+                edit.username = request.POST['username']
+                edit.email = request.POST['email']
+                profile.phone = request.POST['number']
+                profile.image1 = request.FILES.get('image1')
+                print(profile.image1)
+                orginalpassword = request.POST['orginalpassword']
+                checkpassword = check_password(orginalpassword, request.user.password)           
+                if checkpassword:                   
+                    if User.objects.filter(username=edit.username).exclude(id=request.user.id).exists():
+                        messages.error(request, 'This username already taken!!')
+                        return redirect('edit-user-account')
+                    elif User.objects.filter(email=edit.email).exclude(id=request.user.id).exists():
+                        messages.error(request, 'The email is already taken!!')
+                        return redirect('edit-user-account')
+                    else:
+                        edit.save()
+                        profile.save()
+                        messages.success(request, 'Profile information updated..')
+                        return redirect('edit-user-account')
+                else:
+                    messages.error(request, 'Old password is incorrect')
+                    return redirect('edit-user-account')
             return render(request, 'myapp/edit-user-account.html', {'profile': profile})
         else:
             return redirect('login')
     else:
         return redirect("login")
 
+
+
+def change_user_password(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            edit = User.objects.get(id=request.user.id)
+            if request.method == 'POST':
+                password = request.POST['password']
+                orginalpassword = request.POST['orginalpassword']
+                checkpassword = check_password(orginalpassword, request.user.password) 
+                print(checkpassword)            
+                if checkpassword:
+                    edit.password = make_password(password)
+                    print(edit.password)
+                    edit.save()
+                    return JsonResponse('true', safe=False)
+                else:
+                    return JsonResponse('false', safe=False)
+            return render(request, 'myapp/change-user-password.html')
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")

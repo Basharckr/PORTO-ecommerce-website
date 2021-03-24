@@ -7,17 +7,17 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    image = models.FileField(null=True, blank=True, upload_to='myapp/profile_pic/')
+    image1 = models.FileField(null=True, blank=True, upload_to='myapp/profile_pic/')
 
     @property
     def imageurl(self):
         try:
-            url = self.image.url
+            url = self.image1.url
         except:
             url = ''
         return url   
 
-            
+
 class Cart(models.Model):
     user_product = models.ForeignKey(Products, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -57,5 +57,6 @@ urlpatterns = [
 
     path('dashboard', views.dashbaord, name='dashboard'),
     path('edit-user-account', views.edit_user_account, name='edit-user-account'),
+    path('change-user-password', views.change_user_password, name='change-user-password'),
 
 ]
