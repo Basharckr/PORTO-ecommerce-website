@@ -439,3 +439,22 @@ $().ready(function () {
         }
     });
 });
+
+//  ===========================================================================================
+//  ================================Cancel order===================================================
+function cancelOrder(id) {
+    data = {
+
+    }
+    $.ajax({
+        url: '/cancel-order/' + id + '/',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response == 'true') {
+                window.location.replace('/my-orders')
+            }
+
+        }
+    })
+}

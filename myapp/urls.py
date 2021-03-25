@@ -51,7 +51,11 @@ urlpatterns = [
 
     # ==============================Order===========================================
 
-    path('order', views.order, name='order'),
+    path('order', views.place_order, name='order'),
+    path('my-orders', views.my_orders, name='my-orders'),
+    path('cancel-order/<int:id>/', views.cancel_order, name='cancel-order'),
+
+
 
     # ==============================User dashboard===========================================
 

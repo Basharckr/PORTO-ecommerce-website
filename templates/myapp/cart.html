@@ -209,7 +209,7 @@
 										<!-- End-modal -->
 
 										<span title="Remove product" onclick="removeProduct('{{item.id}}')"
-											class="btn-remove icon-cancel"></span>
+										onclick="return confirm('Are you sure you want to delete this product?');" class="btn-remove icon-cancel"></span>
 
 									</div><!-- End .float-right -->
 								</td>

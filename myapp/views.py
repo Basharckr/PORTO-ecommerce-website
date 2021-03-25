@@ -304,7 +304,7 @@ def success(request):
 
 
 @csrf_exempt
-def order(request):
+def place_order(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             id = request.session['address-id']
@@ -318,18 +318,19 @@ def order(request):
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
                                          quantity=item.product_count, amount=item.user_product.product_price,
-                                         ship_id=ship_id, payment_status=False)
+                                         ship_id=ship_id, payment_status=True)
                     item.checkedout = True
                     item.save()
-                return JsonResponse('cod', safe=False)
+                return JsonResponse('true', safe=False)             
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
                                          quantity=item.product_count, amount=item.user_product.product_price,
-                                         ship_id=ship_id, payment_status=True)
+                                         ship_id=ship_id, payment_status=False)
                     item.checkedout = True
                     item.save()
-                return JsonResponse('true', safe=False)
+                return JsonResponse('cod', safe=False)
+              
         else:
             return redirect('login')
     else:
@@ -402,6 +403,28 @@ def change_user_password(request):
                 else:
                     return JsonResponse('false', safe=False)
             return render(request, 'myapp/change-user-password.html')
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def my_orders(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            all_orders = Order.objects.filter(user=request.user.id)
+            return render(request, 'myapp/my-orders.html', {'orders': all_orders})
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+
+def cancel_order(request, id):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            del_order = Order.objects.get(id=id)
+            del_order.delete()
+            return JsonResponse('true', safe=False)
         else:
             return redirect('login')
     else:
