@@ -14,7 +14,22 @@ from django.contrib import messages
 def veIndex(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
-            return render(request, 'vendor/ve-index.html')
+            data = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
+            count = Order.objects.filter(user_cart__user_product__vendor=request.user.id).distinct('user').count()
+            products = Products.objects.filter(vendor=request.user).count()
+            total = 0
+            orders = 0
+            price = []
+            date = []
+            for item in data:
+                total = total + item.amount * item.quantity
+                orders = orders + 1
+                price.append(item.amount * item.quantity)
+                date.append(item.ordered_date.month)
+            context = {
+                'date': date, 'price': price, 'products': products, 'total': total, 'count': count, 'orders': orders
+            }
+            return render(request, 'vendor/ve-index.html', context)
     else: 
         print('helloo')    
         return redirect('ve-login')

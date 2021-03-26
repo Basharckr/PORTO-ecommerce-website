@@ -11,6 +11,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>SI</th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Category</th>
@@ -23,6 +24,7 @@
                 <tbody>
                     {% for product in products %}
                     <tr>
+                        <td>{{forloop.counter}}</td>
                         <td>{{product.product_id}}</td>
                         <td>{{product.product_name}}</td>
                         <td>{{product.category.category_name}}</td>
