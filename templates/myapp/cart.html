@@ -39,12 +39,12 @@
 							<tr class="product-row">
 								<td class="product-col">
 									<figure class="product-image-container">
-										<a href="product.html" class="product-image">
-											<img src="{{item.user_product.image1url}}" alt="product">
+										<a href="{% url 'product' pk=item.user_product.id %}" class="product-image">
+											<img src="{{item.user_product.image1url}}" style="height: 100px;width:100px" alt="product">
 										</a>
 									</figure>
 									<h2 class="product-title">
-										<a href="product.html">{{item.user_product.product_name}}</a>
+										<a href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
 									</h2>
 								</td>
 								<td>{{item.user_product.product_price}}</td>
@@ -85,7 +85,7 @@
 																		<div
 																			class="product-single-carousel owl-carousel owl-theme">
 																			<div class="product-item">
-																				<img class="product-single-image"
+																				<img class="product-single-image" 
 																					src="{{item.user_product.image1url}}"
 																					data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-1-big.jpg" />
 																			</div>

@@ -496,3 +496,30 @@ function readFile(input) {
 //     });
 // });
 //  // End upload preview image
+
+//  ===========================================================================================
+//  ================================Report customers===================================================
+
+function reportCustomers(id) {
+    console.log(id)
+    var txt = $("#txtArea-"+id).val();
+    var a = $('[name=csrfmiddlewaretoken]').first().val()
+    console.log(a)
+    var data = {
+        'csrfmiddlewaretoken': a,
+        'message': txt
+    }
+    console.log("txtArea-"+id)
+   console.log(txt)
+    $.ajax({
+        url: 'report-customer/'+id+'/',
+        method: 'post',
+        data: data,
+        success: function (response) {
+            if (response == 'true') {
+            
+                alert("Reportted successfully")
+            }
+        }
+    })
+}

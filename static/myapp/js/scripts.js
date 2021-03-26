@@ -20,7 +20,7 @@ $().ready(function () {
                 required: true, email: true
             },
             number: {
-                required: true, minlength: 10, maxlength: 12
+                required: true, minlength: 10, maxlength: 10
             },
             password: {
                 required: true, minlength: 5
@@ -69,6 +69,9 @@ $().ready(function () {
                     }
                     if (response == 'false2') {
                         $("#error1").html(" Email already taken!!!!")
+                    }
+                    if (response == 'false3') {
+                        $("#error1").html(" Mobile number already taken!!!!")
                     }
                 },
 

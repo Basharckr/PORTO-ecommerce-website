@@ -36,5 +36,9 @@ urlpatterns = [
     # ==============================Purchased customers====================================
 
     path('purchased-customers', views.purchased_customers, name='purchased-customers'),
+    path('manage-customers', views.manage_customers, name='manage-customers'),
+    path('report-customer/<int:id>/', views.report_customer, name='report-customer'),
+
+
 
 ] 

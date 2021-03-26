@@ -4,14 +4,19 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 from .models import Category
 from vendor.models import Products
-from myapp.models import Cart, Order, ShipAddress
+from myapp.models import Cart, Order, ShipAddress, Profile
 
 # Create your views here.
 
 
 def adIndex(request):
     if request.user.is_authenticated and request.user.is_superuser == True:
-        return render(request, 'owner/ad-index.html')
+        report_user = Profile.objects.filter(report=True)
+        print(report_user)
+        context = {
+            'report': report_user
+        }
+        return render(request, 'owner/ad-index.html', context)
     else:
         return redirect('ad-login')
 

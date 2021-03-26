@@ -57,9 +57,12 @@ def signup(request):
         if User.objects.filter(username=username).exists():
             print('username is alredy is taken')
             return JsonResponse('false1', safe=False)
-        elif User.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             print('email is already taken')
             return JsonResponse('false2', safe=False)
+        if Profile.objects.filter(phone=number).exists():
+            print('number is already taken')
+            return JsonResponse('false3', safe=False)
         else:
             user = User.objects.create_user(
                 first_name=firstname, last_name=lastname, username=username, email=email, password=password)

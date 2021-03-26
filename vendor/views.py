@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from .models import Products
 # from django.core.files import File
 from owner.models import Category
-from myapp.models import Cart, ShipAddress, Order
+from myapp.models import Cart, ShipAddress, Order, Profile
 from django.contrib.auth import logout
 from django.contrib import messages
 
@@ -199,6 +199,8 @@ def check_poructname(request):
             return redirect('ad-login')
     else:
         return redirect('ad-login')
+
+
 def check_poruct_id(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
@@ -228,6 +230,7 @@ def vendor_orders(request):
     else:
         return redirect('ad-login')
 
+
 def ship_status(request, pk):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
@@ -247,6 +250,7 @@ def ship_status(request, pk):
             return redirect('ad-login')
     else:
         return redirect('ad-login')
+
 
 def delete_orders(request, pk):
     if request.user.is_active == True:
@@ -270,6 +274,39 @@ def purchased_customers(request):
                 'customer': customer
             }
             return render(request, 'vendor/customers.html', context)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+
+
+def manage_customers(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            customer = Order.objects.filter(user_cart__user_product__vendor=request.user.id).distinct('user')
+            context = {
+                'customer': customer
+            }
+            return render(request, 'vendor/manage-customers.html', context)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+
+
+
+def report_customer(request, id):
+    print(request.POST)
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            user = Profile.objects.get(user=id)
+            if request.method == 'POST':
+                print(request.POST)
+                user.message = request.POST['message']
+                print(user.message)
+                user.report = True
+                user.save()
+                return JsonResponse('true', safe=False)
         else:
             return redirect('ad-login')
     else:
