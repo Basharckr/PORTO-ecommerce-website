@@ -12,9 +12,25 @@ from myapp.models import Cart, Order, ShipAddress, Profile
 def adIndex(request):
     if request.user.is_authenticated and request.user.is_superuser == True:
         report_user = Profile.objects.filter(report=True)
-        print(report_user)
+        order = Order.objects.all()
+        products = Products.objects.all().count()
+        total_user = User.objects.filter(is_active=True, is_staff=False).count()
+        total_vendors = User.objects.filter(is_active=True, is_staff=True, is_superuser=False).count()
+        print('vendors',total_vendors)
+        print(total_user)
+        print(products)
+        price = []
+        date = []
+        total = 0.00
+        for item in order:
+            total = total + item.amount * item.quantity
+            price.append(item.amount * item.quantity)
+            date.append(item.ordered_date.day)
+
+        print(total)
         context = {
-            'report': report_user
+            'report': report_user, 'total': total, 'products': products, 'total_user': total_user,
+            'total_vendors': total_vendors, 'date': date, 'price': price,
         }
         return render(request, 'owner/ad-index.html', context)
     else:

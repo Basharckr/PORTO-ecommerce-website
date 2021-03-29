@@ -190,10 +190,11 @@
         type: 'line',
         data: {
             datasets: [{
+                label: 'Buisness chart',
                 data: JSON.parse('{{price|safe}}'),
                 backgroundColor: '#F5CEDE'
             }],
-          labels: '{{date|safe}}'
+          labels: JSON.parse('{{date|safe}}')
         },
 
     };
