@@ -66,13 +66,13 @@
 					<nav class="main-nav font2">
 						<ul class="menu">
 							<li>
-								<a href="index.html">Home</a>
+								<a href="{% url 'landing' %}">Home</a>
 							</li>
 							<li>
 								<a href="category.html">Categories</a>
 								<div class="megamenu megamenu-fixed-width megamenu-3cols">
 									<div class="row">
-										<div class="col-lg-4">
+										<div class="col-lg-6">
 											<a href="#" class="nolink">VARIATION 1</a>
 											<ul class="submenu">
 												<li><a href="category.html">Fullwidth Banner</a></li>
@@ -89,98 +89,39 @@
 														Filter2</a></li>
 											</ul>
 										</div>
-										<div class="col-lg-4">
-											<a href="#" class="nolink">VARIATION 2</a>
-											<ul class="submenu">
-												<li><a href="category-list.html">List Types</a></li>
-												<li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a>
-												</li>
-												<li><a href="category-3col.html">3 Columns Products</a></li>
-												<li><a href="category-4col.html">4 Columns Products</a></li>
-												<li><a href="category.html">5 Columns Products</a></li>
-												<li><a href="category-6col.html">6 Columns Products</a></li>
-												<li><a href="category-7col.html">7 Columns Products</a></li>
-												<li><a href="category-8col.html">8 Columns Products</a></li>
-											</ul>
-										</div>
-										<div class="col-lg-4 p-0">
+				
+										<div class="col-lg-6 p-0">
 											<img src="{% static 'myapp/images/menu-banner.jpg' %}" alt="Menu banner">
 										</div>
 									</div>
 								</div><!-- End .megamenu -->
 							</li>
-							<li>
-								<a href="product.html">Products</a>
-								<div class="megamenu megamenu-fixed-width">
-									<div class="row">
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Variations 1</a>
-											<ul class="submenu">
-												<li><a href="product.html">Horizontal Thumbs</a></li>
-												<li><a href="product-full-width.html">Vertical Thumbnails</a></li>
-												<li><a href="product.html">Inner Zoom</a></li>
-												<li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
-												<li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Variations 2</a>
-											<ul class="submenu">
-												<li><a href="product-sticky-tab.html">Sticky Tabs</a></li>
-												<li><a href="product-simple.html">Simple Product</a></li>
-												<li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-										<div class="col-lg-3">
-											<a href="#" class="nolink">Product Layout Types</a>
-											<ul class="submenu">
-												<li><a href="product.html">Default Layout</a></li>
-												<li><a href="product-extended-layout.html">Extended Layout</a></li>
-												<li><a href="product-full-width.html">Full Width Layout</a></li>
-												<li><a href="product-grid-layout.html">Grid Images Layout</a></li>
-												<li><a href="product-sticky-both.html">Sticky Both Side Info</a>
-												</li>
-												<li><a href="product-sticky-info.html">Sticky Right Side Info</a>
-												</li>
-											</ul>
-										</div><!-- End .col-lg-4 -->
-
-										<div class="col-lg-3 p-0">
-											<img src="{% static 'myapp/images/menu-bg.png' %}" alt="Menu banner"
-												class="product-promo">
-										</div><!-- End .col-lg-4 -->
-									</div><!-- End .row -->
-								</div><!-- End .megamenu -->
-							</li>.
+						
 							<li>
 								<a href="#">Pages</a>
 								<ul>
-									<li><a href="#">Shopping Cart</a></li>
-									<li><a href="#">Checkout</a>
-										<ul>
-											<li><a href="checkout-shipping.html">Checkout Shipping</a></li>
-											<li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
-											<li><a href="checkout-review.html">Checkout Review</a></li>
-										</ul>
+									<li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+									<li><a href="{% url 'checkout' %}">Checkout</a>
+								
 									</li>
-									<li><a href="#">Dashboard</a>
-										<ul>
-											<li><a href="dashboard.html">Dashboard</a></li>
-											<li><a href="my-account.html">My Account</a></li>
-										</ul>
+									<li><a href="{% url 'dashboard' %}">Dashboard</a>
+									
 									</li>
-									<li><a href="about.html">About Us</a></li>
+									<!-- <li><a href="about.html">About Us</a></li>
 									<li><a href="#">Blog</a>
 										<ul>
 											<li><a href="blog.html">Blog</a></li>
 											<li><a href="single.html">Blog Post</a></li>
 										</ul>
 									</li>
-									<li><a href="contact.html">Contact Us</a></li>
-									<li><a href="#" class="login-link">Login</a></li>
-									<li><a href="forgot-password.html">Forgot Password</a></li>
+									<li><a href="contact.html">Contact Us</a></li> -->
+									<li><a href="{% url 'login' %}" class="login-link">Login</a></li>
+									<li><a href="{% url 'change-user-password' %}">Change Password</a></li>
 								</ul>
 							</li>
+							<li>
+								<a href="{% url 'my-orders' %}">My Orders</a>
+								</li>
 							<li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
 						</ul>
 					</nav>
@@ -219,69 +160,52 @@
 						<a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false" data-display="static">
 							<i class="icon-shopping-cart"></i>
-							<span class="cart-count badge-circle">2</span>
+							<span class="cart-count badge-circle">{{count}}</span>
 						</a>
 
 						<div class="dropdown-menu">
 							<div class="dropdownmenu-wrapper">
+						
 								<div class="dropdown-cart-header">
-									<span>2 Items</span>
-
+									<span>{{count}} Items</span>
+							
 									<a href="{% url 'cart' %}" class="float-right">View Cart</a>
 								</div><!-- End .dropdown-cart-header -->
-
+								{% for item in cart %}
 								<div class="dropdown-cart-products">
 									<div class="product">
 										<div class="product-details">
 											<h4 class="product-title">
-												<a href="product.html">Woman Ring</a>
+												<a href="#">{{item.user_product.product_name}}</a>
 											</h4>
 
 											<span class="cart-product-info">
-												<span class="cart-product-qty">1</span>
-												x $99.00
+												<span class="cart-product-qty">{{item.product_count}}</span>
+												x ₹{{item.user_product.product_price}}.00
 											</span>
 										</div><!-- End .product-details -->
 
 										<figure class="product-image-container">
-											<a href="product.html" class="product-image">
-												<img src="{% static 'myapp/images/products/cart/product-1.jpg' %}"
+											<a href="#" class="product-image">
+												<img src="{{item.user_product.image1url}}"
 													alt="product" width="80" height="80">
 											</a>
-											<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
+											<span title="Remove product" onclick="removeProduct('{{item.id}}')"
+										onclick="return confirm('Are you sure you want to delete this product?');" class="btn-remove icon-cancel"></span>
+
 										</figure>
 									</div><!-- End .product -->
 
-									<div class="product">
-										<div class="product-details">
-											<h4 class="product-title">
-												<a href="product.html">Woman Necklace</a>
-											</h4>
-
-											<span class="cart-product-info">
-												<span class="cart-product-qty">1</span>
-												x $35.00
-											</span>
-										</div><!-- End .product-details -->
-
-										<figure class="product-image-container">
-											<a href="product.html" class="product-image">
-												<img src="{% static 'myapp/images/products/cart/product-2.jpg' %}"
-													alt="product" width="80" height="80">
-											</a>
-											<a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-										</figure>
-									</div><!-- End .product -->
 								</div><!-- End .cart-product -->
-
+								{% endfor %}
 								<div class="dropdown-cart-total">
 									<span>Total</span>
 
-									<span class="cart-total-price float-right">$134.00</span>
+									<span class="cart-total-price float-right">₹{{grant|first}}</span>
 								</div><!-- End .dropdown-cart-total -->
 
 								<div class="dropdown-cart-action">
-									<a href="checkout-shipping.html" class="btn btn-primary btn-block">Checkout</a>
+									<a href="{% url 'checkout' %}" class="btn btn-primary btn-block">Checkout</a>
 								</div><!-- End .dropdown-cart-total -->
 							</div><!-- End .dropdownmenu-wrapper -->
 						</div><!-- End .dropdown-menu -->
@@ -332,19 +256,19 @@
 								<div class="col-sm-6">
 									<div class="contact-widget">
 										<h4 class="widget-title">ADDRESS</h4>
-										<a href="#">1234 Street Name, City, England</a>
+										<a href="#">Ul cyberpark, Calicut, Keral, India</a>
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="contact-widget email">
 										<h4 class="widget-title">EMAIL</h4>
-										<a href="mailto:mail@example.com">mail@example.com</a>
+										<a href="mailto:basharpmr@gmail.com">basharpmr@gmail.com</a>
 									</div>
-								</div>
+								</div>	
 								<div class="col-sm-6">
 									<div class="contact-widget">
 										<h4 class="widget-title">PHONE</h4>
-										<a href="#">Toll Free (123) 456-7890</a>
+										<a href="#">(+91) 9846337553</a>
 									</div>
 								</div>
 								<div class="col-sm-6">
@@ -361,13 +285,14 @@
 							<h4 class="widget-title">My Account</h4>
 							<ul class="links link-parts row">
 								<div class="link-part col-xl-4">
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="contact.html">Contact Us</a></li>
-									<li><a href="my-account.html">My Account</a></li>
+									<li><a href="#">About Us</a></li>
+									<li><a href="#">Contact Us</a></li>
+									<li><a href="{% url 'dashboard' %}">My Account</a></li>
 								</div>
 								<div class="link-part col-xl-8">
-									<li><a href="#">Orders History</a></li>
-									<li><a href="#">Advanced Search</a></li>
+									<li><a href="{% url 'cart' %}">My Cart</a></li>
+									<li><a href="{% url 'my-orders' %}">Orders History</a></li>
+									
 								</div>
 							</ul>
 						</div><!-- End .widget -->
@@ -377,12 +302,14 @@
 							<h4 class="widget-title">Main Features</h4>
 							<ul class="links link-parts row">
 								<div class="link-part col-xl-6">
-									<li><a href="#">Super Fast WordPress Theme</a></li>
-									<li><a href="#">1st Fully working Ajax Theme</a></li>
-									<li><a href="#">33 Unique Shop Layouts</a></li>
+									<li><a href="{% url 'dashboard' %}">My Account</a></li>
+									<li><a href="{% url 'cart' %}">My Cart</a></li>
+									<li><a href="{% url 'my-orders' %}">Orders History</a></li>
+									
 								</div>
 								<div class="link-part col-xl-6">
-									<li><a href="#">Powerful Admin Panel</a></li>
+									<li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
+
 									<li><a href="#">Mobile &amp; Retina Optimized</a></li>
 								</div>
 							</ul>

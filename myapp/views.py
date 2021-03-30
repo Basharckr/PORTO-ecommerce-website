@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, response
@@ -7,6 +8,7 @@ from .models import Cart, ShipAddress, Order, Profile
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
+from twilio.rest import Client
 
 
 # Create your views here.
@@ -45,6 +47,57 @@ def login(request):
         return render(request, 'myapp/login.html')
     return render(request, 'myapp/login.html')
 
+phone_number = 0
+otp = 0
+
+def otp_login(request):
+    if request.user.is_authenticated:
+        return redirect("landing")
+    else:
+        if request.method == 'POST':
+            global phone_number
+            phone_number = request.POST['number']
+            if Profile.objects.filter(phone=phone_number).exists():
+                user = Profile.objects.get(phone=phone_number)
+                if user.user.is_active:
+                   random_num = random.randint(1000, 9999)
+                   global otp
+                   otp = random_num
+                   account_sid = 'AC52079fbfb832168a7dbb21afde88c1bf'
+                   auth_token = '8f5895e649cb4274d6878de3661fb989'
+                   client = Client(account_sid, auth_token)
+                   message = client.messages.create(
+                    body=f"Your OTP is {otp}",
+                    from_='+12064881795',
+                    to=f"+919846337553"
+                    ) 
+                   return JsonResponse('true', safe=False)
+                else:
+                    print("user is blocked")
+                    return JsonResponse('blocked', safe=False)
+            else:
+                print("This mobile number is not exist")
+                return JsonResponse('nouser', safe=False)
+    return render(request, 'myapp/otp-login.html')
+
+
+def enter_otp(request):
+    if request.method == 'POST':
+        otp1 = request.POST['otp']
+        global phone_number
+        print(phone_number)
+        user = Profile.objects.get(phone=phone_number)
+        print(user)
+        thisuser = user.user
+        global otp
+        if int(otp1) == otp:
+            auth.login(request, thisuser)
+            return JsonResponse('true', safe=False)
+        else:
+            return JsonResponse('false', safe=False)
+    else:
+        return render(request, 'myapp/enter-otp.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -75,8 +128,18 @@ def signup(request):
 def landing(request):
     if request.user.is_authenticated:
         product = Products.objects.filter(product_value=True)
+        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+        count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+        print(count)
+        total = 0.00
+        for item in cart:
+            total = total + \
+                int(item.user_product.product_price) * \
+                int(item.product_count)
+        tot = []
+        tot.append(total)
         context = {
-            'products': product
+            'products': product, 'cart': cart, 'grant': tot , 'count': count
         }
         return render(request, 'myapp/landing.html', context)
     else:
@@ -91,8 +154,18 @@ def userlogout(request):
 def product(request, pk):
     if request.user.is_authenticated:
         product = Products.objects.get(id=pk)
+        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+        count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+        print(count)
+        total = 0.00
+        for item in cart:
+            total = total + \
+                int(item.user_product.product_price) * \
+                int(item.product_count)
+        tot = []
+        tot.append(total)
         context = {
-            'products': product
+            'products': product, 'cart': cart, 'grant': tot , 'count': count
         }
         return render(request, 'myapp/product_detail.html', context)
     else:
@@ -103,6 +176,8 @@ def user_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+
             total = 0.00
             for item in cart:
                 total = total + \
@@ -112,7 +187,7 @@ def user_cart(request):
             tot.append(total)
             request.session['total'] = tot
             context = {
-                'cart': cart, 'grant': tot
+                'cart': cart, 'grant': tot, 'grant': tot , 'count': count
             }
             return render(request, 'myapp/cart.html', context)
         else:
@@ -197,9 +272,19 @@ def checkout(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             address = ShipAddress.objects.filter(user=request.user)
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
             print(address)
             context = {
-                'address': address
+                'address': address, 'cart': cart, 'grant': tot , 'count': count
             }
             return render(request, 'myapp/checkout.html', context)
         else:
@@ -288,8 +373,11 @@ def placeorder(request):
             total = request.session['total']
             id = request.session['address-id']
             address = ShipAddress.objects.get(id=id)
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            print(count)
 
-            return render(request, 'myapp/placeorder.html', {'address': address, 'grant_total': total})
+            return render(request, 'myapp/placeorder.html', {'address': address, 'total': total, 'cart': cart, 'count': count})
         else:
             return redirect('login')
     else:

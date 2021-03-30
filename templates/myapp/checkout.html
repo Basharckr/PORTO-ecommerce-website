@@ -216,30 +216,32 @@
 
 					<h4>
 						<a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
-							aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
+							aria-expanded="false" aria-controls="order-cart-section">{{count}} products in Cart</a>
 					</h4>
 
 					<div class="collapse" id="order-cart-section">
 						<table class="table table-mini-cart">
 							<tbody>
+								{% for item in cart %}
 								<tr>
 									<td class="product-col">
 										<figure class="product-image-container">
 											<a href="product.html" class="product-image">
-												<img src="{% static 'myapp/images/products/product-1.jpg' %}"
+												<img src="{{item.user_product.image1url}}"
 													alt="product">
 											</a>
 										</figure>
 										<div>
 											<h2 class="product-title">
-												<a href="product.html">Running Sneakers</a>
+												<a href="product.html">{{item.user_product.product_name}}</a>
 											</h2>
 
-											<span class="product-qty">Qty: 4</span>
+											<span class="product-qty">Qty: {{item.product_count}}</span>
 										</div>
 									</td>
-									<td class="price-col">$17.90</td>
+									<td class="price-col">₹{{item.subtotal}}</td>
 								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div><!-- End #order-cart-section -->

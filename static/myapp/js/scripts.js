@@ -118,7 +118,56 @@ $().ready(function () {
                         window.location.replace('landing')
                     }
                     if (response == 'false') {
-                        $("#block").html('<div class="alert alert-info text-center" id="block"><strong>Incorrect password!!</strong> </div>')
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Incorrect<strong>Password</strong> </div>')
+
+                    }
+                    if (response == 'blocked') {
+                        $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
+
+                    }
+                    if (response == 'nouser') {
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This mobile number not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
+
+                    }
+                },
+
+            })
+        }
+    });
+});
+
+//  ===========================================================================================
+//  ================================User-otp-Login===================================================
+
+$().ready(function () {
+
+    console.log('hi')
+    $("#otplogin").validate({
+        rules: {
+            number: {
+                required: true, minlength: 10, maxlength: 10
+            },
+ 
+        },
+        messages: {
+            number: {
+                required: "Please enter your registered mobile number",
+                minlength: "Number must be 10 digits"
+            },
+    
+
+        },
+        submitHandler: (otplogin, e) => {
+
+            e.preventDefault()
+            $.ajax({
+                url: "otp-login",
+                data: $("#otplogin").serialize(),
+                method: "post",
+
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('/enter-otp')
                     }
                     if (response == 'blocked') {
                         $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
@@ -134,6 +183,46 @@ $().ready(function () {
         }
     });
 });
+//  ===========================================================================================
+//  ================================User-Enter-otp===================================================
+
+$().ready(function () {
+
+    console.log('d')
+    $("#enterotp").validate({
+        rules: {
+            otp: {
+                required: true
+            }, 
+        },
+        messages: {
+            otp: {
+                required: "Please enter otp",              
+            },
+        },
+        submitHandler: (enterotp, e) => {
+
+            e.preventDefault()
+            $.ajax({
+                url: "enter-otp",
+                data: $("#enterotp").serialize(),
+                method: "post",
+
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('landing')
+                    }
+                    if(response == 'false'){
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Invalid OTP!!</div>')
+                    }
+
+                },
+
+            })
+        }
+    });
+});
+
 
 //  ===========================================================================================
 //  ================================Add to cart===================================================

@@ -25,7 +25,7 @@ def veIndex(request):
                 total = total + item.amount * item.quantity
                 orders = orders + 1
                 price.append(item.amount * item.quantity)
-                date.append(item.ordered_date.month)
+                date.append(item.ordered_date.day)
             context = {
                 'date': date, 'price': price, 'products': products, 'total': total, 'count': count, 'orders': orders
             }

@@ -1,6 +1,6 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
-{% block title %}PORTO||login{% endblock %}
+{% block title %}PORTO||enter-otp{% endblock %}
 {% block content %}
 
 <main class="main">
@@ -30,15 +30,14 @@
 					<h2 class="title">Login</h2>
 					<p>If you have an account with us, please log in.</p>
 				</div><!-- End .heading -->
-				<form action="#" id="loginform">{% csrf_token %}
-					<input type="text" class="form-control" name ="username"placeholder="Username" required>
-					<input type="password" class="form-control" name="password" placeholder="Password" required>
+				<form action="#" id="enterotp">{% csrf_token %}
+					<input type="number" class="form-control" name ="otp"placeholder="Enter OTP" required>
 					<span id="error1"></span>
 
 					<div class="form-footer">
 						<button type="submit" class="btn btn-primary">LOGIN</button>
 						<div>
-						 <a href="{% url 'otp-login' %}" class="forget-pass"> Login with mobile number?</a>
+						 <a href="{% url 'login' %}" class="forget-pass"> Login with username!</a>
 						 <br><br>
 						 <a href="{% url 'signup' %}" class="forget-pass"> Don't have an account?</a>
 						</div>

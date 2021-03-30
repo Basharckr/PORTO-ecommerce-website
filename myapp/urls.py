@@ -15,6 +15,12 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('logout', views.userlogout, name='logout'),
 
+    #otp login 
+
+    path('otp-login', views.otp_login, name='otp-login'),
+    path('enter-otp', views.enter_otp, name='enter-otp'),
+
+
     # ==============================Product===========================================
 
     path('product/<int:pk>/', views.product, name='product'),
