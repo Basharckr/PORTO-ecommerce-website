@@ -69,4 +69,12 @@ urlpatterns = [
     path('edit-user-account', views.edit_user_account, name='edit-user-account'),
     path('change-user-password', views.change_user_password, name='change-user-password'),
 
+    # ==============================User dashboard===========================================
+
+    path('search-product', views.search_product, name='search-product'),
+
+    # =============================Cateogry wise display====================================
+
+    path('categorywise', views.categorywise, name='categorywise'),
+
 ]

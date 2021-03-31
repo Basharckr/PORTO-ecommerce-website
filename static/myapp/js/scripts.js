@@ -1,32 +1,40 @@
-
 //  ===========================================================================================
 //  ================================User-Signup===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#signupform").validate({
         rules: {
             firstname: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             lastname: {
-                required: true, minlength: 1
+                required: true,
+                minlength: 1
             },
             username: {
-                required: true, minlength: 5
+                required: true,
+                minlength: 5
             },
             email: {
-                required: true, email: true
+                required: true,
+                email: true
             },
             number: {
-                required: true, minlength: 10, maxlength: 10
+                required: true,
+                minlength: 10,
+                maxlength: 10
             },
             password: {
-                required: true, minlength: 5
+                required: true,
+                minlength: 5
             },
             cpassword: {
-                required: true, minlength: 5, equalTo: '#password',
+                required: true,
+                minlength: 5,
+                equalTo: '#password',
             },
         },
         messages: {
@@ -60,7 +68,7 @@ $().ready(function () {
                 data: $("#signupform").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('login')
                     }
@@ -84,7 +92,7 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================User-Login===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#loginform").validate({
@@ -113,7 +121,7 @@ $().ready(function () {
                 data: $("#loginform").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('landing')
                     }
@@ -139,22 +147,24 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================User-otp-Login===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('hi')
     $("#otplogin").validate({
         rules: {
             number: {
-                required: true, minlength: 10, maxlength: 10
+                required: true,
+                minlength: 10,
+                maxlength: 10
             },
- 
+
         },
         messages: {
             number: {
                 required: "Please enter your registered mobile number",
                 minlength: "Number must be 10 digits"
             },
-    
+
 
         },
         submitHandler: (otplogin, e) => {
@@ -165,7 +175,7 @@ $().ready(function () {
                 data: $("#otplogin").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('/enter-otp')
                     }
@@ -186,18 +196,18 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================User-Enter-otp===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#enterotp").validate({
         rules: {
             otp: {
                 required: true
-            }, 
+            },
         },
         messages: {
             otp: {
-                required: "Please enter otp",              
+                required: "Please enter otp",
             },
         },
         submitHandler: (enterotp, e) => {
@@ -208,11 +218,11 @@ $().ready(function () {
                 data: $("#enterotp").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('landing')
                     }
-                    if(response == 'false'){
+                    if (response == 'false') {
                         $("#block").html('<div class="alert alert-warning text-center" id="block">Invalid OTP!!</div>')
                     }
 
@@ -236,9 +246,9 @@ function addToCart(id) {
         url: '/add-to-cart/' + id + '/',
         data: data,
         method: 'post',
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
-                window.location.replace('/cart')
+                window.location.replace('/')
             }
             if (response == 'nothing') {
                 window.location.replace('/')
@@ -258,7 +268,7 @@ function removeProduct(id) {
         url: '/remove-from-cart/' + id + '/',
         data: data,
         method: 'get',
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
                 window.location.replace('/cart')
             }
@@ -279,7 +289,7 @@ function editQuantity(id, cou) {
         url: '/edit-quantity/' + id + '/',
         data: data,
         method: 'post',
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
                 window.location.replace('/cart')
             }
@@ -294,30 +304,38 @@ function editQuantity(id, cou) {
 
 //  ===========================================================================================
 //  ================================Shipping address===================================================
-$(document).ready(function () {
+$(document).ready(function() {
 
     $("#shippaddress").validate({
         rules: {
             firstname: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             lastname: {
-                required: true, minlength: 1
+                required: true,
+                minlength: 1
             },
             street: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             city: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             state: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             pincode: {
-                required: true, minlength: 6
+                required: true,
+                minlength: 6
             },
             number: {
-                required: true, minlength: 10, maxlength: 12
+                required: true,
+                minlength: 10,
+                maxlength: 12
             },
         },
         messages: {
@@ -344,7 +362,7 @@ $(document).ready(function () {
                 data: $("#shippaddress").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('checkout')
                     }
@@ -359,31 +377,39 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 
     $("#editaddress").validate({
         rules: {
             firstname1: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             lastname1: {
-                required: true, minlength: 1
+                required: true,
+                minlength: 1
             },
             street1: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             city1: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             state1: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             pincode1: {
-                required: true, minlength: 6
+                required: true,
+                minlength: 6
             },
             number1: {
-                required: true, minlength: 10, maxlength: 12
+                required: true,
+                minlength: 10,
+                maxlength: 12
             },
         },
         messages: {
@@ -416,7 +442,7 @@ function shipHere(id) {
     $.ajax({
         url: "/set-address/" + id + "/",
         method: 'post',
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
                 $("div").removeClass("active");
                 var element = document.getElementById("set-add-" + id);
@@ -431,25 +457,31 @@ function shipHere(id) {
 //  ===========================================================================================
 //  ================================Edi user account===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#editaccount").validate({
         rules: {
             firstname: {
-                required: true, minlength: 3
+                required: true,
+                minlength: 3
             },
             lastname: {
-                required: true, minlength: 1
+                required: true,
+                minlength: 1
             },
             username: {
-                required: true, minlength: 5
+                required: true,
+                minlength: 5
             },
             email: {
-                required: true, email: true
+                required: true,
+                email: true
             },
             number: {
-                required: true, minlength: 10, maxlength: 12
+                required: true,
+                minlength: 10,
+                maxlength: 12
             },
             image1: {
                 extension: "jpg|jpeg|png"
@@ -484,7 +516,7 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================Change user password===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     $("#changuserpassword").validate({
         rules: {
@@ -492,10 +524,13 @@ $().ready(function () {
                 required: true
             },
             password: {
-                required: true, minlength: 5
+                required: true,
+                minlength: 5
             },
             cpassword: {
-                required: true, minlength: 5, equalTo: '#password',
+                required: true,
+                minlength: 5,
+                equalTo: '#password',
             },
         },
         messages: {
@@ -517,7 +552,7 @@ $().ready(function () {
                 data: $("#changuserpassword").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         $("#block").html('<div class="alert alert-success text-center" id="block"><strong>Password changed successfully.</strong> </div>')
                     }
@@ -542,7 +577,7 @@ function cancelOrder(id) {
         url: '/cancel-order/' + id + '/',
         data: data,
         method: 'get',
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
                 window.location.replace('/my-orders')
             }
@@ -550,3 +585,52 @@ function cancelOrder(id) {
         }
     })
 }
+
+
+//  ===========================================================================================
+//  ================================Search product===================================================
+
+// $().ready(function() {
+
+//     console.log('search')
+//     $("#productsearch").validate({
+//         rules: {
+//             q: {
+//                 required: true,
+//             },
+
+//         },
+//         messages: {
+//             q: {
+//                 required: "Please enter productname",
+//             },
+
+
+//         },
+//         submitHandler: (otplogin, e) => {
+
+//             e.preventDefault()
+//             $.ajax({
+//                 url: "search-product",
+//                 data: $("#productsearch").serialize(),
+//                 method: "post",
+
+//                 success: function(response) {
+//                     if(response){
+//                         console.log(response)
+//                         window.location.replace('search-product')
+//                     }
+//                     if (response == 'blocked') {
+//                         $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
+
+//                     }
+//                     if (response == 'nouser') {
+//                         $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This username not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
+
+//                     }
+//                 },
+
+//             })
+//         }
+//     });
+// });

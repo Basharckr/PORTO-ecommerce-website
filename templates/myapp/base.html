@@ -6,19 +6,19 @@
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/demo_1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Mar 2021 05:09:44 GMT -->
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 
-	<meta name="keywords" content="HTML5 Template" />
-	<meta name="description" content="Porto - Bootstrap eCommerce Template">
-	<meta name="author" content="SW-THEMES">
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="author" content="SW-THEMES">
 
-	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="{% static 'myapp/images/icons/favicon.ico' %}">
-<!-- 	
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'myapp/images/icons/favicon.ico' %}">
+    <!-- 	
 	<script type="text/javascript">
 		WebFontConfig = {
 			google: { families: ['Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700'] }
@@ -31,23 +31,21 @@
 		})(document);
 	</script> -->
 
-	<!-- Plugins CSS File -->
-	<link rel="stylesheet" href="{% static 'myapp/css/bootstrap.min.css' %}">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'myapp/css/bootstrap.min.css' %}">
 
-	<!-- Main CSS File -->
-	<link rel="stylesheet" type="text/css" href="{% static 'myapp/css/style.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'myapp/vendor/fontawesome-free/css/all.min.css' %}">
-	<link rel="stylesheet" href="{% static 'myapp/css/style.min.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/style.min.css' %}">
 
-	<style>
-	
-			
-		
-	</style>
+    <style>
+
+    </style>
 </head>
 
 <body class="full-screen-slider">
-	<!-- <div class="page-wrapper">
+    <!-- <div class="page-wrapper">
 		<div class="top-notice text-white bg-dark">
 			<div class="container text-center">
 				<h5 class="ls-n-10 mb-0">Get 10% extra OFF on Porto Summer Sale - Use <b>PORTOSUMMER</b> coupon - <a href="category.html">Shop Now!</a></h5>
@@ -55,59 +53,60 @@
 			</div>End .container
 		</div>End .top-notice -->
 
-	<header class="header header-transparent">
-		<div class="header-middle">
-			<div class="container">
-				<div class="header-left">
-					<a href="{% url 'landing' %}" class="logo">
-						<img src="{% static 'myapp/images/logo.png' %}" alt="Porto Logo">
-					</a>
+    <header class="header header-transparent">
+        <div class="header-middle">
+            <div class="container">
+                <div class="header-left">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'myapp/images/logo.png' %}" alt="Porto Logo">
+                    </a>
 
-					<nav class="main-nav font2">
-						<ul class="menu">
-							<li>
-								<a href="{% url 'landing' %}">Home</a>
-							</li>
-							<li>
-								<a href="category.html">Categories</a>
-								<div class="megamenu megamenu-fixed-width megamenu-3cols">
-									<div class="row">
-										<div class="col-lg-6">
-											<a href="#" class="nolink">VARIATION 1</a>
-											<ul class="submenu">
-												<li><a href="category.html">Fullwidth Banner</a></li>
-												<li><a href="category-banner-boxed-slider.html">Boxed Slider
+                    <nav class="main-nav font2">
+                        <ul class="menu">
+                            <li>
+                                <a href="{% url 'landing' %}">Home</a>
+                            </li>
+                            <li>
+                                <a href="category.html">Categories</a>
+                                <div class="megamenu megamenu-fixed-width megamenu-3cols">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <a href="#" class="nolink">VARIATION 1</a>
+                                            <ul class="submenu">
+                                                <li><a href="category.html">Fullwidth Banner</a></li>
+                                                <li><a href="category-banner-boxed-slider.html">Boxed Slider
 														Banner</a></li>
-												<li><a href="category-banner-boxed-image.html">Boxed Image
+                                                <li><a href="category-banner-boxed-image.html">Boxed Image
 														Banner</a></li>
-												<li><a href="category.html">Left Sidebar</a></li>
-												<li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-												<li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-												<li><a href="category-horizontal-filter1.html">Horizontal
+                                                <li><a href="category.html">Left Sidebar</a></li>
+                                                <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
+                                                <li><a href="category-flex-grid.html">Product Flex Grid</a></li>
+                                                <li><a href="category-horizontal-filter1.html">Horizontal
 														Filter1</a></li>
-												<li><a href="category-horizontal-filter2.html">Horizontal
+                                                <li><a href="category-horizontal-filter2.html">Horizontal
 														Filter2</a></li>
-											</ul>
-										</div>
-				
-										<div class="col-lg-6 p-0">
-											<img src="{% static 'myapp/images/menu-banner.jpg' %}" alt="Menu banner">
-										</div>
-									</div>
-								</div><!-- End .megamenu -->
-							</li>
-						
-							<li>
-								<a href="#">Pages</a>
-								<ul>
-									<li><a href="{% url 'cart' %}">Shopping Cart</a></li>
-									<li><a href="{% url 'checkout' %}">Checkout</a>
-								
-									</li>
-									<li><a href="{% url 'dashboard' %}">Dashboard</a>
-									
-									</li>
-									<!-- <li><a href="about.html">About Us</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-lg-6 p-0">
+                                            <img src="{% static 'myapp/images/menu-banner.jpg' %}" alt="Menu banner">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End .megamenu -->
+                            </li>
+
+                            <li>
+                                <a href="#">Pages</a>
+                                <ul>
+                                    <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+                                    <li><a href="{% url 'checkout' %}">Checkout</a>
+
+                                    </li>
+                                    <li><a href="{% url 'dashboard' %}">Dashboard</a>
+
+                                    </li>
+                                    <!-- <li><a href="about.html">About Us</a></li>
 									<li><a href="#">Blog</a>
 										<ul>
 											<li><a href="blog.html">Blog</a></li>
@@ -115,322 +114,335 @@
 										</ul>
 									</li>
 									<li><a href="contact.html">Contact Us</a></li> -->
-									<li><a href="{% url 'login' %}" class="login-link">Login</a></li>
-									<li><a href="{% url 'change-user-password' %}">Change Password</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="{% url 'my-orders' %}">My Orders</a>
-								</li>
-							<li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
-						</ul>
-					</nav>
-				</div><!-- End .header-left -->
+                                    <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
+                                    <li><a href="{% url 'change-user-password' %}">Change Password</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'my-orders' %}">My Orders</a>
+                            </li>
+                            <li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- End .header-left -->
 
-				<div class="header-right">
-					<button class="mobile-menu-toggler" type="button">
+                <div class="header-right">
+                    <button class="mobile-menu-toggler" type="button">
 						<i class="icon-menu"></i>
 					</button>
-					<!-- login-link -->
-					<a href="{% url 'dashboard' %}" class="header-icon "><i class="icon-user-2"></i></a>
+                    <!-- login-link -->
+                    <a href="{% url 'dashboard' %}" class="header-icon "><i class="icon-user-2"></i></a>
 
-					<!-- <a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a> -->
+                    <!-- <a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a> -->
 
-					<div class="header-search header-search-popup header-search-category d-none d-sm-block">
-						<a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-						<form action="#" method="get">
-							<div class="header-search-wrapper">
-								<input type="search" class="form-control" name="q" id="q"
-									placeholder="I'm searching for..." required="">
-								<div class="select-custom">
-									<select id="cat" name="cat">
-										<option value="">All Categories</option>
-										<option value="4">Fashion</option>
-										<option value="12">- Women</option>
-										<option value="13">- Men</option>
-
+                    <div class="header-search header-search-popup header-search-category d-none d-sm-block">
+                        <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
+                        <form action="search-product" method="post" id="productsearch">{% csrf_token %}
+                            <div class="header-search-wrapper ">
+                                <input type="search" class="form-control " name="q" id="q" placeholder="Search productname..." required="">
+                                <div class="select-custom">
+                                    <select id="cat" name="cat">
+                                    {% for item in category%}
+										<option value="{{item.category_name}}">{{item.category_name}}</option>
+                                        {%endfor%}
 									</select>
-								</div><!-- End .select-custom -->
-								<button class="btn bg-dark icon-search-3" type="submit"></button>
-							</div><!-- End .header-search-wrapper -->
-						</form>
-					</div>
 
-					<div class="dropdown cart-dropdown">
-						<a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false" data-display="static">
-							<i class="icon-shopping-cart"></i>
-							<span class="cart-count badge-circle">{{count}}</span>
-						</a>
+                                </div>
+                                <!-- End .select-custom -->
+                                <button class="btn bg-dark icon-search-3" type="submit"></button>
+                            </div>
+                            <!-- End .header-search-wrapper -->
+                        </form>
+                    </div>
 
-						<div class="dropdown-menu">
-							<div class="dropdownmenu-wrapper">
-						
-								<div class="dropdown-cart-header">
-									<span>{{count}} Items</span>
-							
-									<a href="{% url 'cart' %}" class="float-right">View Cart</a>
-								</div><!-- End .dropdown-cart-header -->
-								{% for item in cart %}
-								<div class="dropdown-cart-products">
-									<div class="product">
-										<div class="product-details">
-											<h4 class="product-title">
-												<a href="#">{{item.user_product.product_name}}</a>
-											</h4>
+                    <div class="dropdown cart-dropdown">
+                        <a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="cart-count badge-circle">{{count}}</span>
+                        </a>
 
-											<span class="cart-product-info">
-												<span class="cart-product-qty">{{item.product_count}}</span>
-												x ₹{{item.user_product.product_price}}.00
-											</span>
-										</div><!-- End .product-details -->
+                        <div class="dropdown-menu">
+                            <div class="dropdownmenu-wrapper">
 
-										<figure class="product-image-container">
-											<a href="#" class="product-image">
-												<img src="{{item.user_product.image1url}}"
-													alt="product" width="80" height="80">
-											</a>
-											<span title="Remove product" onclick="removeProduct('{{item.id}}')"
-										onclick="return confirm('Are you sure you want to delete this product?');" class="btn-remove icon-cancel"></span>
+                                <div class="dropdown-cart-header">
+                                    <span>{{count}} Items</span>
 
-										</figure>
-									</div><!-- End .product -->
+                                    <a href="{% url 'cart' %}" class="float-right">View Cart</a>
+                                </div>
+                                <!-- End .dropdown-cart-header -->
+                                {% for item in cart %}
+                                <div class="dropdown-cart-products">
+                                    <div class="product">
+                                        <div class="product-details">
+                                            <h4 class="product-title">
+                                                <a href="#">{{item.user_product.product_name}}</a>
+                                            </h4>
 
-								</div><!-- End .cart-product -->
-								{% endfor %}
-								<div class="dropdown-cart-total">
-									<span>Total</span>
+                                            <span class="cart-product-info">
+												<span class="cart-product-qty">{{item.product_count}}</span> x ₹{{item.user_product.product_price}}.00
+                                            </span>
+                                        </div>
+                                        <!-- End .product-details -->
 
-									<span class="cart-total-price float-right">₹{{grant|first}}</span>
-								</div><!-- End .dropdown-cart-total -->
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="{{item.user_product.image1url}}" alt="product" width="80" height="80">
+                                            </a>
+                                            <span title="Remove product" onclick="removeProduct('{{item.id}} ')" onclick="return confirm('Are you sure you want to delete this product? ');" class="btn-remove icon-cancel"></span>
 
-								<div class="dropdown-cart-action">
-									<a href="{% url 'checkout' %}" class="btn btn-primary btn-block">Checkout</a>
-								</div><!-- End .dropdown-cart-total -->
-							</div><!-- End .dropdownmenu-wrapper -->
-						</div><!-- End .dropdown-menu -->
-					</div><!-- End .dropdown -->
-				</div><!-- End .header-right -->
-			</div><!-- End .container -->
-		</div><!-- End .header-middle -->
-	</header><!-- End .header -->
-	{% block content%}
+                                        </figure>
+                                    </div>
+                                    <!-- End .product -->
 
+                                </div>
+                                <!-- End .cart-product -->
+                                {% endfor %}
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
 
+                                    <span class="cart-total-price float-right">₹{{grant|first}}</span>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
 
+                                <div class="dropdown-cart-action">
+                                    <a href="{% url 'cart' %}" class="btn btn-primary btn-block">View cart</a>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
+                            </div>
+                            <!-- End .dropdownmenu-wrapper -->
+                        </div>
+                        <!-- End .dropdown-menu -->
+                    </div>
+                    <!-- End .dropdown -->
+                </div>
+                <!-- End .header-right -->
+            </div>
+            <!-- End .container -->
+        </div>
+        <!-- End .header-middle -->
+    </header>
+    <!-- End .header -->
+    {% block content%} {% endblock %}
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container top-border d-flex align-items-center justify-content-between flex-wrap">
+                <div class="footer-left widget-newsletter d-md-flex align-items-center">
+                    <div class="widget-newsletter-info">
+                        <h5 class="widget-newsletter-title text-uppercase m-b-1">subscribe newsletter</h5>
+                        <p class="widget-newsletter-content mb-0">Get all the latest information on Events, Sales and Offers.</p>
+                    </div>
+                    <form action="#">
+                        <div class="footer-submit-wrapper d-flex">
+                            <input type="email" class="form-control" placeholder="Email address..." size="40" required>
+                            <button type="submit" class="btn btn-dark btn-sm">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="footer-right">
+                    <div class="social-icons">
+                        <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
+                        <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
+                        <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
+                    </div>
+                    <!-- End .social-icons -->
+                </div>
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="widget">
+                            <h4 class="widget-title">Contact Info</h4>
 
-	{% endblock %}
-	<footer class="footer">
-		<div class="footer-top">
-			<div class="container top-border d-flex align-items-center justify-content-between flex-wrap">
-				<div class="footer-left widget-newsletter d-md-flex align-items-center">
-					<div class="widget-newsletter-info">
-						<h5 class="widget-newsletter-title text-uppercase m-b-1">subscribe newsletter</h5>
-						<p class="widget-newsletter-content mb-0">Get all the latest information on Events, Sales
-							and Offers.</p>
-					</div>
-					<form action="#">
-						<div class="footer-submit-wrapper d-flex">
-							<input type="email" class="form-control" placeholder="Email address..." size="40" required>
-							<button type="submit" class="btn btn-dark btn-sm">Subscribe</button>
-						</div>
-					</form>
-				</div>
-				<div class="footer-right">
-					<div class="social-icons">
-						<a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
-						<a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-						<a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
-					</div><!-- End .social-icons -->
-				</div>
-			</div>
-		</div>
-		<div class="footer-middle">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 col-xl-4">
-						<div class="widget">
-							<h4 class="widget-title">Contact Info</h4>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="contact-widget">
+                                        <h4 class="widget-title">ADDRESS</h4>
+                                        <a href="#">Ul cyberpark, Calicut, Keral, India</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="contact-widget email">
+                                        <h4 class="widget-title">EMAIL</h4>
+                                        <a href="mailto:basharpmr@gmail.com">basharpmr@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="contact-widget">
+                                        <h4 class="widget-title">PHONE</h4>
+                                        <a href="#">(+91) 9846337553</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="contact-widget">
+                                        <h4 class="widget-title">WORKING DAYS/HOURS</h4>
+                                        <a href="#">Mon - Sun / 9:00 AM - 8:00 PM</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 col-xl-4">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4>
+                            <ul class="links link-parts row">
+                                <div class="link-part col-xl-4">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="{% url 'dashboard' %}">My Account</a></li>
+                                </div>
+                                <div class="link-part col-xl-8">
+                                    <li><a href="{% url 'cart' %}">My Cart</a></li>
+                                    <li><a href="{% url 'my-orders' %}">Orders History</a></li>
 
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="contact-widget">
-										<h4 class="widget-title">ADDRESS</h4>
-										<a href="#">Ul cyberpark, Calicut, Keral, India</a>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="contact-widget email">
-										<h4 class="widget-title">EMAIL</h4>
-										<a href="mailto:basharpmr@gmail.com">basharpmr@gmail.com</a>
-									</div>
-								</div>	
-								<div class="col-sm-6">
-									<div class="contact-widget">
-										<h4 class="widget-title">PHONE</h4>
-										<a href="#">(+91) 9846337553</a>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="contact-widget">
-										<h4 class="widget-title">WORKING DAYS/HOURS</h4>
-										<a href="#">Mon - Sun / 9:00 AM - 8:00 PM</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-3 col-xl-4">
-						<div class="widget">
-							<h4 class="widget-title">My Account</h4>
-							<ul class="links link-parts row">
-								<div class="link-part col-xl-4">
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Contact Us</a></li>
-									<li><a href="{% url 'dashboard' %}">My Account</a></li>
-								</div>
-								<div class="link-part col-xl-8">
-									<li><a href="{% url 'cart' %}">My Cart</a></li>
-									<li><a href="{% url 'my-orders' %}">Orders History</a></li>
-									
-								</div>
-							</ul>
-						</div><!-- End .widget -->
-					</div>
-					<div class="col-sm-6 col-lg-3 col-xl-4">
-						<div class="widget">
-							<h4 class="widget-title">Main Features</h4>
-							<ul class="links link-parts row">
-								<div class="link-part col-xl-6">
-									<li><a href="{% url 'dashboard' %}">My Account</a></li>
-									<li><a href="{% url 'cart' %}">My Cart</a></li>
-									<li><a href="{% url 'my-orders' %}">Orders History</a></li>
-									
-								</div>
-								<div class="link-part col-xl-6">
-									<li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
+                                </div>
+                            </ul>
+                        </div>
+                        <!-- End .widget -->
+                    </div>
+                    <div class="col-sm-6 col-lg-3 col-xl-4">
+                        <div class="widget">
+                            <h4 class="widget-title">Main Features</h4>
+                            <ul class="links link-parts row">
+                                <div class="link-part col-xl-6">
+                                    <li><a href="{% url 'dashboard' %}">My Account</a></li>
+                                    <li><a href="{% url 'cart' %}">My Cart</a></li>
+                                    <li><a href="{% url 'my-orders' %}">Orders History</a></li>
 
-									<li><a href="#">Mobile &amp; Retina Optimized</a></li>
-								</div>
-							</ul>
-						</div><!-- End .widget -->
-					</div>
-				</div>
-			</div>
-		</div>
+                                </div>
+                                <div class="link-part col-xl-6">
+                                    <li><a href="{% url 've-login' %}" target="_blank">Sell!</a></li>
 
-		<div class="footer-bottom">
-			<div class="container top-border d-flex align-items-center justify-content-between flex-wrap">
-				<p class="footer-copyright mb-0 py-3 pr-3">Porto eCommerce. &copy; 2020. All Rights Reserved</p>
-				<img class="py-3" src="{% static 'myapp/images/payments.png' %}" alt="payment image">
-			</div>
-		</div>
-	</footer>
-	</div><!-- End .page-wrapper -->
+                                    <li><a href="#">Mobile &amp; Retina Optimized</a></li>
+                                </div>
+                            </ul>
+                        </div>
+                        <!-- End .widget -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+        <div class="footer-bottom">
+            <div class="container top-border d-flex align-items-center justify-content-between flex-wrap">
+                <p class="footer-copyright mb-0 py-3 pr-3">Porto eCommerce. &copy; 2020. All Rights Reserved</p>
+                <img class="py-3" src="{% static 'myapp/images/payments.png ' %}" alt="payment image">
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- End .page-wrapper -->
 
-	<div class="mobile-menu-container">
-		<div class="mobile-menu-wrapper">
-			<span class="mobile-menu-close"><i class="icon-compare-link"></i></span>
-			<nav class="mobile-nav">
-				<ul class="mobile-menu">
-					<li class="active"><a href="index.html">Home</a></li>
-					<li>
-						<a href="category.html">Categories</a>
-						<ul>
-							<li><a href="category.html">Full Width Banner</a></li>
-							<li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-							<li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-							<li><a href="category.html">Left Sidebar</a></li>
-							<li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-							<li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-							<li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
-							<li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
-							<li><a href="category-list.html">List Types</a></li>
-							<li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
-							<li><a href="category-3col.html">3 Columns Products</a></li>
-							<li><a href="category-4col.html">4 Columns Products</a></li>
-							<li><a href="category.html">5 Columns Products</a></li>
+    <div class="mobile-menu-overlay"></div>
+    <!-- End .mobil-menu-overlay -->
 
-						</ul>
-					</li>
-					<li>
-						<a href="product.html">Products</a>
-						<ul>
-							<li>
-								<a href="#">Variations</a>
-								<ul>
-									<li><a href="product.html">Horizontal Thumbs</a></li>
-									<li><a href="product-full-width.html">Vertical Thumbnails</a></li>
-									<li><a href="product.html">Inner Zoom</a></li>
-									<li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
-									<li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
-									<li><a href="product-sticky-tab.html">Sticky Tabs</a></li>
-									<li><a href="product-simple.html">Simple Product</a></li>
-									<li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#">Product Layout Types</a>
-								<ul>
-									<li><a href="product.html">Default Layout</a></li>
-									<li><a href="product-extended-layout.html">Extended Layout</a></li>
-									<li><a href="product-full-width.html">Full Width Layout</a></li>
-									<li><a href="product-grid-layout.html">Grid Images Layout</a></li>
-									<li><a href="product-sticky-both.html">Sticky Both Side Info</a></li>
-									<li><a href="product-sticky-info.html">Sticky Right Side Info</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#">Pages</a>
-						<ul>
-							<li><a href="cart.html">Shopping Cart</a></li>
-							<li>
-								<a href="#">Checkout</a>
-								<ul>
-									<li><a href="checkout-shipping.html">Checkout Shipping</a></li>
-									<li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
-									<li><a href="checkout-review.html">Checkout Review</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#">Dashboard</a>
-								<ul>
-									<li><a href="dashboard.html">Dashboard</a></li>
-									<li><a href="my-account.html">My Account</a></li>
-								</ul>
-							</li>
-							<li><a href="about.html">About Us</a></li>
-							<li>
-								<a href="#">Blog</a>
-								<ul>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="single.html">Blog Post</a></li>
-								</ul>
-							</li>
-							<li><a href="contact.html">Contact Us</a></li>
-							<li><a href="#" class="login-link">Login</a></li>
-							<li><a href="forgot-password.html">Forgot Password</a></li>
-						</ul>
-					</li>
-					<li><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li>
-				</ul>
-			</nav><!-- End .mobile-nav -->
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-compare-link"></i></span>
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="category.html">Categories</a>
+                        <ul>
+                            <li><a href="category.html">Full Width Banner</a></li>
+                            <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
+                            <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
+                            <li><a href="category.html">Left Sidebar</a></li>
+                            <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
+                            <li><a href="category-flex-grid.html">Product Flex Grid</a></li>
+                            <li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
+                            <li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
+                            <li><a href="category-list.html">List Types</a></li>
+                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a></li>
+                            <li><a href="category-3col.html">3 Columns Products</a></li>
+                            <li><a href="category-4col.html">4 Columns Products</a></li>
+                            <li><a href="category.html">5 Columns Products</a></li>
 
-			<div class="social-icons">
-				<a href="#" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
-				<a href="#" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
-				<a href="#" class="social-icon" target="_blank"><i class="icon-instagram"></i></a>
-			</div><!-- End .social-icons -->
-		</div><!-- End .mobile-menu-wrapper -->
-	</div><!-- End .mobile-menu-container -->
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="product.html">Products</a>
+                        <ul>
+                            <li>
+                                <a href="#">Variations</a>
+                                <ul>
+                                    <li><a href="product.html">Horizontal Thumbs</a></li>
+                                    <li><a href="product-full-width.html">Vertical Thumbnails</a></li>
+                                    <li><a href="product.html">Inner Zoom</a></li>
+                                    <li><a href="product-addcart-sticky.html">Addtocart Sticky</a></li>
+                                    <li><a href="product-sidebar-left.html">Accordion Tabs</a></li>
+                                    <li><a href="product-sticky-tab.html">Sticky Tabs</a></li>
+                                    <li><a href="product-simple.html">Simple Product</a></li>
+                                    <li><a href="product-sidebar-left.html">With Left Sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Product Layout Types</a>
+                                <ul>
+                                    <li><a href="product.html">Default Layout</a></li>
+                                    <li><a href="product-extended-layout.html">Extended Layout</a></li>
+                                    <li><a href="product-full-width.html">Full Width Layout</a></li>
+                                    <li><a href="product-grid-layout.html">Grid Images Layout</a></li>
+                                    <li><a href="product-sticky-both.html">Sticky Both Side Info</a></li>
+                                    <li><a href="product-sticky-info.html">Sticky Right Side Info</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li><a href="cart.html">Shopping Cart</a></li>
+                            <li>
+                                <a href="#">Checkout</a>
+                                <ul>
+                                    <li><a href="checkout-shipping.html">Checkout Shipping</a></li>
+                                    <li><a href="checkout-shipping-2.html">Checkout Shipping 2</a></li>
+                                    <li><a href="checkout-review.html">Checkout Review</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Dashboard</a>
+                                <ul>
+                                    <li><a href="dashboard.html">Dashboard</a></li>
+                                    <li><a href="my-account.html">My Account</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li>
+                                <a href="#">Blog</a>
+                                <ul>
+                                    <li><a href="blog.html">Blog</a></li>
+                                    <li><a href="single.html">Blog Post</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#" class="login-link">Login</a></li>
+                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://1.envato.market/DdLk5" target="_blank">Buy Porto!</a></li>
+                </ul>
+            </nav>
+            <!-- End .mobile-nav -->
 
-	<!-- <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(/static/myapp/images/newsletter_popup_bg.jpg)">
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
+                <a href="#" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank"><i class="icon-instagram"></i></a>
+            </div>
+            <!-- End .social-icons -->
+        </div>
+        <!-- End .mobile-menu-wrapper -->
+    </div>
+    <!-- End .mobile-menu-container -->
+
+    <!-- <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(/static/myapp/images/newsletter_popup_bg.jpg)">
 		<div class="newsletter-popup-content">
-			<img src="{% static 'myapp/images/logo-black.png' %}" alt="Logo" class="logo-newsletter">
+			<img src="{% static 'myapp/images/logo-black.png ' %}" alt="Logo" class="logo-newsletter">
 			<h2>BE THE FIRST TO KNOW</h2>
 			<p class="mb-2">Subscribe to the Porto eCommerce newsletter to receive timely updates from your favorite products.</p>
 			<form action="#">
@@ -443,43 +455,41 @@
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" value="1">
-						Don't show this popup again
-					</label>
-				</div>
-			</div>
-		</div>End .newsletter-popup-content
-	</div>End .newsletter-popup -->
+						Don't show this popup again </label>
+                    </div>
+                </div>
+            </div>End .newsletter-popup-content
+        </div>End .newsletter-popup -->
 
-	<!-- Add Cart Modal -->
-	<div class="modal fade" id="addCartModal" tabindex="-1" role="dialog" aria-labelledby="addCartModal"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-body add-cart-box text-center">
-					<p>You've just added this product to the<br>cart:</p>
-					<h4 id="productTitle"></h4>
-					<img src="#" id="productImage" width="100" height="100" alt="adding cart image">
-					<div class="btn-actions">
-						<a href="cart.html"><button class="btn-primary">Go to cart page</button></a>
-						<a href="#"><button class="btn-primary" data-dismiss="modal">Continue</button></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Add Cart Modal -->
+    <div class="modal fade" id="addCartModal" tabindex="-1" role="dialog" aria-labelledby="addCartModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body add-cart-box text-center">
+                    <p>You've just added this product to the<br>cart:</p>
+                    <h4 id="productTitle"></h4>
+                    <img src="#" id="productImage" width="100" height="100" alt="adding cart image">
+                    <div class="btn-actions">
+                        <a href="cart.html"><button class="btn-primary">Go to cart page</button></a>
+                        <a href="#"><button class="btn-primary" data-dismiss="modal">Continue</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
+    <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
-	<!-- Plugins JS File -->
-	<script src="{% static 'myapp/js/jquery.min.js'%}"></script>
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <!-- Plugins JS File -->
+    <script src="{% static 'myapp/js/jquery.min.js'%}"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
-	<script src="{% static 'myapp/js/bootstrap.bundle.min.js'%}"></script>
-	<script src="{% static 'myapp/js/plugins.min.js' %}"></script>
+    <script src="{% static 'myapp/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'myapp/js/plugins.min.js' %}"></script>
 
-	<!-- Main JS File -->
-	<script src="{% static 'myapp/js/main.min.js' %}"></script>
-	<script src="{% static 'myapp/js/scripts.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'myapp/js/main.min.js' %}"></script>
+    <script src="{% static 'myapp/js/scripts.js' %}"></script>
 </body>
 
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/demo_1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Mar 2021 05:11:03 GMT -->

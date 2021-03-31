@@ -5,6 +5,7 @@ from django.http import JsonResponse, response
 from django.contrib.auth import logout
 from vendor.models import Products
 from .models import Cart, ShipAddress, Order, Profile
+from owner.models import Category
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
@@ -47,8 +48,10 @@ def login(request):
         return render(request, 'myapp/login.html')
     return render(request, 'myapp/login.html')
 
+
 phone_number = 0
 otp = 0
+
 
 def otp_login(request):
     if request.user.is_authenticated:
@@ -60,18 +63,18 @@ def otp_login(request):
             if Profile.objects.filter(phone=phone_number).exists():
                 user = Profile.objects.get(phone=phone_number)
                 if user.user.is_active:
-                   random_num = random.randint(1000, 9999)
-                   global otp
-                   otp = random_num
-                   account_sid = 'AC52079fbfb832168a7dbb21afde88c1bf'
-                   auth_token = '8f5895e649cb4274d6878de3661fb989'
-                   client = Client(account_sid, auth_token)
-                   message = client.messages.create(
-                    body=f"Your OTP is {otp}",
-                    from_='+12064881795',
-                    to=f"+919846337553"
-                    ) 
-                   return JsonResponse('true', safe=False)
+                    random_num = random.randint(1000, 9999)
+                    global otp
+                    otp = random_num
+                    account_sid = 'AC52079fbfb832168a7dbb21afde88c1bf'
+                    auth_token = '8f5895e649cb4274d6878de3661fb989'
+                    client = Client(account_sid, auth_token)
+                    message = client.messages.create(
+                        body=f"Your OTP is {otp}",
+                        from_='+12064881795',
+                        to=f"+919846337553"
+                    )
+                    return JsonResponse('true', safe=False)
                 else:
                     print("user is blocked")
                     return JsonResponse('blocked', safe=False)
@@ -129,7 +132,9 @@ def landing(request):
     if request.user.is_authenticated:
         product = Products.objects.filter(product_value=True)
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-        count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+        count = Cart.objects.filter(
+            user=request.user.id, checkedout=False).count()
+        category = Category.objects.all()
         print(count)
         total = 0.00
         for item in cart:
@@ -139,7 +144,7 @@ def landing(request):
         tot = []
         tot.append(total)
         context = {
-            'products': product, 'cart': cart, 'grant': tot , 'count': count
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
         }
         return render(request, 'myapp/landing.html', context)
     else:
@@ -155,7 +160,9 @@ def product(request, pk):
     if request.user.is_authenticated:
         product = Products.objects.get(id=pk)
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-        count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+        count = Cart.objects.filter(
+            user=request.user.id, checkedout=False).count()
+        category = Category.objects.all()
         print(count)
         total = 0.00
         for item in cart:
@@ -165,7 +172,7 @@ def product(request, pk):
         tot = []
         tot.append(total)
         context = {
-            'products': product, 'cart': cart, 'grant': tot , 'count': count
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
         }
         return render(request, 'myapp/product_detail.html', context)
     else:
@@ -176,7 +183,9 @@ def user_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
 
             total = 0.00
             for item in cart:
@@ -187,7 +196,7 @@ def user_cart(request):
             tot.append(total)
             request.session['total'] = tot
             context = {
-                'cart': cart, 'grant': tot, 'grant': tot , 'count': count
+                'cart': cart, 'grant': tot, 'grant': tot, 'count': count, 'category': category
             }
             return render(request, 'myapp/cart.html', context)
         else:
@@ -204,6 +213,7 @@ def add_to_cart(request, id):
                 count = request.POST['count']
                 obj_product = Products.objects.get(id=id)
                 if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
+
                     add = Cart.objects.get(user_product=obj_product)
                     add.product_count = add.product_count + int(count)
                     add.save()
@@ -273,7 +283,10 @@ def checkout(request):
         if request.user.is_authenticated:
             address = ShipAddress.objects.filter(user=request.user)
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+
             print(count)
             total = 0.00
             for item in cart:
@@ -284,7 +297,7 @@ def checkout(request):
             tot.append(total)
             print(address)
             context = {
-                'address': address, 'cart': cart, 'grant': tot , 'count': count
+                'address': address, 'cart': cart, 'grant': tot, 'count': count, 'category': category
             }
             return render(request, 'myapp/checkout.html', context)
         else:
@@ -374,10 +387,13 @@ def placeorder(request):
             id = request.session['address-id']
             address = ShipAddress.objects.get(id=id)
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+
             print(count)
 
-            return render(request, 'myapp/placeorder.html', {'address': address, 'total': total, 'cart': cart, 'count': count})
+            return render(request, 'myapp/placeorder.html', {'address': address, 'total': total, 'cart': cart, 'count': count, 'category': category})
         else:
             return redirect('login')
     else:
@@ -387,7 +403,11 @@ def placeorder(request):
 def success(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
-            return render(request, 'myapp/success.html')
+            category = Category.objects.all()
+            context = {
+                'category': category
+            }
+            return render(request, 'myapp/success.html', context)
         else:
             return redirect('login')
     else:
@@ -412,7 +432,7 @@ def place_order(request):
                                          ship_id=ship_id, payment_status=True)
                     item.checkedout = True
                     item.save()
-                return JsonResponse('true', safe=False)             
+                return JsonResponse('true', safe=False)
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
@@ -421,7 +441,7 @@ def place_order(request):
                     item.checkedout = True
                     item.save()
                 return JsonResponse('cod', safe=False)
-              
+
         else:
             return redirect('login')
     else:
@@ -433,7 +453,10 @@ def dashbaord(request):
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+
             print(count)
             total = 0.00
             for item in cart:
@@ -442,7 +465,7 @@ def dashbaord(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot , 'count': count})
+            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
         else:
             return redirect('login')
     else:
@@ -453,7 +476,10 @@ def edit_user_account(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+
             print(count)
             total = 0.00
             for item in cart:
@@ -473,10 +499,12 @@ def edit_user_account(request):
                 profile.image1 = request.FILES.get('image1')
                 print(profile.image1)
                 orginalpassword = request.POST['orginalpassword']
-                checkpassword = check_password(orginalpassword, request.user.password)           
-                if checkpassword:                   
+                checkpassword = check_password(
+                    orginalpassword, request.user.password)
+                if checkpassword:
                     if User.objects.filter(username=edit.username).exclude(id=request.user.id).exists():
-                        messages.error(request, 'This username already taken!!')
+                        messages.error(
+                            request, 'This username already taken!!')
                         return redirect('edit-user-account')
                     elif User.objects.filter(email=edit.email).exclude(id=request.user.id).exists():
                         messages.error(request, 'The email is already taken!!')
@@ -484,17 +512,17 @@ def edit_user_account(request):
                     else:
                         edit.save()
                         profile.save()
-                        messages.success(request, 'Profile information updated..')
+                        messages.success(
+                            request, 'Profile information updated..')
                         return redirect('edit-user-account')
                 else:
                     messages.error(request, 'Old password is incorrect')
                     return redirect('edit-user-account')
-            return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot , 'count': count})
+            return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
         else:
             return redirect('login')
     else:
         return redirect("login")
-
 
 
 def change_user_password(request):
@@ -504,8 +532,10 @@ def change_user_password(request):
             if request.method == 'POST':
                 password = request.POST['password']
                 orginalpassword = request.POST['orginalpassword']
-                checkpassword = check_password(orginalpassword, request.user.password) 
-                print(checkpassword)            
+
+                checkpassword = check_password(
+                    orginalpassword, request.user.password)
+                print(checkpassword)
                 if checkpassword:
                     edit.password = make_password(password)
                     print(edit.password)
@@ -519,12 +549,16 @@ def change_user_password(request):
     else:
         return redirect("login")
 
+
 def my_orders(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             all_orders = Order.objects.filter(user=request.user.id)
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+
             print(count)
             total = 0.00
             for item in cart:
@@ -533,7 +567,7 @@ def my_orders(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot , 'count': count})
+            return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
         else:
             return redirect('login')
     else:
@@ -546,6 +580,63 @@ def cancel_order(request, id):
             del_order = Order.objects.get(id=id)
             del_order.delete()
             return JsonResponse('true', safe=False)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+
+def search_product(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                q = request.POST['q']
+                category = request.POST['cat']
+                obj = Category.objects.get(category_name=category)
+                product = Products.objects.filter(
+                    product_name__icontains=q, category=obj.id)
+                cart = Cart.objects.filter(
+                    user=request.user.id, checkedout=False)
+                count = Cart.objects.filter(
+                    user=request.user.id, checkedout=False).count()
+                category = Category.objects.all()
+                
+                print(product)
+                total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            context = {
+                'product': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
+            }
+            return render(request, 'myapp/search-product.html', context)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+
+def categorywise(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            context = {
+                'cart': cart, 'grant': tot, 'count': count, 'category': category
+            }
+            return render(request, 'myapp/my-orders.html')
         else:
             return redirect('login')
     else:

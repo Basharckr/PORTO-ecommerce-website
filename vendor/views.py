@@ -238,9 +238,9 @@ def check_poruct_id(request):
 def vendor_orders(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
-            print(request.user.id)
+     
             order = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
-            print(order)
+       
             context = {
                 'orders': order
             }
