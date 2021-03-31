@@ -40,83 +40,20 @@
 		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4">Shop By Category</h2>
 
 		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
+			{% for item in category%}
 			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-1.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Sunglasses</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-2.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Bags</h3>
-						<span><mark class="count">4</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-3.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Electronics</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
+				<a href="{% url 'categorywise' pk=item.id %}">
 					<figure>
 						<img src="{% static 'myapp/images/categories/category-4.jpg'%}">
 					</figure>
 					<div class="category-content">
-						<h3>Fashion</h3>
+						<h3>{{item.category_name}}</h3>
 						<span><mark class="count">11</mark> products</span>
 					</div>
 				</a>
 			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-5.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Headphone</h3>
-						<span><mark class="count">3</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-6.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Shoes</h3>
-						<span><mark class="count">4</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-1.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Sunglasses</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
+			{%endfor%}
+			
 		</div>
 	</section>
 

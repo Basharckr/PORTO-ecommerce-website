@@ -75,6 +75,6 @@ urlpatterns = [
 
     # =============================Cateogry wise display====================================
 
-    path('categorywise', views.categorywise, name='categorywise'),
+    path('categorywise/<int:pk>/', views.categorywise, name='categorywise'),
 
 ]

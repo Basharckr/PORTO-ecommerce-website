@@ -619,13 +619,15 @@ def search_product(request):
         return redirect("login")
 
 
-def categorywise(request):
+def categorywise(request, pk):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            products = Products.objects.filter(category=pk)
+            print(products)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -634,9 +636,9 @@ def categorywise(request):
             tot = []
             tot.append(total)
             context = {
-                'cart': cart, 'grant': tot, 'count': count, 'category': category
+                'cart': cart, 'grant': tot, 'count': count, 'category': category, 'products': products
             }
-            return render(request, 'myapp/my-orders.html')
+            return render(request, 'myapp/categorywise.html', context)
         else:
             return redirect('login')
     else:
