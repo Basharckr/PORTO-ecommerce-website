@@ -39,6 +39,7 @@ def veSignup(request):
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
+        number = request.POST['number']
         password = request.POST['password']
         if User.objects.filter(username=username).exists():
             print('username is alredy is taken')
@@ -46,6 +47,9 @@ def veSignup(request):
         elif User.objects.filter(email=email).exists():
             print('email is already taken')
             return JsonResponse('false2', safe=False)
+        elif Profile.objects.filter(phone=number).exists():
+            print('mobile number is already exists')
+            return JsonResponse('false3', safe=False)
         else:
             user = User.objects.create_user(
                 username=username, email=email, password=password, is_staff=True)
@@ -113,9 +117,9 @@ def add_product(request):
                 quantity = request.POST['quantity']
                 product_weight = request.POST['product_weight']
                 product_description = request.POST['product_description']
-                image1 = request.FILES.get('image1')
-                image2 = request.FILES.get('image2')
-                image3 = request.FILES.get('image3')
+                image1 = request.FILES.get('thumbnail')
+                image2 = request.FILES.get('thumbnail2')
+                image3 = request.FILES.get('thumbnail3')
                 obj_category = Category.objects.get(id=product_categorie)
                 Products.objects.create(vendor=request.user, product_id=product_id, product_name=product_name, category=obj_category,
                                     product_price=product_price, product_quantity=quantity, product_weight=product_weight,
@@ -146,9 +150,9 @@ def edit_product(request, pk):
                 edit.quantity = request.POST['quantity']
                 edit.product_weight = request.POST['product_weight']
                 edit.product_description = request.POST['product_description']
-                edit.image1 = request.FILES.get('image1')
-                edit.image2 = request.FILES.get('image2')
-                edit.image3 = request.FILES.get('image3')
+                edit.image1 = request.FILES.get('thumbnail')
+                edit.image2 = request.FILES.get('thumbnail2')
+                edit.image3 = request.FILES.get('thumbnail3')
                 if Products.objects.filter(product_id=edit.product_id).exclude(id=pk).exists():
                     messages.error(request, 'This product ID already exist')
                     return redirect('edit-product', pk)

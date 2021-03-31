@@ -17,6 +17,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+  
+  
 
     <!-- Custom styles for this template-->
     <link href="{% static 'vendor/css/sb-admin-2.min.css'%}" rel="stylesheet">
@@ -390,7 +392,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{% url 've-logout' %}">Logout</a>
                 </div>
             </div>
         </div>
@@ -403,16 +405,17 @@
 
 
     <script src="{% static 'vendor/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-
+      <!-- croperjs -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+  
     <!-- Core plugin JavaScript-->
     <script src="{% static 'vendor/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
 
+
     <!-- Custom scripts for all pages-->
     <script src="{% static 'vendor/js/sb-admin-2.min.js'%}"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
- -->
+
 
     <script src="{% static 'vendor/js/scripts.js' %}"></script>
 

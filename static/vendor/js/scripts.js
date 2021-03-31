@@ -1,23 +1,32 @@
-
 //  ===========================================================================================
 //  ================================Vendor-Signup===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#vendorsignupform").validate({
         rules: {
             username: {
-                required: true, minlength: 4
+                required: true,
+                minlength: 4
             },
             email: {
-                required: true, email: true
+                required: true,
+                email: true
+            },
+            number: {
+                required: true,
+                minlength: 10,
+                maxlegth: 10
             },
             password: {
-                required: true, minlength: 5
+                required: true,
+                minlength: 5
             },
             cpassword: {
-                required: true, minlength: 5, equalTo: '#password',
+                required: true,
+                minlength: 5,
+                equalTo: '#password',
             },
         },
         messages: {
@@ -27,6 +36,9 @@ $().ready(function () {
             },
             email: {
                 required: "Please enter your company email",
+            },
+            number: {
+                required: "Enter your phone number"
             },
             password: {
                 required: "Please enter your password",
@@ -46,7 +58,7 @@ $().ready(function () {
                 data: $("#vendorsignupform").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('login')
                     }
@@ -55,6 +67,9 @@ $().ready(function () {
                     }
                     if (response == 'false2') {
                         $("#error1").html(" Email already taken!!!!")
+                    }
+                    if (response == 'false3') {
+                        $("#error1").html("This phone number already taken!!!!")
                     }
                 },
 
@@ -67,7 +82,7 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================Vendor-Login===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#vendorloginform").validate({
@@ -96,7 +111,7 @@ $().ready(function () {
                 data: $("#vendorloginform").serialize(),
                 method: "post",
 
-                success: function (response) {
+                success: function(response) {
                     if (response == 'true') {
                         window.location.replace('/vendor')
                     }
@@ -122,16 +137,18 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================ADD-product===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#addproduct").validate({
         rules: {
             product_id: {
-                required: true, minlength: 4
+                required: true,
+                minlength: 4
             },
             product_name: {
-                required: true, minlength: 4
+                required: true,
+                minlength: 4
             },
             product_categorie: {
                 required: true,
@@ -146,17 +163,18 @@ $().ready(function () {
                 required: true,
             },
             product_description: {
-                required: true, minlength: 6
+                required: true,
+                minlength: 6
             },
-            image1: {
+            thumbnail: {
                 required: true,
                 extension: "jpg|jpeg|png"
             },
-            image2: {
+            thumbnail2: {
                 required: true,
                 extension: "jpg|jpeg|png"
             },
-            image3: {
+            thumbnail3: {
                 required: true,
                 extension: "jpg|jpeg|png"
             },
@@ -187,14 +205,17 @@ $().ready(function () {
                 minlength: "Product description should be minimum 6 character"
 
             },
-            image1: {
-                required: "Please upload the product image", extension:"Only accept jpg/jpeg/png formats!!"
+            thumbnail: {
+                required: "Please upload the product image",
+                extension: "Only accept jpg/jpeg/png formats!!"
             },
-            image2: {
-                required: "Required", extension:"Only accept jpg/jpeg/png formats!!"
+            thumbnail2: {
+                required: "Required",
+                extension: "Only accept jpg/jpeg/png formats!!"
             },
-            image3: {
-                required: "Required", extension:"Only accept jpg/jpeg/png formats!!"
+            thumbnail3: {
+                required: "Required",
+                extension: "Only accept jpg/jpeg/png formats!!"
             },
         },
 
@@ -227,21 +248,20 @@ $().ready(function () {
 
 //  ===========================================================================================
 //  ================================Product name checking===================================================
-$(document).ready(function () {
+$(document).ready(function() {
     // catch the form's submit event
 
-    $('#product_name').on("change", function () {
+    $('#product_name').on("change", function() {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
             url: "check-product-name",
             // on success
-            success: function (response) {
+            success: function(response) {
                 if (response.is_taken == true) {
                     $('#product_name').removeClass('is-valid').addClass('is-invalid');
                     $('#product_name').after('<div class="invalid-feedback d-block" id="productnameError">This Product name available!</div>')
-                }
-                else {
+                } else {
                     $('#product_name').removeClass('is-invalid').addClass('is-valid');
                     $('#productnameError').remove();
 
@@ -249,7 +269,7 @@ $(document).ready(function () {
 
             },
             // on error
-            error: function (response) {
+            error: function(response) {
                 // alert the error if any error occured
                 console.log(response.responseJSON.errors)
             }
@@ -262,21 +282,20 @@ $(document).ready(function () {
 //  ===========================================================================================
 //  ================================Product ID checking===================================================
 
-$(document).ready(function () {
+$(document).ready(function() {
     // catch the form's submit event
     $('#productidError').remove();
-    $('#product_id').on("change", function () {
+    $('#product_id').on("change", function() {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
             url: "check-product-id",
             // on success
-            success: function (response) {
+            success: function(response) {
                 if (response.is_taken == true) {
                     $('#product_id').removeClass('is-valid').addClass('is-invalid');
                     $('#product_id').after('<div class="invalid-feedback d-block" id="productidError">This Product ID available!</div>')
-                }
-                else {
+                } else {
                     $('#product_id').removeClass('is-invalid').addClass('is-valid');
                     $('#productidError').remove();
 
@@ -284,7 +303,7 @@ $(document).ready(function () {
 
             },
             // on error
-            error: function (response) {
+            error: function(response) {
                 // alert the error if any error occured
                 console.log(response.responseJSON.errors)
             }
@@ -300,7 +319,7 @@ $(document).ready(function () {
 
 
 var message_ele = document.getElementById("success1");
-setTimeout(function () {
+setTimeout(function() {
     message_ele.style.display = "none";
 }, 3000);
 
@@ -308,16 +327,18 @@ setTimeout(function () {
 //  ===========================================================================================
 //  ================================Edit-Product===================================================
 
-$().ready(function () {
+$().ready(function() {
 
     console.log('d')
     $("#editproduct").validate({
         rules: {
             product_id: {
-                required: true, minlength: 4
+                required: true,
+                minlength: 4
             },
             product_name: {
-                required: true, minlength: 4
+                required: true,
+                minlength: 4
             },
             product_categorie: {
                 required: true,
@@ -332,19 +353,20 @@ $().ready(function () {
                 required: true,
             },
             product_description: {
-                required: true, minlength: 6
+                required: true,
+                minlength: 6
             },
-            image1: {
+            thumbnail: {
                 required: true,
                 extension: "jpg|jpeg|png"
 
             },
-            image2: {
+            thumbnail2: {
                 required: true,
                 extension: "jpg|jpeg|png"
 
             },
-            image3: {
+            thumbnail3: {
                 required: true,
                 extension: "jpg|jpeg|png"
 
@@ -376,15 +398,18 @@ $().ready(function () {
                 minlength: "Product description should be minimum 6 character"
 
             },
-            image1: {
-                required: "Please upload the product image", extension: "Only accept jpg/jpeg/png formats!!"
+            thumbnail: {
+                required: "Please upload the product image",
+                extension: "Only accept jpg/jpeg/png formats!!"
 
             },
-            image2: {
-                required: "Please upload the alternate product image", extension: "Only accept jpg/jpeg/png formats!!"
+            thumbnail2: {
+                required: "Please upload the alternate product image",
+                extension: "Only accept jpg/jpeg/png formats!!"
             },
-            image3: {
-                required: "Please upload the alternate product image", extension: "Only accept jpg/jpeg/png formats!!"
+            thumbnail3: {
+                required: "Please upload the alternate product image",
+                extension: "Only accept jpg/jpeg/png formats!!"
             },
         },
         // submitHandler: (addproduct, e) => {
@@ -422,7 +447,7 @@ function shipStatus(id) {
     $.ajax({
         url: 'change-ship-status/' + id + '/',
         method: 'get',
-        success: function (response) {
+        success: function(response) {
             if (response == 'shipped') {
                 window.location.replace('vendor-orders')
             }
@@ -441,10 +466,11 @@ var $uploadCrop,
     tempFilename,
     rawImg,
     imageId;
+
 function readFile(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function(e) {
             $('.upload-demo').addClass('ready');
             $('#cropImagePop').modal('show');
             rawImg = e.target.result;
@@ -452,72 +478,33 @@ function readFile(input) {
         }
         reader.readAsDataURL(input.files[0]);
 
-    }
-    else {
+    } else {
         swal("Sorry - you're browser doesn't support the FileReader API");
     }
 }
 
-//  ===========================================================================================
-//  ================================image croping===================================================
-
-// $uploadCrop = $('#upload-demo').croppie({
-//     viewport: {
-//         width: 150,
-//         height: 200,
-//     },
-//     enforceBoundary: false,
-//     enableExif: true
-// });
-// $('#cropImagePop').on('shown.bs.modal', function () {
-//     // alert('Shown pop');
-//     $uploadCrop.croppie('bind', {
-//         url: rawImg
-//     }).then(function () {
-//         console.log('jQuery bind complete');
-//     });
-// });
-
-// $('.item-img').on('change', function () {
-//     console.log($(this).data('id'))
-//     console.log($(this).val())
-//     imageId = $(this).data('id'); tempFilename = $(this).val();
-//     console.log(imageId)
-//     $('#cancelCropBtn').data('id', imageId); readFile(this);
-// });
-// $('#cropImageBtn').on('click', function (ev) {
-//     $uploadCrop.croppie('result', {
-//         type: 'base64',
-//         format: 'jpeg',
-//         size: { width: 150, height: 200 }
-//     }).then(function (resp) {
-//         $('#item-img-output').attr('src', resp);
-//         $('#cropImagePop').modal('hide');
-//     });
-// });
-//  // End upload preview image
 
 //  ===========================================================================================
 //  ================================Report customers===================================================
 
 function reportCustomers(id) {
     console.log(id)
-    var txt = $("#txtArea-"+id).val();
+    var txt = $("#txtArea-" + id).val();
     var a = $('[name=csrfmiddlewaretoken]').first().val()
     console.log(a)
     var data = {
         'csrfmiddlewaretoken': a,
         'message': txt
     }
-    console.log("txtArea-"+id)
-   console.log(txt)
+    console.log("txtArea-" + id)
+    console.log(txt)
     $.ajax({
-        url: 'report-customer/'+id+'/',
+        url: 'report-customer/' + id + '/',
         method: 'post',
         data: data,
-        success: function (response) {
+        success: function(response) {
             if (response == 'true') {
-            
+
                 alert("Reportted successfully")
             }
         }

@@ -40,13 +40,13 @@
                             <tr class="product-row">
                                 <td class="product-col">
                                     <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
+                                        <a href="{% url 'product' pk=item.user_cart.user_product.id %}" class="product-image">
                                             <img style="width: 100px;height: 100px;"
                                                 src="{{item.user_cart.user_product.image1url}}" alt="product">
                                         </a>
                                     </figure>
                                     <h2 class="product-title">
-                                        <a href="product.html">{{item.user_cart.user_product.product_name}}</a>
+                                        <a href="{% url 'product' pk=item.user_cart.user_product.id %}">{{item.user_cart.user_product.product_name}}</a>
                                     </h2>
                                 </td>
                                 {% if item.shipped == True %}
@@ -66,7 +66,7 @@
                                 <td colspan="4" class="clearfix">
                                     <div class="float-right">
                                         <span title="Remove product" 
-                                        onclick="cancelOrder('{{item.id}}')"onclick="return confirm('Are you sure you want to delete this item?');"
+                                        onclick="cancelOrder('{{item.id}}')" onclick="return confirm('Are you sure you want to delete this item?');"
                                             class="btn-remove icon-cancel"></span>
                                     </div><!-- End .float-right -->
                                 </td>

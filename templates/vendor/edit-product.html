@@ -1,17 +1,11 @@
-{% extends 'vendor/base.html' %}
-{% load static %}
-{% block title %}Edit Product{% endblock %}
-{% block content %}
+{% extends 'vendor/base.html' %} {% load static %} {% block title %}Edit Product{% endblock %} {% block content %}
 <form id="editproduct" action="" method="POST" act class="form-horizontalv ml-5" enctype="multipart/form-data">{%csrf_token %}
     <fieldset>
 
         <!-- Form Name -->
         <legend class="ml-3">ADD PRODUCTS</legend>
-        {% if messages %}
-        {% for message in messages %}
-        <span id="error1" class="ml-3">{{message}}</span>
-        {% endfor %}
-        {% endif %}
+        {% if messages %} {% for message in messages %}
+        <span id="error1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
 
 
         <!-- Text input-->
@@ -51,8 +45,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">PRICE</label>
             <div class="col-md-6">
-                <input name="product_price" value="{{products.product_price}}" class="form-control input-md"
-                    type="number">
+                <input name="product_price" value="{{products.product_price}}" class="form-control input-md" type="number">
 
             </div>
         </div>
@@ -61,8 +54,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">QUANTITY</label>
             <div class="col-md-6">
-                <input name="quantity" value="{{products.product_quantity}}" class="form-control input-md"
-                    type="number">
+                <input name="quantity" value="{{products.product_quantity}}" class="form-control input-md" type="number">
 
             </div>
         </div>
@@ -72,8 +64,7 @@
             <label class="col-md-4 control-label" for="product_weight">PRODUCT WEIGHT (weight in gram)</label>
             <div class="col-md-6">
 
-                <input name="product_weight" value="{{products.product_weight}}" class="form-control input-md"
-                    type="number">
+                <input name="product_weight" value="{{products.product_weight}}" class="form-control input-md" type="number">
 
             </div>
         </div>
@@ -82,41 +73,31 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
             <div class="col-md-6">
-                <textarea class="form-control" value=""
-                    name="product_description">{{products.proudct_description}}</textarea>
+                <textarea class="form-control" value="" name="product_description">{{products.proudct_description}}</textarea>
             </div>
         </div>
 
-        <!-- File Button -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="filebutton">main_image</label>
-            <div class="col-md-6">
+        <div class="mb-3 ml-2">
+            <label for="thumbnail">Upload image</label><br>
+            <img id="cropped" class="cropped" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
 
-                <input type="file" name="image1"
-                    onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah" src="{{products.image1url}}" alt="your image" width="100" height="100" />
 
-            </div>
+            <input type="file" name="thumbnail" id="thumbnail" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
         </div>
-        <!-- File Button -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="filebutton">extra_images</label>
-            <div class="col-md-6">
-                <input type="file" name="image2"
-                    onchange="document.getElementById('blah2').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah2" src="{{products.image2url}}"alt="your image" width="100" height="100" />
 
-            </div>
+        <div class="mb-3 ml-2">
+            <label for="thumbnail2">Upload image</label><br>
+            <img id="cropped2" class="cropped2" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
+
+
+            <input type="file" name="thumbnail2" id="thumbnail2" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
         </div>
-        <!-- File Button -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="filebutton">extra_images</label>
-            <div class="col-md-6">
-                <input type="file" name="image3"
-                    onchange="document.getElementById('blah3').src = window.URL.createObjectURL(this.files[0])">
-                <img id="blah3" src="{{products.image1url}}" alt="your image" width="100" height="100" />
+        <div class="mb-3 ml-2">
+            <label for="thumbnail3">Upload image</label><br>
+            <img id="cropped3" class="cropped3" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
 
-            </div>
+
+            <input type="file" name="thumbnail3" id="thumbnail3" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
         </div>
         <span id="error1"></span>
 
@@ -130,4 +111,213 @@
     </fieldset>
 </form>
 
-{%endblock%}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="box-2">
+                    <div class="result"></div>
+
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+
+                    <button type="button" id="load" class="btn save btn-primary">
+                    Save changes
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- first image -->
+    <script>
+        var imgSrc;
+        let result = document.querySelector(".result"),
+            save = document.querySelector(".save"),
+            cropped = document.querySelector(".cropped"),
+            upload = document.querySelector("#thumbnail"),
+            cropper = "";
+
+        upload.addEventListener("change", (e) => {
+            console.log("hauiiiiiiiiiiiiiiiiiiiiiiiiiii")
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement("img");
+                        img.id = "image";
+                        img.src = e.target.result;
+
+                        // clean result before
+                        result.innerHTML = "";
+                        // append new image
+
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 6 / 9,
+                            autoCropArea: 1,
+                            crop: function(e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+                        });
+
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        save.addEventListener("click", (e) => {
+            e.preventDefault();
+            // get result to data uri
+            imgSrc = cropper
+                .getCroppedCanvas({
+                    width: 300, // img disp value
+                })
+                .toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+
+        });
+    </script>
+    <!-- second image -->
+
+    <script>
+        var imgSrc;
+        let result2 = document.querySelector(".result"),
+            save2 = document.querySelector(".save"),
+            cropped2 = document.querySelector(".cropped2"),
+            upload2 = document.querySelector("#thumbnail2"),
+            cropper2cr = "";
+
+        upload2.addEventListener("change", (e) => {
+            console.log('hghfdyguihjhjhftytyuhhffd')
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement("img");
+                        img.id = "image2";
+                        img.src = e.target.result;
+
+                        // clean result before
+                        result2.innerHTML = "";
+                        // append new image
+                        result2.appendChild(img);
+
+                        // init cropper
+                        cropper2cr = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 6 / 9,
+                            autoCropArea: 1,
+                            crop: function(e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+                        });
+
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        save2.addEventListener("click", (e) => {
+            e.preventDefault();
+            // get result to data uri
+            imgSrc = cropper2cr
+                .getCroppedCanvas({
+                    width: 300, // img disp value
+                })
+                .toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped2.src = imgSrc;
+
+        });
+    </script>
+    <!-- Third image -->
+
+    <script>
+        var imgSrc;
+        let result3 = document.querySelector(".result"),
+            save3 = document.querySelector(".save"),
+            cropped3 = document.querySelector(".cropped3"),
+            upload3 = document.querySelector("#thumbnail3"),
+            cropper3cr = "";
+
+        upload3.addEventListener("change", (e) => {
+            console.log('hghfdyguihjhjhftytyuhhffd')
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement("img");
+                        img.id = "image2";
+                        img.src = e.target.result;
+
+                        // clean result before
+                        result3.innerHTML = "";
+                        // append new image
+                        result3.appendChild(img);
+
+                        // init cropper
+                        cropper3cr = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 6 / 9,
+                            autoCropArea: 1,
+                            crop: function(e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+                        });
+
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        save3.addEventListener("click", (e) => {
+            e.preventDefault();
+            // get result to data uri
+            imgSrc = cropper3cr
+                .getCroppedCanvas({
+                    width: 300, // img disp value
+                })
+                .toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped3.src = imgSrc;
+
+        });
+    </script>
+
+
+    {%endblock%}

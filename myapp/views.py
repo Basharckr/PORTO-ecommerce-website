@@ -432,7 +432,17 @@ def dashbaord(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
-            return render(request, 'myapp/dashboard.html', {'profile': profile})
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot , 'count': count})
         else:
             return redirect('login')
     else:
@@ -442,6 +452,16 @@ def dashbaord(request):
 def edit_user_account(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
             profile = Profile.objects.get(user=request.user.id)
             edit = User.objects.get(id=request.user.id)
             if request.method == 'POST':
@@ -469,7 +489,7 @@ def edit_user_account(request):
                 else:
                     messages.error(request, 'Old password is incorrect')
                     return redirect('edit-user-account')
-            return render(request, 'myapp/edit-user-account.html', {'profile': profile})
+            return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot , 'count': count})
         else:
             return redirect('login')
     else:
@@ -503,7 +523,17 @@ def my_orders(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             all_orders = Order.objects.filter(user=request.user.id)
-            return render(request, 'myapp/my-orders.html', {'orders': all_orders})
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(user=request.user.id, checkedout=False).count()
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot , 'count': count})
         else:
             return redirect('login')
     else:

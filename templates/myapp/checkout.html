@@ -226,14 +226,14 @@
 								<tr>
 									<td class="product-col">
 										<figure class="product-image-container">
-											<a href="product.html" class="product-image">
+											<a href="{% url 'product' pk=item.user_product.id %}" class="product-image">
 												<img src="{{item.user_product.image1url}}"
 													alt="product">
 											</a>
 										</figure>
 										<div>
 											<h2 class="product-title">
-												<a href="product.html">{{item.user_product.product_name}}</a>
+												<a href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
 											</h2>
 
 											<span class="product-qty">Qty: {{item.product_count}}</span>
