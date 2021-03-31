@@ -17,7 +17,7 @@ $().ready(function() {
             number: {
                 required: true,
                 minlength: 10,
-                maxlegth: 10
+                maxlength: 10
             },
             password: {
                 required: true,

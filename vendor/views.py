@@ -53,6 +53,7 @@ def veSignup(request):
         else:
             user = User.objects.create_user(
                 username=username, email=email, password=password, is_staff=True)
+            Profile.objects.create(user=user, phone=number)
             print('Vendor is created')
             return JsonResponse('true', safe=False)
     return render(request, 'vendor/ve-signup.html')
