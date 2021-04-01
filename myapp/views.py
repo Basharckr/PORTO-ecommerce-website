@@ -626,6 +626,7 @@ def categorywise(request, pk):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
             products = Products.objects.filter(category=pk)
             print(products)
             total = 0.00
@@ -636,9 +637,35 @@ def categorywise(request, pk):
             tot = []
             tot.append(total)
             context = {
-                'cart': cart, 'grant': tot, 'count': count, 'category': category, 'products': products
+                'cart': cart, 'grant': tot, 'count': count, 'category': category, 'products': products, 'brands': brands
             }
             return render(request, 'myapp/categorywise.html', context)
+        else:
+            return redirect('login')
+    else:
+        return redirect("login")
+
+def brandwise(request, pk):
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
+            products = Products.objects.filter(vendor=pk)
+            print(products)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.product_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            context = {
+                'cart': cart, 'grant': tot, 'count': count, 'category': category, 'products': products, 'brands': brands
+            }
+            return render(request, 'myapp/brandwise.html', context)
         else:
             return redirect('login')
     else:

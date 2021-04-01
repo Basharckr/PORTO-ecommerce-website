@@ -73,8 +73,10 @@ urlpatterns = [
 
     path('search-product', views.search_product, name='search-product'),
 
-    # =============================Cateogry wise display====================================
+    # =============================Cateogry-brand wise display====================================
 
     path('categorywise/<int:pk>/', views.categorywise, name='categorywise'),
+    path('brandwise/<int:pk>/', views.brandwise, name='brandwise'),
+
 
 ]

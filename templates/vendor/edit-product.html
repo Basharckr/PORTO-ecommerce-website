@@ -83,6 +83,7 @@
 
 
             <input type="file" name="thumbnail" id="thumbnail" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text" id="text" hidden cols="30" rows="10"></textarea>
         </div>
 
         <div class="mb-3 ml-2">
@@ -91,6 +92,8 @@
 
 
             <input type="file" name="thumbnail2" id="thumbnail2" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text2" id="text2" hidden cols="30" rows="10"></textarea>
+
         </div>
         <div class="mb-3 ml-2">
             <label for="thumbnail3">Upload image</label><br>
@@ -98,6 +101,8 @@
 
 
             <input type="file" name="thumbnail3" id="thumbnail3" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text3" id="text3" hidden cols="30" rows="10"></textarea>
+
         </div>
         <span id="error1"></span>
 
@@ -152,7 +157,6 @@
             cropper = "";
 
         upload.addEventListener("change", (e) => {
-            console.log("hauiiiiiiiiiiiiiiiiiiiiiiiiiii")
             if (e.target.files.length) {
                 // start file reader
                 const reader = new FileReader();
@@ -197,6 +201,7 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped.src = imgSrc;
+            $("#text").val(cropped.src)
 
         });
     </script>
@@ -211,7 +216,6 @@
             cropper2cr = "";
 
         upload2.addEventListener("change", (e) => {
-            console.log('hghfdyguihjhjhftytyuhhffd')
             if (e.target.files.length) {
                 // start file reader
                 const reader = new FileReader();
@@ -256,7 +260,7 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped2.src = imgSrc;
-
+            $("#text2").val(cropped2.src)
         });
     </script>
     <!-- Third image -->
@@ -315,7 +319,7 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped3.src = imgSrc;
-
+            $("#text3").val(cropped3.src)
         });
     </script>
 

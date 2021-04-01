@@ -2,7 +2,8 @@
 
 
 
-<form id="addproduct" runat="server" action="{% url 'add-product' %}" method="POST" act class="form-horizontalv ml-5" enctype="multipart/form-data">{% csrf_token %}
+<form id="addproduct" runat="server" action="{% url 'add-product' %}" method="post" act class="form-horizontalv ml-5"
+    enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
 
         <!-- Form Name -->
@@ -15,7 +16,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_id">PRODUCT ID</label>
             <div class="col-md-6">
-                <input name="product_id" id="product_id" placeholder="Product id" class="form-control input-md" type="number">
+                <input name="product_id" id="product_id" placeholder="Product id" class="form-control input-md"
+                    type="number">
             </div>
         </div>
 
@@ -24,7 +26,8 @@
             <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
             <div class="col-md-6">
 
-                <input name="product_name" id="product_name" placeholder="Product name" class="form-control input-md" type="text">
+                <input name="product_name" id="product_name" placeholder="Product name" class="form-control input-md"
+                    type="text">
 
             </div>
         </div>
@@ -33,7 +36,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_categorie">PRODUCT CATEGORY</label>
             <div class="col-md-6">
-                <select name="product_categorie" placeholder="Select product category" class="form-control">
+                <select name="product_categorie" id="product_categorie" placeholder="Select product category"
+                    class="form-control">
                     {% for category in categorys %}
                     <option value="{{category.id}}">{{ category.category_name }}</option>
                     {% endfor %}
@@ -44,7 +48,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">PRICE</label>
             <div class="col-md-6">
-                <input name="product_price" placeholder="Price" class="form-control input-md" type="number">
+                <input name="product_price" id="product_price" placeholder="Price" class="form-control input-md"
+                    type="number">
 
             </div>
         </div>
@@ -53,7 +58,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">QUANTITY</label>
             <div class="col-md-6">
-                <input name="quantity" placeholder="Quantity" class="form-control input-md" type="number">
+                <input name="quantity" id="quantity" placeholder="Quantity" class="form-control input-md" type="number">
 
             </div>
         </div>
@@ -63,7 +68,8 @@
             <label class="col-md-4 control-label" for="product_weight">PRODUCT WEIGHT (weight in gram)</label>
             <div class="col-md-6">
 
-                <input name="product_weight" placeholder="Product weight" class="form-control input-md" type="number">
+                <input name="product_weight" id="product_weight" placeholder="Product weight"
+                    class="form-control input-md" type="number">
 
             </div>
         </div>
@@ -72,31 +78,40 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
             <div class="col-md-6">
-                <textarea class="form-control" name="product_description"></textarea>
+                <textarea class="form-control" name="product_description" id="product_description"></textarea>
             </div>
         </div>
 
         <div class="mb-3 ml-2">
             <label for="thumbnail">Upload image</label><br>
-            <img id="cropped" class="cropped" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
+            <img id="cropped" class="cropped" onclick="openImage()" onchange="preview()" id="frame1"
+                style="height: 10rem; width: 10rem;">
 
 
-            <input type="file" name="thumbnail" id="thumbnail" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <input type="file" name="thumbnail" id="thumbnail"
+                oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text" hidden id="text" cols="30" rows="10"></textarea>
         </div>
 
         <div class="mb-3 ml-2">
             <label for="thumbnail2">Upload image</label><br>
-            <img id="cropped2" class="cropped2" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
+            <img id="cropped2" class="cropped2" onclick="openImage()" onchange="preview()" id="frame1"
+                style="height: 10rem; width: 10rem;">
 
 
-            <input type="file" name="thumbnail2" id="thumbnail2" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <input type="file" name="thumbnail2" id="thumbnail2"
+                oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text2" id="text2" hidden cols="30" rows="10"></textarea>
         </div>
         <div class="mb-3 ml-2">
             <label for="thumbnail3">Upload image</label><br>
-            <img id="cropped3" class="cropped3" onclick="openImage()" onchange="preview()" id="frame1" style="height: 10rem; width: 10rem;">
+            <img id="cropped3" class="cropped3" onclick="openImage()" onchange="preview()" id="frame1"
+                style="height: 10rem; width: 10rem;">
 
 
-            <input type="file" name="thumbnail3" id="thumbnail3" oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <input type="file" name="thumbnail3" id="thumbnail3"
+                oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+            <textarea name="text3" id="text3" hidden cols="30" rows="10"></textarea>
         </div>
 
         <span id="error1"></span>
@@ -104,14 +119,16 @@
         <!-- Button -->
         <div class="form-group">
             <div class="col-md-6">
-                <button type="submit" name="singlebutton" class="btn btn-primary mt-4">Add Product</button>
+                <button type="submit" id="createBtn" name="singlebutton" class="btn btn-primary mt-4">Add
+                    Product</button>
             </div>
         </div>
     </fieldset>
 </form>
 
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
@@ -131,12 +148,12 @@
                 <div class="modal-footer">
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
-                </button>
+                        Close
+                    </button>
 
                     <button type="button" id="load" class="btn save btn-primary">
-                    Save changes
-                </button>
+                        Save changes
+                    </button>
                 </div>
             </div>
         </div>
@@ -173,7 +190,7 @@
                             viewMode: 2,
                             aspectRatio: 6 / 9,
                             autoCropArea: 1,
-                            crop: function(e) {
+                            crop: function (e) {
                                 console.log(e.detail.x);
                                 console.log(e.detail.y);
                             }
@@ -195,6 +212,7 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped.src = imgSrc;
+            $("#text").val(cropped.src)
 
         });
     </script>
@@ -231,7 +249,7 @@
                             viewMode: 2,
                             aspectRatio: 6 / 9,
                             autoCropArea: 1,
-                            crop: function(e) {
+                            crop: function (e) {
                                 console.log(e.detail.x);
                                 console.log(e.detail.y);
                             }
@@ -253,6 +271,7 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped2.src = imgSrc;
+            $("#text2").val(cropped2.src)
 
         });
     </script>
@@ -289,7 +308,7 @@
                             viewMode: 2,
                             aspectRatio: 6 / 9,
                             autoCropArea: 1,
-                            crop: function(e) {
+                            crop: function (e) {
                                 console.log(e.detail.x);
                                 console.log(e.detail.y);
                             }
@@ -311,8 +330,11 @@
                 .toDataURL();
             $("#exampleModalCenter").modal("hide");
             cropped3.src = imgSrc;
+            $("#text3").val(cropped3.src)
+
 
         });
     </script>
+
 
     {%endblock%}

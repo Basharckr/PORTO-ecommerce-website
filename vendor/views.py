@@ -7,6 +7,8 @@ from owner.models import Category
 from myapp.models import Cart, ShipAddress, Order, Profile
 from django.contrib.auth import logout
 from django.contrib import messages
+import base64
+from django.core.files.base import ContentFile
 
 
 # Create your views here.
@@ -32,7 +34,7 @@ def veIndex(request):
             return render(request, 'vendor/ve-index.html', context)
     else: 
         print('helloo')    
-        return redirect('ve-login')
+        return render(request, 'vendor/ve-login.html')
 
 
 def veSignup(request):
@@ -118,13 +120,20 @@ def add_product(request):
                 quantity = request.POST['quantity']
                 product_weight = request.POST['product_weight']
                 product_description = request.POST['product_description']
-                image1 = request.FILES.get('thumbnail')
-                image2 = request.FILES.get('thumbnail2')
-                image3 = request.FILES.get('thumbnail3')
+                image1 = request.POST['text']
+                image2 = request.POST['text2']
+                image3 = request.POST['text3']
+                format, img1 = image1.split(';base64,')
+                ext = format.split('/')[-1]
+                pic1 = ContentFile(base64.b64decode(img1), name=product_name+ '.' + ext)
+                format, img2 = image2.split(';base64,')
+                pic2 = ContentFile(base64.b64decode(img2), name=product_name+ '.' + ext)
+                format, img3 = image3.split(';base64,')
+                pic3 = ContentFile(base64.b64decode(img3), name=product_name+ '.' + ext)
                 obj_category = Category.objects.get(id=product_categorie)
                 Products.objects.create(vendor=request.user, product_id=product_id, product_name=product_name, category=obj_category,
                                     product_price=product_price, product_quantity=quantity, product_weight=product_weight,
-                                    proudct_description=product_description, image1=image1, image2=image2, image3=image3)
+                                    proudct_description=product_description, image1=pic1, image2=pic2, image3=pic3)
                 print('product added successfully')
                 messages.success(request, 'Product added successfully')
                 return redirect('add-product')
@@ -151,9 +160,16 @@ def edit_product(request, pk):
                 edit.quantity = request.POST['quantity']
                 edit.product_weight = request.POST['product_weight']
                 edit.product_description = request.POST['product_description']
-                edit.image1 = request.FILES.get('thumbnail')
-                edit.image2 = request.FILES.get('thumbnail2')
-                edit.image3 = request.FILES.get('thumbnail3')
+                image1 = request.POST['text']
+                image2 = request.POST['text2']
+                image3 = request.POST['text3']
+                format, img1 = image1.split(';base64,')
+                ext = format.split('/')[-1]
+                edit.image1 = ContentFile(base64.b64decode(img1), name=edit.product_name+ '.' + ext)
+                format, img2 = image2.split(';base64,')
+                edit.image2 = ContentFile(base64.b64decode(img2), name=edit.product_name+ '.' + ext)
+                format, img3 = image3.split(';base64,')
+                edit.image3 = ContentFile(base64.b64decode(img3), name=edit.product_name+ '.' + ext)
                 if Products.objects.filter(product_id=edit.product_id).exclude(id=pk).exists():
                     messages.error(request, 'This product ID already exist')
                     return redirect('edit-product', pk)

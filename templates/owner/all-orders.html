@@ -24,7 +24,7 @@
                         <th>Shipping Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="search_here">
                     {% for item in all_orders %}
                     <tr> 
                         <th>{{forloop.counter}}</th>
@@ -50,6 +50,34 @@
         </div>
     </div>
 </div>
+
+<!-- ------------search-------------- -->  
+  <script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
+
+
+<script>
+    $(document).ready(function ($) {
+        $('.search_here tr').each(function () {
+            $(this).attr('data-search-term',
+                $(this).text().toLowerCase());
+                console.log('hiii')
+
+
+        });
+        $('.search_key').on('keyup', function () {
+            console.log('jjjjjj')
+            var searchTerm = $(this).val().toLowerCase();
+            $('.search_here tr').each(function () {
+                if ($(this).filter('[data-search-term *= ' +
+                    searchTerm + ']').length > 0 || searchTerm.length < 1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
 
 
 {% endblock %}
