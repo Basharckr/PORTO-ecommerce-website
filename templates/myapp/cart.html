@@ -1,4 +1,7 @@
-
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block title %}Porto-Cart{% endblock %}
+{% block content %}
 
 <main class="main">
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -37,11 +40,13 @@
 								<td class="product-col">
 									<figure class="product-image-container">
 										<a href="{% url 'product' pk=item.user_product.id %}" class="product-image">
-											<img src="{{item.user_product.image1url}}" style="height: 100px;width:100px" alt="product">
+											<img src="{{item.user_product.image1url}}" style="height: 100px;width:100px"
+												alt="product">
 										</a>
 									</figure>
 									<h2 class="product-title">
-										<a href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
+										<a
+											href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
 									</h2>
 								</td>
 								<td>{{item.user_product.product_price}}</td>
@@ -82,7 +87,7 @@
 																		<div
 																			class="product-single-carousel owl-carousel owl-theme">
 																			<div class="product-item">
-																				<img class="product-single-image" 
+																				<img class="product-single-image"
 																					src="{{item.user_product.image1url}}"
 																					data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-1-big.jpg" />
 																			</div>
@@ -136,8 +141,8 @@
 
 																	<div class="price-box">
 																		<span class="old-price">₹81.00</span>
-																		<span
-																			class="product-price">	{{item.user_product.product_price}}</span>
+																		<span class="product-price">
+																			{{item.user_product.product_price}}</span>
 																	</div><!-- End .price-box -->
 
 																	<div class="product-desc">
@@ -206,7 +211,8 @@
 										<!-- End-modal -->
 
 										<span title="Remove product" onclick="removeProduct('{{item.id}}')"
-										onclick="return confirm('Are you sure you want to delete this product?');" class="btn-remove icon-cancel"></span>
+											onclick="return confirm('Are you sure you want to delete this product?');"
+											class="btn-remove icon-cancel"></span>
 
 									</div><!-- End .float-right -->
 								</td>
@@ -357,6 +363,4 @@
 </tfoot>
 
 {% endif %}
-
-
-{% endblock %}
+{%endblock%}

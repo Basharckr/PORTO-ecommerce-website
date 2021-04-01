@@ -39,6 +39,10 @@ urlpatterns = [
     path('manage-customers', views.manage_customers, name='manage-customers'),
     path('report-customer/<int:id>/', views.report_customer, name='report-customer'),
 
+    # ==============================Changin ship status====================================
+
+    path('export-excel', views.export_excel, name='export-excel'),
+
 
 
 ] 

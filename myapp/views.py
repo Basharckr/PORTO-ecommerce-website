@@ -134,6 +134,7 @@ def landing(request):
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
+        brands = User.objects.filter(is_active=True, is_staff=True)
         category = Category.objects.all()
         print(count)
         total = 0.00
@@ -144,7 +145,7 @@ def landing(request):
         tot = []
         tot.append(total)
         context = {
-            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
         }
         return render(request, 'myapp/landing.html', context)
     else:
@@ -163,6 +164,8 @@ def product(request, pk):
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
         category = Category.objects.all()
+        brands = User.objects.filter(is_active=True, is_staff=True)
+
         print(count)
         total = 0.00
         for item in cart:
@@ -172,7 +175,7 @@ def product(request, pk):
         tot = []
         tot.append(total)
         context = {
-            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
         }
         return render(request, 'myapp/product_detail.html', context)
     else:
@@ -186,6 +189,7 @@ def user_cart(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
             total = 0.00
             for item in cart:
@@ -196,7 +200,7 @@ def user_cart(request):
             tot.append(total)
             request.session['total'] = tot
             context = {
-                'cart': cart, 'grant': tot, 'grant': tot, 'count': count, 'category': category
+                'cart': cart, 'grant': tot, 'grant': tot, 'count': count, 'category': category, 'brands': brands
             }
             return render(request, 'myapp/cart.html', context)
         else:
@@ -286,6 +290,8 @@ def checkout(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
+
 
             print(count)
             total = 0.00
@@ -297,7 +303,7 @@ def checkout(request):
             tot.append(total)
             print(address)
             context = {
-                'address': address, 'cart': cart, 'grant': tot, 'count': count, 'category': category
+                'address': address, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
             }
             return render(request, 'myapp/checkout.html', context)
         else:
@@ -390,10 +396,11 @@ def placeorder(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
             print(count)
 
-            return render(request, 'myapp/placeorder.html', {'address': address, 'total': total, 'cart': cart, 'count': count, 'category': category})
+            return render(request, 'myapp/placeorder.html', {'address': address, 'total': total, 'cart': cart, 'count': count, 'category': category, 'brands': brands})
         else:
             return redirect('login')
     else:
@@ -404,8 +411,10 @@ def success(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
+
             context = {
-                'category': category
+                'category': category, 'brands': brands
             }
             return render(request, 'myapp/success.html', context)
         else:
@@ -456,6 +465,7 @@ def dashbaord(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
             print(count)
             total = 0.00
@@ -465,7 +475,7 @@ def dashbaord(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
+            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
         else:
             return redirect('login')
     else:
@@ -479,6 +489,7 @@ def edit_user_account(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
             print(count)
             total = 0.00
@@ -518,7 +529,7 @@ def edit_user_account(request):
                 else:
                     messages.error(request, 'Old password is incorrect')
                     return redirect('edit-user-account')
-            return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
+            return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
         else:
             return redirect('login')
     else:
@@ -558,6 +569,7 @@ def my_orders(request):
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
             print(count)
             total = 0.00
@@ -567,7 +579,7 @@ def my_orders(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot, 'count': count, 'category': category})
+            return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
         else:
             return redirect('login')
     else:
@@ -600,6 +612,7 @@ def search_product(request):
                 count = Cart.objects.filter(
                     user=request.user.id, checkedout=False).count()
                 category = Category.objects.all()
+                brands = User.objects.filter(is_active=True, is_staff=True)
                 
                 print(product)
                 total = 0.00
@@ -610,7 +623,7 @@ def search_product(request):
             tot = []
             tot.append(total)
             context = {
-                'product': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category
+                'product': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
             }
             return render(request, 'myapp/search-product.html', context)
         else:

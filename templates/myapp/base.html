@@ -67,15 +67,21 @@
                                 <a href="{% url 'landing' %}">Home</a>
                             </li>
                             <li>
-                                <a href="category.html">Categories</a>
+                                <a href="#">Categories</a>
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <a href="#" class="nolink">Available Categories</a>
+                                            <span class="nolink">Available Categories</span>
                                             <ul class="submenu">
                                                 {% for item in category %}
-                                                <li><a href="#">{{item.category_name}}</a></li>
+                                                <li><a href="{% url 'categorywise' pk=item.id %}">{{item.category_name}}</a></li>
                                                 {%endfor%}
+                                                <span  class="nolink">Available Brands</span>
+                                            <ul class="submenu">
+                                                {% for item in brands %}
+                                                <li><a href="{% url 'brandwise' pk=item.id %}">{{item.username}}</a></li>
+                                                {%endfor%}
+                                            </ul>
                                             </ul>
                                         </div>
 
