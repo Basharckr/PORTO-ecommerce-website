@@ -41,7 +41,7 @@ urlpatterns = [
 
     # ==============================Changin ship status====================================
 
-    path('export-excel', views.export_excel, name='export-excel'),
+    path('vendor-report', views.vendor_report, name='vendor-report'),
 
 
 

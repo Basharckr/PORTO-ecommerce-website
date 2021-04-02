@@ -351,27 +351,44 @@ def report_customer(request, id):
         return redirect('ad-login')
 
 
-def export_excel(request):
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=Report'+\
-        request.user.username+'_'+str(datetime.datetime.now()) +'.xls'
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Vendor report')
-    row_num = 0
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-    
-    columns = ['Username', 'Product', 'Price', 'Quantity',  'Ordered date', 'Payment status', 'Shipping status']
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
+def vendor_report(request):
+    if request.user.is_active == True:
+        if request.user.is_authenticated and request.user.is_staff == True:
+            if request.method == 'POST':
+                start = request.POST['start']
+                end = request.POST['end']
+                response = HttpResponse(content_type='application/ms-excel')
+                response['Content-Disposition'] = 'attachment; filename=Report'+\
+                    request.user.username+'_'+str(datetime.datetime.now()) +'.xls'
+                wb = xlwt.Workbook(encoding='utf-8')
+                ws = wb.add_sheet('Vendor report')
+                row_num = 0
+                font_style = xlwt.XFStyle()
+                font_style.font.bold = True
+                
+                columns = ['Username', 'Product', 'Price', 'Quantity',  'Ordered date', 'Payment status', 'Shipping status']
+                for col_num in range(len(columns)):
+                    ws.write(row_num, col_num, columns[col_num], font_style)
 
-    font_style = xlwt.XFStyle()
-    rows = Order.objects.filter(user_cart__user_product__vendor=request.user.id).values_list('user__username', 'user_cart__user_product__product_name',
-                                                                                            'amount', 'quantity', 'ordered_date', 'payment_status',
-                                                                                            'shipped')
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, str(row[col_num]), font_style)
-    wb.save(response)
-    return response
+                font_style = xlwt.XFStyle()
+                rows = Order.objects.filter(user_cart__user_product__vendor=request.user.id, ordered_date__range=[start, end]).values_list('user__username', 'user_cart__user_product__product_name',
+                                                                                                        'amount', 'quantity', 'ordered_date', 'payment_status',
+                                                                                                        'shipped')
+                for row in rows:
+                    row_num += 1
+                    for col_num in range(len(row)):
+                        ws.write(row_num, col_num, str(row[col_num]), font_style)
+                wb.save(response)
+                return response
+            else:
+                order = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
+        
+                context = {
+                    'orders': order
+                }
+            return render(request, 'vendor/vendor-report.html', context)
+        else:
+            return redirect('ad-login')
+    else:
+        return redirect('ad-login')
+    
