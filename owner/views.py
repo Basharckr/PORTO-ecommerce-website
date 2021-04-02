@@ -69,15 +69,33 @@ def create_category(request):
         category = Category.objects.all()
         if request.method == 'POST':
             categoryname = request.POST['category']
+            category_offer = request.POST['offer']
+
             if Category.objects.filter(category_name=categoryname).exists():
                 print('category already added')
                 return JsonResponse('false', safe=False)
             else:
                 print('category is added')
-                Category.objects.create(category_name=categoryname)
+                Category.objects.create(category_name=categoryname, category_offer=category_offer)
                 return JsonResponse('true', safe=False)
 
         return render(request, 'owner/create-category.html', {'category': category})
+    else:
+        return redirect('ad-login')
+
+def change_offer_validity(request, id):
+    if request.user.is_authenticated and request.user.is_superuser == True:
+        category = Category.objects.get(id=id)
+        if category.valid == False:
+            print(category.valid)
+            category.valid = True
+            category.save()
+            print(category.valid)
+            return JsonResponse('true', safe=False)
+        else:
+            category.valid = False
+            category.save() 
+            return JsonResponse('false', safe=False)
     else:
         return redirect('ad-login')
 
@@ -97,6 +115,7 @@ def edit_category(request, pk):
         edit = Category.objects.get(id=pk)
         if request.method == 'POST':
             edit.category_name = request.POST['cate']
+            edit.category_offer = request.POST['offer']
             if Category.objects.filter(category_name=edit.category_name).exclude(id=pk).exists():
                 print('category already taken')
                 return JsonResponse('false', safe=False)
@@ -225,7 +244,8 @@ def all_report(request):
                 ws.write(row_num, col_num, columns[col_num], font_style)
 
             font_style = xlwt.XFStyle()
-            rows = Order.objects.filter(ordered_date__range=[start, end]).values_list('user__username', 'user_cart__user_product__product_name', 'user_cart__user_product__vendor__username',
+            rows = Order.objects.filter(ordered_date__range=[start, end]).values_list('user__username', 'user_cart__user_product__product_name',
+                                                'user_cart__user_product__vendor__username',
                                                 'amount', 'quantity', 'ordered_date', 'payment_status', 'shipped')
             for row in rows:
                 row_num += 1

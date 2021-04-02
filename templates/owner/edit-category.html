@@ -2,69 +2,68 @@
 {% load static %}
 {% block title %}Edit categary{% endblock %}
 {% block content %}
-
-<form class="ml-5">
-    <div class="form-row align-items-center">{% csrf_token %}
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Edit Category:</label>
-
-        <div class="col-auto">
-
-            <input type="text" class="form-control mb-2" id="edit" value="{{category.category_name}}">
-        </div>
-        <div class="col-auto">
-            <button type="button" id="editbutton" class="btn btn-primary mb-2">Change</button>
-        </div>
-        <span id="error1"></span>
+<div class="container">
+<form id="edit1">{% csrf_token %}
+    <div class="form-group">
+        <label for="" style="float: left;">Edit categoryname</label>
+        <input type="text" class="form-control" id="edit" name="editcategoryname" aria-describedby="emailHelp"
+            value="{{category.category_name}}">
 
     </div>
+    <div class="form-group">
+        <label for="" style="float: left;">Edit category offer</label>
+        <input type="number" class="form-control" id="offer" name="offer" value="{{category.category_offer}}">
+    <span id="error1"></span>
+
+    </div>
+
+    <a class="btn btn-dark" href="{% url 'manage-category' %}">Back</a>
+    <button type="button" id="editbutton" class="btn btn-info">Save changes</button>
+
 </form>
-
-
+</div>
 <script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 <script>
-
-    $("#editbutton").click(function () {
-        console.log("here");
-        var fname = $("#edit").val()
-        var fname_len = $("#edit").val().length
-        var pk = '{{category.id}}'
-        console.log(pk)
-        var data = {
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-            'cate': fname,
-
-        }
-        if (fname_len < 3) {
-            $("#error1").html('category should be 3 characters')
-        }
-
-
-        else {
-            console.log("hai")
-            // create an AJAX call
-            $.ajax({
-                url: "/owner/edit-category/"+pk+"/",
-                method: "POST",
-                data: data,
-                dataType: 'json',
-                // on success
-
-                success: function (data) {
-                    if (data == 'true') {
-                        window.location.replace('/owner/manage-category')
-                    }
-                    if (data == 'false') {
-                        $('#error1').html("This category already taken. Enter another one!")
-                    }
-        
+    $("#editbutton").click(function(){
+        console.log('jjj')
+    var name = $("#edit").val()
+    var name_len = $("#edit").val().length
+    var offer = $("#offer").val()
+    var offer_len = $("#offer").val()
+    var pk = '{{category.id}}'
+    var data = {
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+        'cate': name,
+        'offer': offer
+    }
+    if (name_len < 3) {
+        $("#error1").html('category should be 3 characters')
+    }
+    if (offer_len == '') {
+        $("#error1").html('Enter offer in percentage')
+    }
+    else {
+        // create an AJAX call
+        $.ajax({
+            url: "/owner/edit-category/"+pk+"/",
+            method: "POST",
+            data: data,
+            dataType: 'json',
+            // on success
+            success: function (data) {
+                if (data == 'true') {
+                    window.location.replace('/owner/manage-category')
                 }
-            })
+                if (data == 'false') {
+                    $('#error1').html("This category already taken. Enter another one!")
+                }
+    
+            }
+        })
 
-        }
-    })
+    }
+})
 </script>
-
-
 {% endblock %}

@@ -24,6 +24,7 @@
                     <tr>
                         <th>SI</th>
                         <th>Vendor</th>
+                        <th>user</th>
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
@@ -38,6 +39,7 @@
                     <tr> 
                         <th>{{forloop.counter}}</th>
                         <td>{{item.user_cart.user_product.vendor}}</td>
+                        <td>{{item.user.username}}</td>
                         <td>{{item.user_cart.user_product.product_name}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.user_cart.subtotal}}</td>

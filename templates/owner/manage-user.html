@@ -26,12 +26,12 @@
                         <td>{{user.username}}</td>
                         <td>{{user.email}}</td>
 
-                        <td>
+                        <td class="text-center">
                         {% if user.is_active == True %}
-                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-danger btn-xs"><span
+                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-sm btn-danger btn-xs"><span
                                     class="glyphicon glyphicon-remove"></span>Block</a>
                         {% else %}
-                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-success btn-xs"><span
+                            <a href="{% url 'block-unblock-user' pk=user.id %}" class="btn btn-sm btn-success btn-xs"><span
                                     class="glyphicon glyphicon-remove"></span>Unblock</a>
                         {% endif %}
 

@@ -5,6 +5,8 @@
 <form class="col-md-6 ml-auto mr-auto" id="addcategory">{% csrf_token %}
     <div class="form-group">
         <input type="text" name="category" class="form-control" placeholder="Enter your category..">
+        <input type="number" name="offer" class="form-control mt-1" placeholder="Category offer in %">
+
         <span id="error1"></span>
     </div>
     
@@ -21,12 +23,15 @@
                 <thead>
                     <tr>
                         <th>Category name</th>
+                        <th>Category offer</th>
+                        <th>Offer validity</th>
                     </tr>
                 </thead>
                 <tbody class="search_here">{% for category in category %}
                     <tr>
                         <td>{{category.category_name}}</td>
-
+                        <td>{{category.category_offer}}</td>
+                        <td>{{category.valid}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
