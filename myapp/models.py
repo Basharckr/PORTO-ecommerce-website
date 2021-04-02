@@ -44,6 +44,7 @@ class ShipAddress(models.Model):
     state = models.CharField(max_length=150, null=True, blank=True)
     country = models.CharField(max_length=150, null=True, blank=True)
     number = models.CharField(max_length=20, null=True, blank=True)
+    select = models.BooleanField(default=False)
 
 
 class Order(models.Model):

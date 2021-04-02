@@ -325,9 +325,23 @@ def add_address(request):
                 pincode = request.POST['pincode']
                 country = request.POST['country']
                 number = request.POST['number']
-                ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
-                                           organization=organization, streetaddress=street, city=city,
-                                           state=state, pincode=pincode, country=country, number=number)
+                check = request.POST['check']
+                print('checkboxxxx', check)
+                data = ShipAddress.objects.filter(select=True, user=request.user)
+                print(data)
+                if check == '1':
+                    for item in data:
+                        item.select = False
+                        item.save()
+                    ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
+                                        organization=organization, streetaddress=street, city=city,
+                                        state=state, pincode=pincode, country=country, number=number, select=True)
+                else:
+                    ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
+                                            organization=organization, streetaddress=street, city=city,
+                                            state=state, pincode=pincode, country=country, number=number)
+                
+
                 return JsonResponse('true', safe=False)
             else:
                 return JsonResponse('false', safe=False)
@@ -466,6 +480,8 @@ def dashbaord(request):
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
+            address = ShipAddress.objects.filter(select=True, user=request.user)
+            print(address)
 
             print(count)
             total = 0.00
@@ -475,7 +491,8 @@ def dashbaord(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
+            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot,'count': count,
+                                                             'category': category, 'brands': brands, 'address': address})
         else:
             return redirect('login')
     else:

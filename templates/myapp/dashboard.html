@@ -61,9 +61,41 @@
 							</div><!-- End .card-body -->
 						</div><!-- End .card -->
 					</div><!-- End .col-md-6 -->
+				
 
 
 				</div><!-- End .row -->
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header">
+								Address Book
+							</div><!-- End .card-header -->
+
+							<div class="card-body">
+								<div class="col-md-6">
+									{% if address%}
+									<Strong>Saved Address</Strong><br>
+									<br>
+									{% for address in address %}
+									<address>
+										{{address.firstname}} <br>
+										{{address.organization}}<br>
+										{{address.streetaddress}}<br>
+										{{address.city}} <br>
+										{{address.state}} <br>
+										{{address.country}} <br>
+										{{address.number}} <br>
+									</address>
+									{% endfor %}
+									{% else %}
+									<strong>No saved address</strong>
+									{%endif%}
+								</div>
+							
+							</div><!-- End .card-body -->
+						</div><!-- End .card -->
+					</div><!-- End .col-md-6 -->
+
 
 			</div><!-- End .col-lg-9 -->
 

@@ -2,7 +2,11 @@
 {% load static %}
 {% block title %}PORTO||Checkout{% endblock %}
 {% block content %}
-
+<style>
+	.custom-checkbox .custom-control-label:before {
+		display: none;
+	}
+</style>
 <main class="main">
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
 		<div class="container">
@@ -35,16 +39,16 @@
 				<ul class="checkout-steps">
 					<li>
 						<h2 class="step-title">Shipping Address</h2>
-						
+
 
 						<div class="shipping-step-addresses">
 							{% if address%}
 							{% for item in address %}
 
-							<div class="shipping-address-box"  id="set-add-{{item.id}}">
+							<div class="shipping-address-box" id="set-add-{{item.id}}">
 								<!-- put active to class to select -->
-								
-								<address >
+
+								<address>
 									{{item.firstname}} <br>
 									{{item.organization}}, <br>
 									{{item.streetaddress}}, {{item.city}} <br>
@@ -146,14 +150,14 @@
 														</div><!-- End .form-group -->
 
 														<!-- <div class="form-group-custom-control">
-																<div class="custom-control custom-checkbox">
-																	<input type="checkbox" class="custom-control-input"
-																		id="address-save">
-																	<label class="custom-control-label"
-																		for="address-save">Save
-																		in Address book</label>
-																</div>End .custom-checkbox
-															</div>End .form-group -->
+															<div class="custom-control custom-checkbox">
+																<input type="checkbox" class="custom-control-input"
+																	id="address-save">
+																<label class="custom-control-label"
+																	for="address-save">Save
+																	in Address book</label>
+															</div>
+														</div> -->
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-link btn-sm"
@@ -188,12 +192,10 @@
 									United States <br>
 									(123) 789-6150 <br>
 								</address>
-
 								<div class="address-box-action clearfix">
 									<a href="#" class="btn btn-sm btn-link">
 										Edit
 									</a>
-
 									<a href="#" class="btn btn-sm btn-outline-secondary float-right">
 										Ship Here
 									</a>
@@ -227,13 +229,13 @@
 									<td class="product-col">
 										<figure class="product-image-container">
 											<a href="{% url 'product' pk=item.user_product.id %}" class="product-image">
-												<img src="{{item.user_product.image1url}}"
-													alt="product">
+												<img src="{{item.user_product.image1url}}" alt="product">
 											</a>
 										</figure>
 										<div>
 											<h2 class="product-title">
-												<a href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
+												<a
+													href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
 											</h2>
 
 											<span class="product-qty">Qty: {{item.product_count}}</span>
@@ -332,7 +334,8 @@
 
 					<div class="form-group-custom-control">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="address-save">
+							<input type='hidden' value='0' name='check'>
+							<input type='checkbox' value='1' name='check' class="checkboxx">
 							<label class="custom-control-label" for="address-save">Save in Address book</label>
 						</div><!-- End .custom-checkbox -->
 					</div><!-- End .form-group -->

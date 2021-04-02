@@ -353,21 +353,21 @@ def report_customer(request, id):
 
 def export_excel(request):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=Full_Report'+\
+    response['Content-Disposition'] = 'attachment; filename=Report'+\
         request.user.username+'_'+str(datetime.datetime.now()) +'.xls'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Full report')
+    ws = wb.add_sheet('Vendor report')
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
     
-    columns = ['Username', 'Product', 'Quantity', 'Price', 'Ordered date', 'Payment status', 'Shipping status']
+    columns = ['Username', 'Product', 'Price', 'Quantity',  'Ordered date', 'Payment status', 'Shipping status']
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle()
     rows = Order.objects.filter(user_cart__user_product__vendor=request.user.id).values_list('user__username', 'user_cart__user_product__product_name',
-                                                                                            'quantity', 'amount', 'ordered_date', 'payment_status',
+                                                                                            'amount', 'quantity', 'ordered_date', 'payment_status',
                                                                                             'shipped')
     for row in rows:
         row_num += 1

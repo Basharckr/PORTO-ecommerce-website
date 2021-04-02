@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, response
+from django.http import JsonResponse, response, HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 from .models import Category
 from vendor.models import Products
 from myapp.models import Cart, Order, ShipAddress, Profile
+import datetime
+import xlwt
 
 # Create your views here.
 
@@ -204,3 +206,27 @@ def all_orders(request):
     else:
         return redirect('ad-login')
 
+
+def full_report(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Full_Report'+str(datetime.datetime.now()) +'.xls'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Full report')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Username', 'Product', 'vendor_namwe', 'price', 'Quantity', 'Ordered date', 'Payment status', 'Shipping status']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+    rows = Order.objects.all().values_list('user__username', 'user_cart__user_product__product_name', 'user_cart__user_product__vendor__username',
+                                        'amount', 'quantity', 'ordered_date', 'payment_status', 'shipped')
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+    wb.save(response)
+    return response

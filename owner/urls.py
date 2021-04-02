@@ -32,6 +32,10 @@ urlpatterns = [
 
     path('all-orders', views.all_orders, name='all-orders'),
 
+    # =============================Full report=============================================
+
+    path('full-report', views.full_report, name='full-report'),
+
 
 
 
