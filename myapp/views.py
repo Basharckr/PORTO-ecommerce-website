@@ -160,6 +160,7 @@ def userlogout(request):
 def product(request, pk):
     if request.user.is_authenticated:
         product = Products.objects.get(id=pk)
+        related_product = Products.objects.filter(category=product.category).exclude(id=pk)
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
@@ -175,7 +176,8 @@ def product(request, pk):
         tot = []
         tot.append(total)
         context = {
-            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category,
+            'brands': brands, 'related_product': related_product
         }
         return render(request, 'myapp/product_detail.html', context)
     else:
