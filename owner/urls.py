@@ -34,7 +34,7 @@ urlpatterns = [
 
     # =============================Full report=============================================
 
-    path('full-report', views.full_report, name='full-report'),
+    path('All-report', views.all_report, name='all-report'),
 
 
 
