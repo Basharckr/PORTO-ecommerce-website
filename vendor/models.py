@@ -23,6 +23,16 @@ class Products(models.Model):
     image3 = models.FileField(null=True, blank=True,
                               upload_to='vendor/products/')
 
+
+    @property
+    def offer_price(self):  
+        if self.category.valid == True and self.category.category_offer != 0:
+            new_price = self.product_price - round((self.product_price * (self.category.category_offer) / 100))
+        else:
+            new_price = self.product_price
+
+        return new_price
+
     @property
     def image1url(self):
         try:
@@ -45,3 +55,9 @@ class Products(models.Model):
         except:
             url = ''
         return url
+
+        
+class Coupon(models.Model):
+    coupon_code = models.CharField(max_length=150, null=True, blank=True)
+    coupon_offer = models.IntegerField(null=True, blank=True)
+    active = models.BooleanField(default=False)

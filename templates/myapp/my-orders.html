@@ -54,13 +54,13 @@
                                 {% else %}
                                 <td>Pending</td>
                                 {% endif %}
-                                <td>{{item.user_cart.user_product.product_price}}</td>
+                                <td id="amount">{{item.amount}}</td>
                                 <td>
                                     <div class="product-single-qty">
-                                        <h3 id="count">{{item.user_cart.product_count}}</h3>
+                                        <h3 id="count">{{item.quantity}}</h3>
                                     </div>
                                 </td>
-                                <td>{{item.user_cart.subtotal}}</td>
+                                <td>{{item.order_total}}</td>
                             </tr>
                             <tr class="product-action-row">
                                 <td colspan="4" class="clearfix">
@@ -112,6 +112,8 @@
 </tfoot>
 
 {% endif %}
-
+<script>
+    
+</script>
 
 {% endblock %}

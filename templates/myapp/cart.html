@@ -30,6 +30,8 @@
 							<tr>
 								<th class="product-col">Product</th>
 								<th class="price-col">Price</th>
+								<th class="price-col">Offer</th>
+
 								<th class="qty-col">Qty</th>
 								<th>Subtotal</th>
 							</tr>
@@ -50,6 +52,13 @@
 									</h2>
 								</td>
 								<td>{{item.user_product.product_price}}</td>
+								{% if item.user_product.category.valid == True %}
+								<td>{{item.user_product.category.category_offer}}%</td>
+								{% else %}
+								<td>0%</td>
+
+								{% endif %}
+
 								<td>
 									<div class="product-single-qty">
 										<h3 id="count">{{item.product_count}}</h3>
@@ -140,9 +149,20 @@
 																	</div><!-- End .product-container -->
 
 																	<div class="price-box">
-																		<span class="old-price">₹81.00</span>
-																		<span class="product-price">
-																			{{item.user_product.product_price}}</span>
+																		{% if item.user_product.category.valid == True %}
+
+																		<span
+																			class="old-price">₹{{item.user_product.product_price}}</span>
+																		<span
+																			class="product-price">₹{{item.user_product.offer_price}}</span>
+
+																		<span
+																			class="ml-4">{{item.user_product.category.category_offer}}%</span>
+																		{% else %}
+																		<span
+																			class="product-price">₹{{item.user_product.offer_price}}</span>
+
+																		{% endif %}
 																	</div><!-- End .price-box -->
 
 																	<div class="product-desc">
@@ -179,7 +199,7 @@
 																		<div class="product-single-qty">
 																			<input
 																				class="horizontal-quantity form-control"
-																				id="newquantity-{{item.id}}"
+																				id="newquantity-{{item.id}}" value="{{item.product_count}}"
 																				type="text">
 																		</div><!-- End .product-single-qty -->
 
@@ -257,58 +277,6 @@
 			<div class="col-lg-4">
 				<div class="cart-summary">
 					<h3>Summary</h3>
-
-					<h4>
-						<a data-toggle="collapse" href="#total-estimate-section" class="collapsed" role="button"
-							aria-expanded="false" aria-controls="total-estimate-section">Estimate Shipping and Tax</a>
-					</h4>
-
-					<div class="collapse" id="total-estimate-section">
-						<form action="#">
-							<div class="form-group form-group-sm">
-								<label>Country</label>
-								<div class="select-custom">
-									<select class="form-control form-control-sm">
-										<option value="USA">United States</option>
-										<option value="Turkey">Turkey</option>
-										<option value="China">China</option>
-										<option value="Germany">Germany</option>
-									</select>
-								</div><!-- End .select-custom -->
-							</div><!-- End .form-group -->
-
-							<div class="form-group form-group-sm">
-								<label>State/Province</label>
-								<div class="select-custom">
-									<select class="form-control form-control-sm">
-										<option value="CA">California</option>
-										<option value="TX">Texas</option>
-									</select>
-								</div><!-- End .select-custom -->
-							</div><!-- End .form-group -->
-
-							<div class="form-group form-group-sm">
-								<label>Zip/Postal Code</label>
-								<input type="text" class="form-control form-control-sm">
-							</div><!-- End .form-group -->
-
-							<div class="form-group form-group-custom-control">
-								<label>Flat Way</label>
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="flat-rate">
-									<label class="custom-control-label" for="flat-rate">Fixed $5.00</label>
-								</div><!-- End .custom-checkbox -->
-							</div><!-- End .form-group -->
-
-							<div class="form-group form-group-custom-control">
-								<label>Best Rate</label>
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="best-rate">
-									<label class="custom-control-label" for="best-rate">Table Rate $15.00</label>
-								</div><!-- End .custom-checkbox -->
-							</div><!-- End .form-group -->
-						</form>
-					</div><!-- End #total-estimate-section -->
 
 					<table class="table table-totals">
 						<tbody>

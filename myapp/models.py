@@ -30,7 +30,7 @@ class Cart(models.Model):
 
     @property
     def subtotal(self):     
-        return self.product_count * self.user_product.product_price
+        return self.product_count * self.user_product.offer_price
 
    
 class ShipAddress(models.Model):
@@ -56,3 +56,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(auto_now_add=True)
     payment_status = models.BooleanField(default=False)
     shipped = models.BooleanField(default=False)
+
+    @property
+    def order_total(self):
+        return self.amount * self.quantity

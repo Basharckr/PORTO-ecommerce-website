@@ -25,8 +25,8 @@ def adIndex(request):
         date = []
         total = 0.00
         for item in order:
-            total = total + item.amount * item.quantity
-            price.append(item.amount * item.quantity)
+            total = total + item.order_total
+            price.append(item.order_total)
             date.append(item.ordered_date.day)
 
         print(total)

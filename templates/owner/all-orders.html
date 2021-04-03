@@ -14,6 +14,7 @@
                 <thead>
                     <tr>
                         <th>SI</th>
+                        <th>User</th>
                         <th>Vendor</th>
                         <th>Product</th>
                         <th>Quantity</th>
@@ -27,11 +28,12 @@
                 <tbody class="search_here">
                     {% for item in all_orders %}
                     <tr> 
-                        <th>{{forloop.counter}}</th>
+                        <td>{{forloop.counter}}</td>
+                        <th>{{item.user.username}}</th>
                         <td>{{item.user_cart.user_product.vendor}}</td>
                         <td>{{item.user_cart.user_product.product_name}}</td>
                         <td>{{item.quantity}}</td>
-                        <td>{{item.user_cart.subtotal}}</td>
+                        <td>{{item.order_total}}</td>
                         <td>{{item.ship_id.firstname}},
                             {{item.ship_id.organization}},{{item.ship_id.streetaddress}},
                             {{item.ship_id.pincode}},{{item.ship_id.city}},   
@@ -40,7 +42,7 @@
                         </td>
                         <td>{{item.ordered_date|date:'Y-m-d'}}</td>
                         <td>{{item.payment_status}}</td>
-                        <th>{{item.shipped}}</th>
+                        <td>{{item.shipped}}</td>
            
                     </tr>
                     {% endfor %}

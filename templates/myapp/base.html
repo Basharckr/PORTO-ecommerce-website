@@ -71,12 +71,13 @@
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <span class="nolink">Available Categories</span>
+                                            <strong><span class="nolink">Available Categories</span></strong><br>
                                             <ul class="submenu">
                                                 {% for item in category %}
                                                 <li><a href="{% url 'categorywise' pk=item.id %}">{{item.category_name}}</a></li>
                                                 {%endfor%}
-                                                <span  class="nolink">Available Brands</span>
+                                                <br>
+                                                <span  class="nolink">Available Brands</span><br>
                                             <ul class="submenu">
                                                 {% for item in brands %}
                                                 <li><a href="{% url 'brandwise' pk=item.id %}">{{item.username}}</a></li>
@@ -177,7 +178,7 @@
                                             </h4>
 
                                             <span class="cart-product-info">
-												<span class="cart-product-qty">{{item.product_count}}</span> x ₹{{item.user_product.product_price}}.00
+												<span class="cart-product-qty">{{item.product_count}}</span> x ₹{{item.user_product.offer_price}}
                                             </span>
                                         </div>
                                         <!-- End .product-details -->

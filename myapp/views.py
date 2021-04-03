@@ -140,7 +140,7 @@ def landing(request):
         total = 0.00
         for item in cart:
             total = total + \
-                int(item.user_product.product_price) * \
+                int(item.user_product.offer_price) * \
                 int(item.product_count)
         tot = []
         tot.append(total)
@@ -160,7 +160,8 @@ def userlogout(request):
 def product(request, pk):
     if request.user.is_authenticated:
         product = Products.objects.get(id=pk)
-        related_product = Products.objects.filter(category=product.category).exclude(id=pk)
+        related_product = Products.objects.filter(
+            category=product.category).exclude(id=pk)
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
@@ -171,7 +172,7 @@ def product(request, pk):
         total = 0.00
         for item in cart:
             total = total + \
-                int(item.user_product.product_price) * \
+                int(item.user_product.offer_price) * \
                 int(item.product_count)
         tot = []
         tot.append(total)
@@ -196,7 +197,7 @@ def user_cart(request):
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -294,12 +295,11 @@ def checkout(request):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
 
-
             print(count)
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -329,20 +329,20 @@ def add_address(request):
                 number = request.POST['number']
                 check = request.POST['check']
                 print('checkboxxxx', check)
-                data = ShipAddress.objects.filter(select=True, user=request.user)
+                data = ShipAddress.objects.filter(
+                    select=True, user=request.user)
                 print(data)
                 if check == '1':
                     for item in data:
                         item.select = False
                         item.save()
                     ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
-                                        organization=organization, streetaddress=street, city=city,
-                                        state=state, pincode=pincode, country=country, number=number, select=True)
+                                               organization=organization, streetaddress=street, city=city,
+                                               state=state, pincode=pincode, country=country, number=number, select=True)
                 else:
                     ShipAddress.objects.create(user=request.user, firstname=firstname, lastname=lastname,
-                                            organization=organization, streetaddress=street, city=city,
-                                            state=state, pincode=pincode, country=country, number=number)
-                
+                                               organization=organization, streetaddress=street, city=city,
+                                               state=state, pincode=pincode, country=country, number=number)
 
                 return JsonResponse('true', safe=False)
             else:
@@ -453,7 +453,7 @@ def place_order(request):
             if request.method == 'POST':
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
-                                         quantity=item.product_count, amount=item.user_product.product_price,
+                                         quantity=item.product_count, amount=item.user_product.offer_price,
                                          ship_id=ship_id, payment_status=True)
                     item.checkedout = True
                     item.save()
@@ -461,7 +461,7 @@ def place_order(request):
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
-                                         quantity=item.product_count, amount=item.user_product.product_price,
+                                         quantity=item.product_count, amount=item.user_product.offer_price,
                                          ship_id=ship_id, payment_status=False)
                     item.checkedout = True
                     item.save()
@@ -482,19 +482,20 @@ def dashbaord(request):
                 user=request.user.id, checkedout=False).count()
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
-            address = ShipAddress.objects.filter(select=True, user=request.user)
+            address = ShipAddress.objects.filter(
+                select=True, user=request.user)
             print(address)
 
             print(count)
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
-            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot,'count': count,
-                                                             'category': category, 'brands': brands, 'address': address})
+            return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count,
+                                                            'category': category, 'brands': brands, 'address': address})
         else:
             return redirect('login')
     else:
@@ -514,7 +515,7 @@ def edit_user_account(request):
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -559,6 +560,26 @@ def change_user_password(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             edit = User.objects.get(id=request.user.id)
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
+            address = ShipAddress.objects.filter(
+                select=True, user=request.user)
+            print(address)
+
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.offer_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            context = {
+                'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands,
+            }
             if request.method == 'POST':
                 password = request.POST['password']
                 orginalpassword = request.POST['orginalpassword']
@@ -573,7 +594,7 @@ def change_user_password(request):
                     return JsonResponse('true', safe=False)
                 else:
                     return JsonResponse('false', safe=False)
-            return render(request, 'myapp/change-user-password.html')
+            return render(request, 'myapp/change-user-password.html', context)
         else:
             return redirect('login')
     else:
@@ -594,7 +615,7 @@ def my_orders(request):
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -632,12 +653,12 @@ def search_product(request):
                     user=request.user.id, checkedout=False).count()
                 category = Category.objects.all()
                 brands = User.objects.filter(is_active=True, is_staff=True)
-                
+
                 print(product)
                 total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -664,7 +685,7 @@ def categorywise(request, pk):
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)
@@ -676,6 +697,7 @@ def categorywise(request, pk):
             return redirect('login')
     else:
         return redirect("login")
+
 
 def brandwise(request, pk):
     if request.user.is_active == True:
@@ -690,7 +712,7 @@ def brandwise(request, pk):
             total = 0.00
             for item in cart:
                 total = total + \
-                    int(item.user_product.product_price) * \
+                    int(item.user_product.offer_price) * \
                     int(item.product_count)
             tot = []
             tot.append(total)

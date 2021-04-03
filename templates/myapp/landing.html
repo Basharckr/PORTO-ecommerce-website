@@ -52,7 +52,7 @@
 				</a>
 			</div>
 			{%endfor%}
-			
+
 		</div>
 	</section>
 
@@ -113,9 +113,11 @@
 						<a href="{% url 'product' pk=product.id %}">
 							<img src="{{product.image1.url}}" style="width: 150px; height: 150px;">
 						</a>
+						{% if product.category.valid == True %}
 						<div class="label-group">
 							<span class="product-label label-sale">{{product.category.category_offer}}%</span>
 						</div>
+						{% endif %}
 						<!-- <div class="btn-icon-group">
 							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal">
 								<i
@@ -142,7 +144,7 @@
 									<div class="modal-body">
 										<div class="product-single-container product-single-default product-quick-view">
 											<div class="row row-sparse">
-												<div class="col-lg-6 product-single-gallery" >
+												<div class="col-lg-6 product-single-gallery">
 													<div class="product-slider-container">
 														<div class="product-single-carousel owl-carousel owl-theme">
 															<div class="product-item">
@@ -166,13 +168,16 @@
 													</div>
 													<div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
 														<div class="owl-dot">
-															<img style="height: 100px;width:100px" src="{{product.image1url}}" />
+															<img style="height: 100px;width:100px"
+																src="{{product.image1url}}" />
 														</div>
 														<div class="owl-dot">
-															<img style="height: 100px;width:100px" src="{{product.image2url}}" />
+															<img style="height: 100px;width:100px"
+																src="{{product.image2url}}" />
 														</div>
 														<div class="owl-dot">
-															<img style="height: 100px;width:100px"src="{{product.image3url}}" />
+															<img style="height: 100px;width:100px"
+																src="{{product.image3url}}" />
 														</div>
 
 													</div>
@@ -191,8 +196,16 @@
 													</div><!-- End .product-container -->
 
 													<div class="price-box">
-														<span class="old-price">₹81.00</span>
-														<span class="product-price">₹{{product.product_price}}</span>
+														{% if product.category.valid == True %}
+
+														<span class="old-price">₹{{product.product_price}}</span>
+														<span class="product-price">₹{{product.offer_price}}</span>
+
+														<span class="ml-4">{{product.category.category_offer}}%</span>
+														{% else %}
+														<span class="product-price">₹{{product.offer_price}}</span>
+
+														{% endif %}
 													</div><!-- End .price-box -->
 
 													<div class="product-desc">
@@ -256,7 +269,8 @@
 					<div class="product-details">
 						<div class="category-wrap">
 							<div class="category-list">
-								<a href="{% url 'categorywise' pk=product.category.id %}" class="product-category">{{product.category.category_name}}</a>
+								<a href="{% url 'categorywise' pk=product.category.id %}"
+									class="product-category">{{product.category.category_name}}</a>
 							</div>
 						</div>
 						<h3 class="product-title">
@@ -269,8 +283,16 @@
 							</div><!-- End .product-ratings -->
 						</div><!-- End .product-container -->
 						<div class="price-box">
-							<span class="old-price">₹59.00</span>
-							<span class="product-price">₹{{product.product_price}}</span>
+							{% if product.category.valid == True %}
+
+							<span class="old-price">₹{{product.product_price}}</span>
+							<span class="product-price">₹{{product.offer_price}}</span>
+
+							<span class="ml-4">{{product.category.category_offer}}%</span>
+							{% else %}
+							<span class="product-price">₹{{product.offer_price}}</span>
+
+							{% endif %}
 						</div><!-- End .price-box -->
 					</div><!-- End .product-details -->
 				</div>
@@ -291,7 +313,8 @@
 						<h5>24x7 Customer Care Support
 						</h5>
 
-						<p>The Porto Customer Care Support solve various types of issues that you may have encountered so that there can be quick resolution and you can go back to shopping online.
+						<p>The Porto Customer Care Support solve various types of issues that you may have encountered
+							so that there can be quick resolution and you can go back to shopping online.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
@@ -305,7 +328,9 @@
 						<h3 class="text-uppercase">Secured Payment</h3>
 						<h5>Safe & Fast</h5>
 
-						<p>Porto offers you multiple payment methods. Whatever your online mode of payment, you can rest assured that Porto's trusted payment gateway partners use secure encryption technology to keep your transaction details confidential at all times.
+						<p>Porto offers you multiple payment methods. Whatever your online mode of payment, you can rest
+							assured that Porto's trusted payment gateway partners use secure encryption technology to
+							keep your transaction details confidential at all times.
 
 						</p>
 					</div><!-- End .feature-box-content -->
@@ -320,7 +345,9 @@
 						<h3 class="text-uppercase">Free Returns</h3>
 						<h5>Easy & Free</h5>
 
-						<p>Returns is a scheme provided by respective sellers directly under this policy in terms of which the option of exchange, replacement and/ or refund is offered by the respective sellers to you.
+						<p>Returns is a scheme provided by respective sellers directly under this policy in terms of
+							which the option of exchange, replacement and/ or refund is offered by the respective
+							sellers to you.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
@@ -334,7 +361,8 @@
 						<h3 class="text-uppercase">Free Shipping</h3>
 						<h5>Orders Over ₹999</h5>
 
-						<p>Sellers generally procure and ship the items within the time specified on the product page. Business days exclude public holidays and Sundays.
+						<p>Sellers generally procure and ship the items within the time specified on the product page.
+							Business days exclude public holidays and Sundays.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
