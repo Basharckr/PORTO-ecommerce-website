@@ -1,7 +1,7 @@
 //  ===========================================================================================
 //  ================================Vendor-Signup===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#vendorsignupform").validate({
@@ -58,7 +58,7 @@ $().ready(function() {
                 data: $("#vendorsignupform").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('login')
                     }
@@ -82,7 +82,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================Vendor-Login===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#vendorloginform").validate({
@@ -111,7 +111,7 @@ $().ready(function() {
                 data: $("#vendorloginform").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('/vendor')
                     }
@@ -137,7 +137,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================ADD-product===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#addproduct").validate({
@@ -248,16 +248,16 @@ $().ready(function() {
 
 //  ===========================================================================================
 //  ================================Product name checking===================================================
-$(document).ready(function() {
+$(document).ready(function () {
     // catch the form's submit event
 
-    $('#product_name').on("change", function() {
+    $('#product_name').on("change", function () {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
             url: "check-product-name",
             // on success
-            success: function(response) {
+            success: function (response) {
                 if (response.is_taken == true) {
                     $('#product_name').removeClass('is-valid').addClass('is-invalid');
                     $('#product_name').after('<div class="invalid-feedback d-block" id="productnameError">This Product name available!</div>')
@@ -269,7 +269,7 @@ $(document).ready(function() {
 
             },
             // on error
-            error: function(response) {
+            error: function (response) {
                 // alert the error if any error occured
                 console.log(response.responseJSON.errors)
             }
@@ -282,16 +282,16 @@ $(document).ready(function() {
 //  ===========================================================================================
 //  ================================Product ID checking===================================================
 
-$(document).ready(function() {
+$(document).ready(function () {
     // catch the form's submit event
     $('#productidError').remove();
-    $('#product_id').on("change", function() {
+    $('#product_id').on("change", function () {
         // create an AJAX call
         $.ajax({
             data: $(this).serialize(), // get the form data
             url: "check-product-id",
             // on success
-            success: function(response) {
+            success: function (response) {
                 if (response.is_taken == true) {
                     $('#product_id').removeClass('is-valid').addClass('is-invalid');
                     $('#product_id').after('<div class="invalid-feedback d-block" id="productidError">This Product ID available!</div>')
@@ -303,7 +303,7 @@ $(document).ready(function() {
 
             },
             // on error
-            error: function(response) {
+            error: function (response) {
                 // alert the error if any error occured
                 console.log(response.responseJSON.errors)
             }
@@ -319,7 +319,7 @@ $(document).ready(function() {
 
 
 var message_ele = document.getElementById("success1");
-setTimeout(function() {
+setTimeout(function () {
     message_ele.style.display = "none";
 }, 3000);
 
@@ -327,7 +327,7 @@ setTimeout(function() {
 //  ===========================================================================================
 //  ================================Edit-Product===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#editproduct").validate({
@@ -447,7 +447,7 @@ function shipStatus(id) {
     $.ajax({
         url: 'change-ship-status/' + id + '/',
         method: 'get',
-        success: function(response) {
+        success: function (response) {
             if (response == 'shipped') {
                 window.location.replace('vendor-orders')
             }
@@ -470,7 +470,7 @@ var $uploadCrop,
 function readFile(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('.upload-demo').addClass('ready');
             $('#cropImagePop').modal('show');
             rawImg = e.target.result;
@@ -502,7 +502,7 @@ function reportCustomers(id) {
         url: 'report-customer/' + id + '/',
         method: 'post',
         data: data,
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
 
                 alert("Reportted successfully")
@@ -511,3 +511,68 @@ function reportCustomers(id) {
     })
 }
 
+//  ===========================================================================================
+// ================================Add Coupon=================================================== -->
+
+$().ready(function () {
+
+    console.log('cou')
+    $("#addcoupon").validate({
+        rules: {
+            couponcode: {
+                required: true, minlength: 4, maxlength: 6
+            },
+            couponoffer: {
+                required: true
+            }
+        },
+        messages: {
+            couponcode: {
+                required: "Enter Coupon code..",
+            
+
+            },
+            couponoffer: {
+                required: "Enter Coupon offer in percentage..",
+            },
+        },
+        submitHandler: (addcoupon, e) => {
+
+            e.preventDefault()
+            $.ajax({
+                url: "add-coupon",
+                data: $("#addcoupon").serialize(),
+                method: "post",
+
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('add-coupon')
+                    }
+                    if (response == 'false') {
+                        $("#error1").html("This Coupon already exist!!")
+                    }
+                },
+
+            })
+        }
+    });
+});
+
+//  ===========================================================================================
+// ================================Change offer validity=================================================== -->
+function couponValidity(id) {
+    $.ajax({
+        url: 'change-couponvalditity/' + id + '/',
+        method: 'get',
+        success: function (response) {
+            if (response == 'true') {
+                $("#valid" + id).removeClass("btn-danger")
+                $("#valid" + id).addClass("btn-success")
+            }
+            if (response == 'false') {
+                $("#valid" + id).removeClass("btn-success")
+                $("#valid" + id).addClass("btn-danger")
+            }
+        }
+    })
+}

@@ -95,7 +95,7 @@ $().ready(function () {
 // ================================Change offer validity=================================================== -->
 function changeValidity(id) {
     $.ajax({
-        url: 'change-offervality/' + id + '/',
+        url: 'change-offervalidity/' + id + '/',
         method: 'get',
         success: function (response) {
             if (response == 'true') {

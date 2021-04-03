@@ -1,0 +1,101 @@
+{% extends 'vendor/base.html' %}
+{% load static %}
+{% block title %}Add Coupon{% endblock %}
+{% block content %}
+<div class="container">
+<form id="addcoupon" runat="server" act class="form-horizontalv ml-3" enctype="multipart/form-data">{% csrf_token %}
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend class="ml-3">ADD COUPON</legend>
+        {% if messages %} {% for message in messages %}
+        <span id="success1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
+
+        <!-- Text input-->
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="product_id">COUPON CODE</label>
+            <div class="col-md-6">
+                <input name="couponcode" id="couponcode" placeholder="Coupon code" class="form-control input-md"
+                    type="text">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="product_name">COUPON OFFER</label>
+            <div class="col-md-6">
+                <input name="couponoffer" id="couponoffer" placeholder="Coupon offer in percentage.."
+                    class="form-control input-md" type="number">
+
+            </div>
+        </div>
+
+
+        <span id="error1"></span>
+
+        <!-- Button -->
+        <div class="form-group">
+            <div class="col-md-6">
+                <button type="submit" id="createBtn" name="singlebutton" class="btn btn-primary mt-4">Add
+                    Coupon</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<!--Coupon DataTales  -->
+<div class="card shadow mb-2 mt-4 col-md-12">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center">All Coupons</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Coupon code</th>
+                        <th>Coupon offer in percentage</th>                  
+                    </tr>
+                </thead>
+                <tbody class="search_here">{% for coupons in coupons %}
+                    <tr>
+                        <td>{{coupons.coupon_code}}</td>
+                        <td>{{coupons.coupon_offer}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
+
+
+<!-- ----------------------search------------------ -->
+<script>
+    $(document).ready(function ($) {
+        $('.search_here tr').each(function () {
+            $(this).attr('data-search-term',
+                $(this).text().toLowerCase());
+                console.log('hiii')
+
+
+        });
+        $('.search_key').on('keyup', function () {
+            console.log('jjjjjj')
+            var searchTerm = $(this).val().toLowerCase();
+            $('.search_here tr').each(function () {
+                if ($(this).filter('[data-search-term *= ' +
+                    searchTerm + ']').length > 0 || searchTerm.length < 1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+{%endblock%}

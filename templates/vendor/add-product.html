@@ -1,8 +1,9 @@
-{% extends 'vendor/base.html' %} {% load static %} {% block title %}Add Product{% endblock %} {% block content %}
+{% extends 'vendor/base.html' %} 
+{% load static %} 
+{% block title %}Add Product{% endblock %} 
+{% block content %}
 
-
-
-<form id="addproduct" runat="server" action="{% url 'add-product' %}" method="post" act class="form-horizontalv ml-5"
+<form id="addproduct" runat="server" action="{% url 'add-product' %}" method="post" act class="form-horizontalv ml-3"
     enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
 

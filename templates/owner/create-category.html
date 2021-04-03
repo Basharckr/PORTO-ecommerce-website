@@ -1,6 +1,6 @@
 {% extends 'owner/base.html' %}
 {% load static %}
-{% block title %}Create categary{% endblock %}
+{% block title %}Create category{% endblock %}
 {% block content %}
 <form class="col-md-6 ml-auto mr-auto" id="addcategory">{% csrf_token %}
     <div class="form-group">
@@ -13,6 +13,7 @@
     <button type="submit" class="btn btn-primary">Add Category</button>
 </form>
 <!--Category DataTales  -->
+<div class="container">
 <div class="card shadow mb-2 mt-4 col-md-12">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary text-center">Categories</h6>
@@ -23,15 +24,13 @@
                 <thead>
                     <tr>
                         <th>Category name</th>
-                        <th>Category offer</th>
-                        <th>Offer validity</th>
+                        <th>Category offer in percentage</th>
                     </tr>
                 </thead>
                 <tbody class="search_here">{% for category in category %}
                     <tr>
                         <td>{{category.category_name}}</td>
                         <td>{{category.category_offer}}</td>
-                        <td>{{category.valid}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -39,6 +38,7 @@
             </table>
         </div>
     </div>
+</div>
 </div>
 <script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
 

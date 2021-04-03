@@ -36,9 +36,9 @@ urlpatterns = [
 
     path('All-report', views.all_report, name='all-report'),
 
-    # =============================Full report=============================================
+    # =============================Change offer validity=============================================
 
-    path('change-offervality/<int:id>/', views.change_offer_validity, name='change-offervality'),
+    path('change-offervalidity/<int:id>/', views.change_offer_validity, name='change-offervalidity'),
 
 
 

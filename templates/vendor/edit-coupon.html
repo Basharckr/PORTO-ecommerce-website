@@ -1,0 +1,86 @@
+{% extends 'vendor/base.html' %}
+{% load static %}
+{% block title %}Add Coupon{% endblock %}
+{% block content %}
+<div class="container">
+    <form id="editcoupon" runat="server" act class="form-horizontalv ml-3" enctype="multipart/form-data">{% csrf_token%}
+    
+            <!-- Form Name -->
+            <legend class="ml-3">EDIT COUPON</legend>
+            <!-- Text input-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_id">COUPON CODE</label>
+                <div class="col-md-6">
+                    <input name="couponcode" id="couponcode" value="{{coupon.coupon_code}}" placeholder="Coupon code"
+                        class="form-control input-md" type="text">
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="product_name">COUPON OFFER</label>
+                <div class="col-md-6">
+                    <input name="couponoffer" id="couponoffer" value="{{coupon.coupon_offer}}"
+                        placeholder="Coupon offer in percentage.." class="form-control input-md" type="number">
+
+                </div>
+            </div>
+            <span id="error1"></span>
+
+            <!-- Button -->
+            <div class="form-group">
+                <div class="col-md-6">
+                    <a class="btn btn-dark" href="{% url 'manage-coupon' %}">Back</a>
+                    <button type="button" id="editcouponbtn" name="singlebutton" class="btn btn-primary mt-4">Edit
+                        Coupon</button>
+                </div>
+            </div>
+       
+    </form>
+</div>
+<script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+<script>
+    $("#editcouponbtn").click(function () {
+        console.log('jjj')
+        var couponcode = $("#couponcode").val()
+        var couponcode_len = $("#couponcode").val().length
+        var couponoffer = $("#couponoffer").val()
+        var couponoffer_len = $("#couponoffer").val()
+        var pk = '{{coupon.id}}'
+        var data = {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'couponcode': couponcode,
+            'couponoffer': couponoffer
+        }
+        if (couponcode_len < 3) {
+            $("#error1").html('category should be 3 characters')
+        }
+        if (couponoffer_len == '') {
+            $("#error1").html('Enter offer in percentage')
+        }
+        else {
+            // create an AJAX call
+            $.ajax({
+                url: "/vendor/edit-coupon/" + pk + "/",
+                method: "POST",
+                data: data,
+                dataType: 'json',
+                // on success
+                success: function (data) {
+                    if (data == 'true') {
+                        window.location.replace('/vendor/edit-coupon')
+                    }
+                    if (data == 'false') {
+                        $('#error1').html("This category already taken. Enter another one!")
+                    }
+
+                }
+            })
+
+        }
+    })
+</script>
+{%endblock%}
