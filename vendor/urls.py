@@ -43,13 +43,6 @@ urlpatterns = [
 
     path('vendor-report', views.vendor_report, name='vendor-report'),
 
-    # ============================== Coupon ===========================================
-
-    path('add-coupon', views.add_coupon, name='add-coupon'),
-    path('manage-coupon', views.manage_coupon, name='manage-coupon'),
-    path('change-couponvalidity/<int:id>/', views.change_coupon_validity, name='change-couponvalidity'),
-    path('edit-coupon/<int:id>/', views.edit_coupon, name='edit-coupon'),
-    path('delete-coupon/<int:id>/', views.delete_coupon, name='delete-coupon'),
 
 
 

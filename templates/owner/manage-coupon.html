@@ -1,8 +1,12 @@
-{% extends 'vendor/base.html' %}
+{% extends 'owner/base.html' %}
 {% load static %}
 {% block title %}Manage Coupon{% endblock %}
 {% block content %}
 <div class="container">
+    {% if messages %} {% for message in messages %}
+            <span id="success1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
+    
+
     <!--Coupon DataTales  -->
     <div class="card shadow mb-2 mt-4 col-md-12">
         <div class="card-header py-3">

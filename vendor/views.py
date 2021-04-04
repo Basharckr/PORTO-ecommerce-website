@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, response, HttpResponse
 from django.contrib.auth.models import User, auth
-from .models import Products, Coupons
+from .models import Products
 # from django.core.files import File
 from owner.models import Category
 from myapp.models import Cart, ShipAddress, Order, Profile
@@ -391,78 +391,3 @@ def vendor_report(request):
     else:
         return redirect('ad-login')
     
-
-def add_coupon(request):
-    if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
-            if request.method == 'POST':
-                coupon_code = request.POST['couponcode']
-                couponoffer = request.POST['couponoffer']
-                if Coupons.objects.filter(coupon_code=coupon_code).exists():
-                    return JsonResponse('false', safe=False)
-                else:
-                    Coupons.objects.create(coupon_code=coupon_code, coupon_offer=couponoffer)
-                    messages.success(request, 'Coupon added successfully')
-                    return JsonResponse('true', safe=False)
-            coupons = Coupons.objects.all()
-            context = {
-                'coupons': coupons
-            }
-            return render(request, 'vendor/add-coupon.html', context)
-        else:
-            return redirect('ad-login')
-    else:
-        return redirect('ad-login')
-
-def manage_coupon(request):
-    if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
-            coupons = Coupons.objects.all()
-            context = {
-                'coupons': coupons
-            }
-            return render(request, 'vendor/manage-coupon.html', context)
-        else:
-            return redirect('ad-login')
-    else:
-        return redirect('ad-login')
-
-
-def change_coupon_validity(request, id):
-    if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
-            coupon = Coupons.objects.get(id=id)
-            if coupon.active == False:
-                coupon.active = True
-                coupon.save()
-                return JsonResponse('true', safe=False)
-            else:
-                coupon.active = False
-                coupon.save() 
-                return JsonResponse('false', safe=False)
-        else:
-            return redirect('ad-login')
-    else:
-        return redirect('ad-login')
-
-
-def edit_coupon(request, id):
-    if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
-            coupon = Coupons.objects.get(id=id)
-            return render(request, 'vendor/edit-coupon.html', {'coupon': coupon})
-        else:
-            return redirect('ad-login')
-    else:
-        return redirect('ad-login')
-
-
-def delete_coupon(request, id):
-    if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
-            coupon = Coupons.objects.get(id=id)
-            pass
-        else:
-            return redirect('ad-login')
-    else:
-        return redirect('ad-login')

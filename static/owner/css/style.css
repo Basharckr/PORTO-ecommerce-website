@@ -9,3 +9,8 @@
 .left{
     float: left;
 }
+#success1{
+    color:green;
+    font-size:large;
+    width: 100%;
+}

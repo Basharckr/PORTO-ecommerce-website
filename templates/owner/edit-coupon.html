@@ -1,6 +1,6 @@
-{% extends 'vendor/base.html' %}
+{% extends 'owner/base.html' %}
 {% load static %}
-{% block title %}Add Coupon{% endblock %}
+{% block title %}Edit Coupon{% endblock %}
 {% block content %}
 <div class="container">
     <form id="editcoupon" runat="server" act class="form-horizontalv ml-3" enctype="multipart/form-data">{% csrf_token%}
@@ -8,7 +8,7 @@
             <!-- Form Name -->
             <legend class="ml-3">EDIT COUPON</legend>
             <!-- Text input-->
-
+            
             <div class="form-group">
                 <label class="col-md-4 control-label" for="product_id">COUPON CODE</label>
                 <div class="col-md-6">
@@ -64,17 +64,17 @@
         else {
             // create an AJAX call
             $.ajax({
-                url: "/vendor/edit-coupon/" + pk + "/",
+                url: "/owner/edit-coupon/" + pk + "/",
                 method: "POST",
                 data: data,
                 dataType: 'json',
                 // on success
                 success: function (data) {
                     if (data == 'true') {
-                        window.location.replace('/vendor/edit-coupon')
+                        window.location.replace('/owner/manage-coupon')
                     }
                     if (data == 'false') {
-                        $('#error1').html("This category already taken. Enter another one!")
+                        $('#error1').html("This Coupon already entered!! Enter another one.")
                     }
 
                 }

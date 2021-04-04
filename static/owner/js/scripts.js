@@ -109,3 +109,80 @@ function changeValidity(id) {
         }
     })
 }
+
+//  ===========================================================================================
+// ================================Add Coupon=================================================== -->
+
+$().ready(function () {
+
+    console.log('cou')
+    $("#addcoupon").validate({
+        rules: {
+            couponcode: {
+                required: true, minlength: 4, maxlength: 6
+            },
+            couponoffer: {
+                required: true
+            }
+        },
+        messages: {
+            couponcode: {
+                required: "Enter Coupon code..",
+            
+
+            },
+            couponoffer: {
+                required: "Enter Coupon offer in percentage..",
+            },
+        },
+        submitHandler: (addcoupon, e) => {
+
+            e.preventDefault()
+            $.ajax({
+                url: "add-coupon",
+                data: $("#addcoupon").serialize(),
+                method: "post",
+
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('add-coupon')
+                    }
+                    if (response == 'false') {
+                        $("#error1").html("This Coupon already exist!!")
+                    }
+                },
+
+            })
+        }
+    });
+});
+
+//  ===========================================================================================
+// ================================Change coupon validity=================================================== -->
+function couponValidity(id) {
+    console.log('kkkkkkkk')
+    $.ajax({
+        url: 'change-couponvalidity/'+ id +'/',
+        method: 'get',
+        success: function (response) {
+            if (response == 'true') {
+                $("#valid" + id).removeClass("btn-danger")
+                $("#valid" + id).addClass("btn-success")
+            }
+            if (response == 'false') {
+                $("#valid" + id).removeClass("btn-success")
+                $("#valid" + id).addClass("btn-danger")
+            }
+        }
+    })
+}
+
+
+//  ===========================================================================================
+//  ================================message-hide===================================================
+
+
+var message_ele = document.getElementById("success1");
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
