@@ -260,22 +260,25 @@
 						</tfoot>
 					</table>
 				</div><!-- End .cart-table-container -->
-				<div class="cart-discount">
-					<h4>Apply Discount Code</h4>
-					<form id="applycoupon1">{% csrf_token %}
-						<div class="input-group">
-							<input type="text" name="coupon_code" class="form-control form-control-sm" placeholder="Enter discount code"
-								>
-							<div class="input-group-append">
-								<button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
-							</div>
-						</div><!-- End .input-group -->
-					</form>
-					<div id="cmsg">
-						<span id="success1"></span>
-						<span id="fail"></span>
+				<div class="checkout-discount">
+					<h4>
+						<a data-toggle="collapse" href="#checkout-discount-section" class="collapsed" role="button"
+							aria-expanded="false" aria-controls="checkout-discount-section">Apply Discount Code</a>
+					</h4>
+
+					<div class="collapse" id="checkout-discount-section">
+						<form id="applycoupon1">{% csrf_token %}
+							<input type="text" name="coupon_code"class="form-control form-control-sm" placeholder="Enter discount code"
+									required>
+							<button class="btn btn-sm btn-outline-secondary" type="submit">Apply Discount</button>
+						</form>
+					
+								<span id="success1"></span>
+								<span id="fail"></span>
+						
 					</div>
-				</div><!-- End .cart-discount -->
+				</div>
+				
 			</div><!-- End .col-lg-8 -->
 
 			<div class="col-lg-4">

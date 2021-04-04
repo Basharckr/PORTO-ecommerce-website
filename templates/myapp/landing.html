@@ -118,13 +118,12 @@
 							<span class="product-label label-sale">{{product.category.category_offer}}%</span>
 						</div>
 						{% endif %}
-						<!-- <div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal">
-								<i
-									class="icon-shopping-cart"></i></button>
+						<div class="btn-icon-group">
+							<button class="btn-icon btn-add-cart" onclick="addToCart('{{product.id}}')" data-toggle="modal" >
+								<i class="icon-shopping-cart"></i></button>
+						</div>
+						
 
-
-						</div> -->
 						<button type="button" class="btn-quickview" data-toggle="modal"
 							data-target="#exampleModal-{{product.id}}">
 							Quick View

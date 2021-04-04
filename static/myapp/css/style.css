@@ -7,6 +7,11 @@
 #fail{
   color: red;
 }
+#success1{
+  color:green;
+  font-size:large;
+  width: 100%;
+}
 #success{
     text-align: center;
     padding: 40px 0;

@@ -15,11 +15,31 @@ from twilio.rest import Client
 # Create your views here.
 
 
-def index(request):
+def guest(request):
     if request.user.is_authenticated:
-        return redirect("landing")
+        return redirect("landing") 
     else:
-        return render(request, 'myapp/index.html')
+        product = Products.objects.filter(product_value=True)
+        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+        count = Cart.objects.filter(
+            user=request.user.id, checkedout=False).count()
+        brands = User.objects.filter(is_active=True, is_staff=True)
+        category = Category.objects.all()
+        print(count)
+        total = 0.00
+        for item in cart:
+            total = total + \
+                int(item.user_product.offer_price) * \
+                int(item.product_count)
+        tot = []
+        tot.append(total)
+        print('list', tot)
+        tot[0] = tot[0] - discount_price
+        request.session['total'] = tot
+        context = {
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+        }
+    return render(request, 'myapp/index.html', context)
 
 
 def login(request):
@@ -152,7 +172,7 @@ def landing(request):
         }
         return render(request, 'myapp/landing.html', context)
     else:
-        return redirect("login")
+        return redirect("guest")
 
 
 def userlogout(request):
@@ -161,35 +181,37 @@ def userlogout(request):
 
 
 def product(request, pk):
-    if request.user.is_authenticated:
-        product = Products.objects.get(id=pk)
-        related_product = Products.objects.filter(
-            category=product.category).exclude(id=pk)
-        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
-        count = Cart.objects.filter(
-            user=request.user.id, checkedout=False).count()
-        category = Category.objects.all()
-        brands = User.objects.filter(is_active=True, is_staff=True)
+    if request.user.is_active == True:
+        if request.user.is_authenticated:
+            product = Products.objects.get(id=pk)
+            related_product = Products.objects.filter(
+                category=product.category).exclude(id=pk)
+            cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+            count = Cart.objects.filter(
+                user=request.user.id, checkedout=False).count()
+            category = Category.objects.all()
+            brands = User.objects.filter(is_active=True, is_staff=True)
 
-        print(count)
-        total = 0.00
-        for item in cart:
-            total = total + \
-                int(item.user_product.offer_price) * \
-                int(item.product_count)
-        tot = []
-        tot.append(total)
-        print('list', tot)
-        tot[0] = tot[0] - discount_price
-        request.session['total'] = tot
-        context = {
-            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category,
-            'brands': brands, 'related_product': related_product
-        }
-        return render(request, 'myapp/product_detail.html', context)
+            print(count)
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.offer_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            print('list', tot)
+            tot[0] = tot[0] - discount_price
+            request.session['total'] = tot
+            context = {
+                'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category,
+                'brands': brands, 'related_product': related_product
+            }
+            return render(request, 'myapp/product_detail.html', context)
+        else:
+            return redirect("login")
     else:
         return redirect("login")
-
 
 discount_price = 0
 

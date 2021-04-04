@@ -1,6 +1,6 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
-{% block title %}PORTO || Index{% endblock %}
+{% block title %}PORTO || Guest{% endblock %}
 {% block content %}
 
 <main class="main">
@@ -26,7 +26,9 @@
 			<div class="banner-layer banner-layer-middle">
 				<h2 class="m-b-1">New Season Hats </h2>
 				<h3 class="text-uppercase rotated-upto-text mb-0"><small>Up to</small>20% off</h3>
+
 				<hr class="short-thick-divider">
+
 				<h5 class="text-uppercase d-inline-block mb-0">Starting at <span class="ml-2">$<em>19</em>99</span></h5>
 				<a href="category.html" class="btn btn-dark btn-xl btn-icon-right" role="button">Shop Now <i
 						class="fas fa-long-arrow-alt-right"></i></a>
@@ -38,83 +40,19 @@
 		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4">Shop By Category</h2>
 
 		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
+			{% for item in category%}
 			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-1.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Sunglasses</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-2.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Bags</h3>
-						<span><mark class="count">4</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-3.jpg' %}">
-					</figure>
-					<div class="category-content">
-						<h3>Electronics</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
+				<a href="{% url 'categorywise' pk=item.id %}">
 					<figure>
 						<img src="{% static 'myapp/images/categories/category-4.jpg'%}">
 					</figure>
 					<div class="category-content">
-						<h3>Fashion</h3>
-						<span><mark class="count">11</mark> products</span>
+						<h3>{{item.category_name}}</h3>
 					</div>
 				</a>
 			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-5.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Headphone</h3>
-						<span><mark class="count">3</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-6.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Shoes</h3>
-						<span><mark class="count">4</mark> products</span>
-					</div>
-				</a>
-			</div>
-			<div class="product-category">
-				<a href="category.html">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-1.jpg'%}">
-					</figure>
-					<div class="category-content">
-						<h3>Sunglasses</h3>
-						<span><mark class="count">8</mark> products</span>
-					</div>
-				</a>
-			</div>
+			{%endfor%}
+
 		</div>
 	</section>
 
@@ -167,31 +105,175 @@
 
 	<section class="container pb-3 mb-1">
 		<h2 class="section-title ls-n-10 text-center pb-2 m-b-4">Featured Products</h2>
+		<div class="row">
+			{% for product in products%}
+			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
+				<div class="product-default inner-quickview inner-icon">
+					<figure>
+						<a href="{% url 'product' pk=product.id %}">
+							<img src="{{product.image1.url}}" style="width: 150px; height: 150px;">
+						</a>
+						{% if product.category.valid == True %}
+						<div class="label-group">
+							<span class="product-label label-sale">{{product.category.category_offer}}%</span>
+						</div>
+						{% endif %}
+						<div class="btn-icon-group">
+							<button class="btn-icon btn-add-cart" onclick="addToCart('{{product.id}}')" data-toggle="modal" >
+								<i class="icon-shopping-cart"></i></button>
+						</div>
+						
 
-		<div class="row py-4">
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-10.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-sale">-30%</span>
+						<button type="button" class="btn-quickview" data-toggle="modal"
+							data-target="#exampleModal-{{product.id}}">
+							Quick View
+						</button>
+
+						<!-- ---------------------------------------------------------------------------------------- -->
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal-{{product.id}}" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="close ml-auto mr-4 mt-1" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<div class="modal-body">
+										<div class="product-single-container product-single-default product-quick-view">
+											<div class="row row-sparse">
+												<div class="col-lg-6 product-single-gallery">
+													<div class="product-slider-container">
+														<div class="product-single-carousel owl-carousel owl-theme">
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image1url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-1-big.jpg" />
+															</div>
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image2url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-2-big.jpg" />
+															</div>
+															<div class="product-item">
+																<img class="product-single-image"
+																	src="{{product.image3url}}"
+																	data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-3-big.jpg" />
+															</div>
+
+														</div>
+														<!-- End .product-single-carousel -->
+													</div>
+													<div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
+														<div class="owl-dot">
+															<img style="height: 100px;width:100px"
+																src="{{product.image1url}}" />
+														</div>
+														<div class="owl-dot">
+															<img style="height: 100px;width:100px"
+																src="{{product.image2url}}" />
+														</div>
+														<div class="owl-dot">
+															<img style="height: 100px;width:100px"
+																src="{{product.image3url}}" />
+														</div>
+
+													</div>
+												</div><!-- End .product-single-gallery -->
+
+												<div class="col-lg-6 product-single-details">
+													<h1 class="product-title">{{product.product_name}}</h1>
+
+													<div class="ratings-container">
+														<div class="product-ratings">
+															<span class="ratings" style="width:60%"></span>
+															<!-- End .ratings -->
+														</div><!-- End .product-ratings -->
+
+														<a href="#" class="rating-link">( 6 Reviews )</a>
+													</div><!-- End .product-container -->
+
+													<div class="price-box">
+														{% if product.category.valid == True %}
+
+														<span class="old-price">₹{{product.product_price}}</span>
+														<span class="product-price">₹{{product.offer_price}}</span>
+
+														<span class="ml-4">{{product.category.category_offer}}%</span>
+														{% else %}
+														<span class="product-price">₹{{product.offer_price}}</span>
+
+														{% endif %}
+													</div><!-- End .price-box -->
+
+													<div class="product-desc">
+														<p>{{product.proudct_description}}</p>
+													</div><!-- End .product-desc -->
+
+													<div class="product-filters-container">
+														<div class="product-single-filter">
+															<label>Colors:</label>
+															<ul class="config-swatch-list">
+																<li class="active">
+																	<a href="#" style="background-color: #0188cc;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #ab6e6e;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #ddb577;"></a>
+																</li>
+																<li>
+																	<a href="#" style="background-color: #6085a5;"></a>
+																</li>
+															</ul>
+														</div><!-- End .product-single-filter -->
+													</div><!-- End .product-filters-container -->
+
+													<hr class="divider">
+
+													<div class="product-action">
+														<div class="product-single-qty">
+															<input class="horizontal-quantity form-control"
+																id="quantity" type="text">
+														</div><!-- End .product-single-qty -->
+
+														<button class="btn btn-dark add-cart"
+															onclick="addToCart('{{product.id}}')"
+															title="Add to Cart">Add to
+															Cart</button>
+													</div><!-- End .product-action -->
+
+													<hr class="divider">
+
+													<div class="product-single-share">
+														<label class="sr-only">Share:</label>
+
+														<!-- www.addthis.com share plugin-->
+														<div class="addthis_inline_share_toolbox"></div>
+
+														<a href="#" class="add-wishlist" title="Add to Wishlist">Add to
+															Wishlist</a>
+													</div><!-- End .product single-share -->
+												</div><!-- End .product-single-details -->
+											</div><!-- End .row -->
+										</div><!-- End .product-single-container -->
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+						<!-- End-modal -->
 					</figure>
 					<div class="product-details">
 						<div class="category-wrap">
 							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
+								<a href="{% url 'categorywise' pk=product.category.id %}"
+									class="product-category">{{product.category.category_name}}</a>
 							</div>
 						</div>
 						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
+							<a href="{% url 'product' pk=product.id %}">{{product.product_name}}</a>
 						</h3>
 						<div class="ratings-container">
 							<div class="product-ratings">
@@ -200,194 +282,24 @@
 							</div><!-- End .product-ratings -->
 						</div><!-- End .product-container -->
 						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
+							{% if product.category.valid == True %}
+
+							<span class="old-price">₹{{product.product_price}}</span>
+							<span class="product-price">₹{{product.offer_price}}</span>
+
+							<span class="ml-4">{{product.category.category_offer}}%</span>
+							{% else %}
+							<span class="product-price">₹{{product.offer_price}}</span>
+
+							{% endif %}
 						</div><!-- End .price-box -->
 					</div><!-- End .product-details -->
 				</div>
+
 			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-11.jpg' %}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-hot">HOT</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-12.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-sale">-20%</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-1.jpg'%}">
-						</a>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-2.jpg'%}">
-						</a>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
-			<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-				<div class="product-default inner-quickview inner-icon">
-					<figure>
-						<a href="product.html">
-							<img src="{% static 'myapp/images/products/product-3.jpg'%}">
-						</a>
-						<div class="label-group">
-							<span class="product-label label-hot">HOT</span>
-						</div>
-						<div class="btn-icon-group">
-							<button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal"><i
-									class="icon-shopping-cart"></i></button>
-						</div>
-						<a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-					</figure>
-					<div class="product-details">
-						<div class="category-wrap">
-							<div class="category-list">
-								<a href="category.html" class="product-category">category</a>
-							</div>
-						</div>
-						<h3 class="product-title">
-							<a href="product.html">Product Short Name</a>
-						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
-						<div class="price-box">
-							<span class="old-price">$59.00</span>
-							<span class="product-price">$49.00</span>
-						</div><!-- End .price-box -->
-					</div><!-- End .product-details -->
-				</div>
-			</div>
+			{% endfor %}
 
 		</div>
-
 		<hr class="mt-3 mb-6">
 
 		<div class="row feature-boxes-container pt-2">
@@ -397,9 +309,11 @@
 
 					<div class="feature-box-content">
 						<h3 class="text-uppercase">Customer Support</h3>
-						<h5>Need Assistence?</h5>
+						<h5>24x7 Customer Care Support
+						</h5>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna, et dapib.
+						<p>The Porto Customer Care Support solve various types of issues that you may have encountered
+							so that there can be quick resolution and you can go back to shopping online.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
@@ -413,8 +327,11 @@
 						<h3 class="text-uppercase">Secured Payment</h3>
 						<h5>Safe & Fast</h5>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna, et
-							dapibus lacus. Lorem ipsum dolor sit amet.</p>
+						<p>Porto offers you multiple payment methods. Whatever your online mode of payment, you can rest
+							assured that Porto's trusted payment gateway partners use secure encryption technology to
+							keep your transaction details confidential at all times.
+
+						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
 			</div><!-- End .col-lg-3 -->
@@ -427,7 +344,9 @@
 						<h3 class="text-uppercase">Free Returns</h3>
 						<h5>Easy & Free</h5>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna, et dapib.
+						<p>Returns is a scheme provided by respective sellers directly under this policy in terms of
+							which the option of exchange, replacement and/ or refund is offered by the respective
+							sellers to you.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
@@ -439,9 +358,10 @@
 
 					<div class="feature-box-content">
 						<h3 class="text-uppercase">Free Shipping</h3>
-						<h5>Orders Over $99</h5>
+						<h5>Orders Over ₹999</h5>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec vestibulum magna, et dapib.
+						<p>Sellers generally procure and ship the items within the time specified on the product page.
+							Business days exclude public holidays and Sundays.
 						</p>
 					</div><!-- End .feature-box-content -->
 				</div><!-- End .feature-box -->
@@ -449,4 +369,5 @@
 		</div><!-- End .row .feature-boxes-container-->
 	</section>
 </main><!-- End .main -->
+
 {% endblock %}

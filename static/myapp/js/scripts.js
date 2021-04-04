@@ -248,7 +248,7 @@ function addToCart(id) {
         method: 'post',
         success: function (response) {
             if (response == 'true') {
-                window.location.replace('/')
+                window.location.reload()
             }
             if (response == 'nothing') {
                 window.location.replace('/')
@@ -614,11 +614,16 @@ $().ready(function () {
                 success: function (response) {
                     if (response == 'true') {
                         window.location.replace('cart')
-                        $("#cmsg").html('<span id="success1">Valid Coupon..Discount added to total amount</span>')
+                        $('#fail').remove()
+                        $("#success1").html('Valid Coupon..Discount added to total amount')
+
                     }
                     if (response == 'false') {
-                        $("#cmsg").html('<span id="fail">Invalid coupon..Try again..</span>')
-
+                        $("#fail").html('Invalid coupon..Try again..')
+                        var message_ele = document.getElementById("#fail");
+                        setTimeout(function () {
+                            message_ele.style.display = "none";
+                        }, 3000);
                     }
 
                 },
@@ -633,7 +638,4 @@ $().ready(function () {
 //  ================================message-hide===================================================
 
 
-var message_ele = document.getElementById("fail");
-setTimeout(function () {
-    message_ele.style.display = "none";
-}, 3000);
+
