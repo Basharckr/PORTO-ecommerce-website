@@ -79,4 +79,5 @@ urlpatterns = [
     path('brandwise/<int:pk>/', views.brandwise, name='brandwise'),
 
 
+
 ]

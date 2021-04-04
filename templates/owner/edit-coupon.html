@@ -22,7 +22,7 @@
                 <label class="col-md-4 control-label" for="product_name">COUPON OFFER</label>
                 <div class="col-md-6">
                     <input name="couponoffer" id="couponoffer" value="{{coupon.coupon_offer}}"
-                        placeholder="Coupon offer in percentage.." class="form-control input-md" type="number">
+                        placeholder="Coupon offer in price" class="form-control input-md" type="number">
 
                 </div>
             </div>
@@ -59,7 +59,7 @@
             $("#error1").html('category should be 3 characters')
         }
         if (couponoffer_len == '') {
-            $("#error1").html('Enter offer in percentage')
+            $("#error1").html('Enter offer in price')
         }
         else {
             // create an AJAX call

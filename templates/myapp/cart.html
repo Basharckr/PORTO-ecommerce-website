@@ -262,15 +262,19 @@
 				</div><!-- End .cart-table-container -->
 				<div class="cart-discount">
 					<h4>Apply Discount Code</h4>
-					<form action="#">
+					<form id="applycoupon1">{% csrf_token %}
 						<div class="input-group">
-							<input type="text" class="form-control form-control-sm" placeholder="Enter discount code"
-								required>
+							<input type="text" name="coupon_code" class="form-control form-control-sm" placeholder="Enter discount code"
+								>
 							<div class="input-group-append">
 								<button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
 							</div>
 						</div><!-- End .input-group -->
 					</form>
+					<div id="cmsg">
+						<span id="success1"></span>
+						<span id="fail"></span>
+					</div>
 				</div><!-- End .cart-discount -->
 			</div><!-- End .col-lg-8 -->
 

@@ -132,7 +132,7 @@ $().ready(function () {
 
             },
             couponoffer: {
-                required: "Enter Coupon offer in percentage..",
+                required: "Enter Coupon offer in price",
             },
         },
         submitHandler: (addcoupon, e) => {
@@ -160,18 +160,19 @@ $().ready(function () {
 //  ===========================================================================================
 // ================================Change coupon validity=================================================== -->
 function couponValidity(id) {
-    console.log('kkkkkkkk')
     $.ajax({
         url: 'change-couponvalidity/'+ id +'/',
         method: 'get',
         success: function (response) {
             if (response == 'true') {
+                $("#valid" + id).removeClass("btn-success")
+                $("#valid" + id).addClass("btn-danger")           
+
+            }
+            if (response == 'false') {           
                 $("#valid" + id).removeClass("btn-danger")
                 $("#valid" + id).addClass("btn-success")
-            }
-            if (response == 'false') {
-                $("#valid" + id).removeClass("btn-success")
-                $("#valid" + id).addClass("btn-danger")
+
             }
         }
     })
@@ -182,7 +183,8 @@ function couponValidity(id) {
 //  ================================message-hide===================================================
 
 
-var message_ele = document.getElementById("success1");
+                $("#valid" + id).addClass("btn-success")
+                var message_ele = document.getElementById("success1");
 setTimeout(function () {
     message_ele.style.display = "none";
 }, 3000);

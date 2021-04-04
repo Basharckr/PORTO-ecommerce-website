@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container">
     {% if messages %} {% for message in messages %}
-            <span id="success1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
-    
+    <span id="success1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
+
 
     <!--Coupon DataTales  -->
     <div class="card shadow mb-2 mt-4 col-md-12">
@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>Coupon code</th>
-                            <th>Coupon offer in percentage</th>
+                            <th>Coupon offer in price</th>
                             <th>Offer valid</th>
                             <th>Action</th>
                         </tr>
@@ -27,27 +27,28 @@
                         <tr>
                             <td>{{coupons.coupon_code}}</td>
                             <td>{{coupons.coupon_offer}}</td>
-                            {% if coupons.active == False%} <td class="text-center"><button type="button"
-                                    id="valid{{coupons.id}}" onclick="couponValidity('{{coupons.id}}')"
-                                    class="btn btn-sm btn-danger">active
+                            {% if coupons.active == False%}
+                            <td class="text-center"><button type="button" id="valid{{coupons.id}}"
+                                    onclick="couponValidity('{{coupons.id}}')" class="btn btn-sm btn-success">active
                                 </button></td>
-                                {% else %}
-                                <td class="text-center"><button type="button" id="valid{{coupons.id}}"
-                                        onclick="couponValidity('{{coupons.id}}')" class="btn btn-sm btn-success">active
-                                    </button></td>
-                                {% endif %}
+                            {% else %}
+                            <td class="text-center"><button type="button" id="valid{{coupons.id}}"
+                                    onclick="couponValidity('{{coupons.id}}')" class="btn btn-sm btn-danger">active
+                                </button></td>
 
-                                <td class="text-center"><a href="{% url 'edit-coupon' id=coupons.id %}"
-                                        class="btn btn-sm btn-info btn-xs">
-                                        Edit
-                                    </a>
+                            {% endif %}
 
-                                    <a href="{% url 'delete-coupon' id=coupons.id %}"
-                                        onclick="return confirm('Are you sure you want to delete this?')"
-                                        class="btn btn-sm btn-danger btn-xs"><span
-                                            class="glyphicon glyphicon-remove"></span>
-                                        Del</a>
-                                </td>
+                            <td class="text-center"><a href="{% url 'edit-coupon' id=coupons.id %}"
+                                    class="btn btn-sm btn-info btn-xs">
+                                    Edit
+                                </a>
+
+                                <a href="{% url 'delete-coupon' id=coupons.id %}"
+                                    onclick="return confirm('Are you sure you want to delete this?')"
+                                    class="btn btn-sm btn-danger btn-xs"><span
+                                        class="glyphicon glyphicon-remove"></span>
+                                    Del</a>
+                            </td>
 
                         </tr>
                         {% endfor %}

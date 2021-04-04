@@ -4,7 +4,9 @@
 #error1{
     color: red;
 }
-
+#fail{
+  color: red;
+}
 #success{
     text-align: center;
     padding: 40px 0;

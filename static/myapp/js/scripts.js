@@ -1,7 +1,7 @@
 //  ===========================================================================================
 //  ================================User-Signup===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#signupform").validate({
@@ -68,7 +68,7 @@ $().ready(function() {
                 data: $("#signupform").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('login')
                     }
@@ -92,7 +92,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================User-Login===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#loginform").validate({
@@ -121,7 +121,7 @@ $().ready(function() {
                 data: $("#loginform").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('landing')
                     }
@@ -147,7 +147,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================User-otp-Login===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('hi')
     $("#otplogin").validate({
@@ -175,7 +175,7 @@ $().ready(function() {
                 data: $("#otplogin").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('/enter-otp')
                     }
@@ -196,7 +196,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================User-Enter-otp===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#enterotp").validate({
@@ -218,7 +218,7 @@ $().ready(function() {
                 data: $("#enterotp").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('landing')
                     }
@@ -246,7 +246,7 @@ function addToCart(id) {
         url: '/add-to-cart/' + id + '/',
         data: data,
         method: 'post',
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
                 window.location.replace('/')
             }
@@ -268,7 +268,7 @@ function removeProduct(id) {
         url: '/remove-from-cart/' + id + '/',
         data: data,
         method: 'get',
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
                 window.location.replace('/cart')
             }
@@ -289,7 +289,7 @@ function editQuantity(id, cou) {
         url: '/edit-quantity/' + id + '/',
         data: data,
         method: 'post',
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
                 window.location.replace('/cart')
             }
@@ -304,7 +304,7 @@ function editQuantity(id, cou) {
 
 //  ===========================================================================================
 //  ================================Shipping address===================================================
-$(document).ready(function() {
+$(document).ready(function () {
 
     $("#shippaddress").validate({
         rules: {
@@ -362,7 +362,7 @@ $(document).ready(function() {
                 data: $("#shippaddress").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         window.location.replace('checkout')
                     }
@@ -377,7 +377,7 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 
 
     $("#editaddress").validate({
@@ -442,11 +442,12 @@ function shipHere(id) {
     $.ajax({
         url: "/set-address/" + id + "/",
         method: 'post',
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
                 $("div").removeClass("active");
                 var element = document.getElementById("set-add-" + id);
                 element.classList.add("active");
+                document.getElementById('show').style.display = "block";
             }
         }
 
@@ -457,7 +458,7 @@ function shipHere(id) {
 //  ===========================================================================================
 //  ================================Edi user account===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     console.log('d')
     $("#editaccount").validate({
@@ -516,7 +517,7 @@ $().ready(function() {
 //  ===========================================================================================
 //  ================================Change user password===================================================
 
-$().ready(function() {
+$().ready(function () {
 
     $("#changuserpassword").validate({
         rules: {
@@ -552,7 +553,7 @@ $().ready(function() {
                 data: $("#changuserpassword").serialize(),
                 method: "post",
 
-                success: function(response) {
+                success: function (response) {
                     if (response == 'true') {
                         $("#block").html('<div class="alert alert-success text-center" id="block"><strong>Password changed successfully.</strong> </div>')
                     }
@@ -577,7 +578,7 @@ function cancelOrder(id) {
         url: '/cancel-order/' + id + '/',
         data: data,
         method: 'get',
-        success: function(response) {
+        success: function (response) {
             if (response == 'true') {
                 window.location.replace('/my-orders')
             }
@@ -588,49 +589,51 @@ function cancelOrder(id) {
 
 
 //  ===========================================================================================
-//  ================================Search product===================================================
+//  ================================Apply coupon===================================================
+$().ready(function () {
+    console.log('hiiiiiiiiiiiiii')
+    $("#applycoupon1").validate({
+        rules: {
+            coupon_code: {
+                required: true
+            }
+        },
+        messages: {
+            coupon_code: {
+                required: "Please enter your coupon code",
+            }
+        },
+        submitHandler: (applycoupon1, e) => {
 
-// $().ready(function() {
+            e.preventDefault()
+            $.ajax({
+                url: "cart",
+                data: $("#applycoupon1").serialize(),
+                method: "post",
 
-//     console.log('search')
-//     $("#productsearch").validate({
-//         rules: {
-//             q: {
-//                 required: true,
-//             },
+                success: function (response) {
+                    if (response == 'true') {
+                        window.location.replace('cart')
+                        $("#cmsg").html('<span id="success1">Valid Coupon..Discount added to total amount</span>')
+                    }
+                    if (response == 'false') {
+                        $("#cmsg").html('<span id="fail">Invalid coupon..Try again..</span>')
 
-//         },
-//         messages: {
-//             q: {
-//                 required: "Please enter productname",
-//             },
+                    }
+
+                },
+
+            })
+        }
+    });
+});
 
 
-//         },
-//         submitHandler: (otplogin, e) => {
+//  ===========================================================================================
+//  ================================message-hide===================================================
 
-//             e.preventDefault()
-//             $.ajax({
-//                 url: "search-product",
-//                 data: $("#productsearch").serialize(),
-//                 method: "post",
 
-//                 success: function(response) {
-//                     if(response){
-//                         console.log(response)
-//                         window.location.replace('search-product')
-//                     }
-//                     if (response == 'blocked') {
-//                         $("#block").html('<div class="alert alert-danger text-center" id="block">Sorry!! <strong>You are Blocked!!</strong> </div>')
-
-//                     }
-//                     if (response == 'nouser') {
-//                         $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This username not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
-
-//                     }
-//                 },
-
-//             })
-//         }
-//     });
-// });
+var message_ele = document.getElementById("fail");
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
