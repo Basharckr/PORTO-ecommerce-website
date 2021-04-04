@@ -17,7 +17,7 @@ from twilio.rest import Client
 
 def guest(request):
     if request.user.is_authenticated:
-        return redirect("landing") 
+        return redirect("landing")
     else:
         product = Products.objects.filter(product_value=True)
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
@@ -25,7 +25,6 @@ def guest(request):
             user=request.user.id, checkedout=False).count()
         brands = User.objects.filter(is_active=True, is_staff=True)
         category = Category.objects.all()
-        print(count)
         total = 0.00
         for item in cart:
             total = total + \
@@ -33,7 +32,6 @@ def guest(request):
                 int(item.product_count)
         tot = []
         tot.append(total)
-        print('list', tot)
         tot[0] = tot[0] - discount_price
         request.session['total'] = tot
         context = {
@@ -55,11 +53,9 @@ def login(request):
                     user = auth.authenticate(
                         username=username, password=password)
                     if user is not None:
-                        print('goto user home')
                         auth.login(request, user)
                         return JsonResponse('true', safe=False)
                     else:
-                        print("incorrect password")
                         return JsonResponse('false', safe=False)
                 else:
                     return JsonResponse('blocked', safe=False)
@@ -96,10 +92,8 @@ def otp_login(request):
                     )
                     return JsonResponse('true', safe=False)
                 else:
-                    print("user is blocked")
                     return JsonResponse('blocked', safe=False)
             else:
-                print("This mobile number is not exist")
                 return JsonResponse('nouser', safe=False)
     return render(request, 'myapp/otp-login.html')
 
@@ -108,9 +102,7 @@ def enter_otp(request):
     if request.method == 'POST':
         otp1 = request.POST['otp']
         global phone_number
-        print(phone_number)
         user = Profile.objects.get(phone=phone_number)
-        print(user)
         thisuser = user.user
         global otp
         if int(otp1) == otp:
@@ -131,19 +123,15 @@ def signup(request):
         number = request.POST['number']
         password = request.POST['password']
         if User.objects.filter(username=username).exists():
-            print('username is alredy is taken')
             return JsonResponse('false1', safe=False)
         if User.objects.filter(email=email).exists():
-            print('email is already taken')
             return JsonResponse('false2', safe=False)
         if Profile.objects.filter(phone=number).exists():
-            print('number is already taken')
             return JsonResponse('false3', safe=False)
         else:
             user = User.objects.create_user(
                 first_name=firstname, last_name=lastname, username=username, email=email, password=password)
             Profile.objects.create(user=user, phone=number)
-            print('user is created')
             return JsonResponse('true', safe=False)
     return render(request, 'myapp/signup.html')
 
@@ -156,7 +144,6 @@ def landing(request):
             user=request.user.id, checkedout=False).count()
         brands = User.objects.filter(is_active=True, is_staff=True)
         category = Category.objects.all()
-        print(count)
         total = 0.00
         for item in cart:
             total = total + \
@@ -164,7 +151,6 @@ def landing(request):
                 int(item.product_count)
         tot = []
         tot.append(total)
-        print('list', tot)
         tot[0] = tot[0] - discount_price
         request.session['total'] = tot
         context = {
@@ -192,7 +178,6 @@ def product(request, pk):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
 
-            print(count)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -200,7 +185,6 @@ def product(request, pk):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             context = {
@@ -212,6 +196,7 @@ def product(request, pk):
             return redirect("login")
     else:
         return redirect("login")
+
 
 discount_price = 0
 
@@ -225,7 +210,8 @@ def user_cart(request):
                 cart = Cart.objects.filter(
                     user=request.user.id, checkedout=False)
                 if Coupons.objects.filter(coupon_code=coupon_code, active=False).exists():
-                    coupon_offer = Coupons.objects.get(coupon_code=coupon_code, active=False)
+                    coupon_offer = Coupons.objects.get(
+                        coupon_code=coupon_code, active=False)
                     discount_price = coupon_offer.coupon_offer
                     total = 0.00
                     for item in cart:
@@ -235,12 +221,10 @@ def user_cart(request):
                     tot = []
                     tot.append(total)
                     request.session['total'] = tot[0] - discount_price
-                    coupon_offer.active=True
+                    coupon_offer.active = True
                     coupon_offer.save()
-                    print('added', discount_price)
                     return JsonResponse('true', safe=False)
                 else:
-                    print('coupon not exists')
                     return JsonResponse('false', safe=False)
             else:
                 cart = Cart.objects.filter(
@@ -257,10 +241,8 @@ def user_cart(request):
                         int(item.product_count)
                 tot = []
                 tot.append(total)
-                print('list', tot)
                 tot[0] = tot[0] - discount_price
                 request.session['total'] = tot
-                print('old', request.session['total'])
                 context = {
                     'cart': cart, 'grant': tot, 'grant': tot, 'count': count, 'category': category, 'brands': brands
                 }
@@ -312,7 +294,6 @@ def clear_all_cart(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             product = Cart.objects.filter(user=request.user, checkedout=False)
-            print(product)
             product.delete()
 
             return redirect('cart')
@@ -327,12 +308,8 @@ def edit_quantity(request, id):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             quantity = request.POST['quantity']
-            print(quantity)
             edit = Cart.objects.get(id=id)
-            print(edit)
             if edit.product_count == quantity:
-                print(edit.product_count)
-                print(quantity)
                 return JsonResponse('nothing', safe=False)
             else:
                 edit.product_count = quantity
@@ -360,10 +337,8 @@ def checkout(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
-            print(address)
             context = {
                 'address': address, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
             }
@@ -478,10 +453,8 @@ def placeorder(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
-            print(count)
 
             return render(request, 'myapp/placeorder.html', {'address': address, 'grant': tot, 'cart': cart, 'count': count, 'category': category, 'brands': brands})
         else:
@@ -505,7 +478,6 @@ def success(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
 
@@ -525,11 +497,8 @@ def place_order(request):
         if request.user.is_authenticated:
             global discount_price
             id = request.session['address-id']
-            print(id)
             grant_total = request.session['total']
-            print(grant_total)
             cart = Cart.objects.filter(user=request.user, checkedout=False)
-            print(cart)
             ship_id = ShipAddress.objects.get(id=id)
             if request.method == 'POST':
                 for item in cart:
@@ -569,9 +538,7 @@ def dashbaord(request):
             brands = User.objects.filter(is_active=True, is_staff=True)
             address = ShipAddress.objects.filter(
                 select=True, user=request.user)
-            print(address)
 
-            print(count)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -579,7 +546,6 @@ def dashbaord(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count,
@@ -599,7 +565,6 @@ def edit_user_account(request):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
 
-            print(count)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -607,7 +572,6 @@ def edit_user_account(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             profile = Profile.objects.get(user=request.user.id)
@@ -619,7 +583,6 @@ def edit_user_account(request):
                 edit.email = request.POST['email']
                 profile.phone = request.POST['number']
                 profile.image1 = request.FILES.get('image1')
-                print(profile.image1)
                 orginalpassword = request.POST['orginalpassword']
                 checkpassword = check_password(
                     orginalpassword, request.user.password)
@@ -658,9 +621,7 @@ def change_user_password(request):
             brands = User.objects.filter(is_active=True, is_staff=True)
             address = ShipAddress.objects.filter(
                 select=True, user=request.user)
-            print(address)
 
-            print(count)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -668,7 +629,6 @@ def change_user_password(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             context = {
@@ -680,10 +640,8 @@ def change_user_password(request):
 
                 checkpassword = check_password(
                     orginalpassword, request.user.password)
-                print(checkpassword)
                 if checkpassword:
                     edit.password = make_password(password)
-                    print(edit.password)
                     edit.save()
                     return JsonResponse('true', safe=False)
                 else:
@@ -705,7 +663,6 @@ def my_orders(request):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
 
-            print(count)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -713,7 +670,6 @@ def my_orders(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             return render(request, 'myapp/my-orders.html', {'orders': all_orders, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
@@ -751,7 +707,6 @@ def search_product(request):
                 category = Category.objects.all()
                 brands = User.objects.filter(is_active=True, is_staff=True)
 
-                print(product)
                 total = 0.00
             for item in cart:
                 total = total + \
@@ -759,7 +714,6 @@ def search_product(request):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             context = {
@@ -781,7 +735,6 @@ def categorywise(request, pk):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
             products = Products.objects.filter(category=pk)
-            print(products)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -789,7 +742,6 @@ def categorywise(request, pk):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             context = {
@@ -811,7 +763,6 @@ def brandwise(request, pk):
             category = Category.objects.all()
             brands = User.objects.filter(is_active=True, is_staff=True)
             products = Products.objects.filter(vendor=pk)
-            print(products)
             total = 0.00
             for item in cart:
                 total = total + \
@@ -819,7 +770,6 @@ def brandwise(request, pk):
                     int(item.product_count)
             tot = []
             tot.append(total)
-            print('list', tot)
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             context = {

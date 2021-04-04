@@ -19,9 +19,6 @@ def adIndex(request):
         products = Products.objects.all().count()
         total_user = User.objects.filter(is_active=True, is_staff=False).count()
         total_vendors = User.objects.filter(is_active=True, is_staff=True, is_superuser=False).count()
-        print('vendors',total_vendors)
-        print(total_user)
-        print(products)
         price = []
         date = []
         total = 0.00
@@ -30,7 +27,6 @@ def adIndex(request):
             price.append(item.order_total)
             date.append(item.ordered_date.day)
 
-        print(total)
         context = {
             'report': report_user, 'total': total, 'products': products, 'total_user': total_user,
             'total_vendors': total_vendors, 'date': date, 'price': price,
@@ -49,11 +45,9 @@ def adLogin(request):
             password = request.POST['password']
             user = auth.authenticate(username=username, password=password)
             if user is not None:
-                print('goto admin home')
                 auth.login(request, user)
                 return JsonResponse('true', safe=False)
             else:
-                print("incorrect username or password")
                 return JsonResponse('false', safe=False)
         return render(request, 'owner/ad-login.html')
 
@@ -73,10 +67,8 @@ def create_category(request):
             category_offer = request.POST['offer']
 
             if Category.objects.filter(category_name=categoryname).exists():
-                print('category already added')
                 return JsonResponse('false', safe=False)
             else:
-                print('category is added')
                 Category.objects.create(category_name=categoryname, category_offer=category_offer)
                 return JsonResponse('true', safe=False)
 
@@ -88,10 +80,8 @@ def change_offer_validity(request, id):
     if request.user.is_authenticated and request.user.is_superuser == True:
         category = Category.objects.get(id=id)
         if category.valid == False:
-            print(category.valid)
             category.valid = True
             category.save()
-            print(category.valid)
             return JsonResponse('true', safe=False)
         else:
             category.valid = False
@@ -118,11 +108,9 @@ def edit_category(request, pk):
             edit.category_name = request.POST['cate']
             edit.category_offer = request.POST['offer']
             if Category.objects.filter(category_name=edit.category_name).exclude(id=pk).exists():
-                print('category already taken')
                 return JsonResponse('false', safe=False)
             else:
                 edit.save()
-                print('category is edited')
                 return JsonResponse('true', safe=False)
         else:
 
@@ -171,13 +159,11 @@ def block_unblock_vendor(request, pk):
                 product.product_value = False
                 product.save()
 
-            print('vendor is blocked')
         else:
             user.is_active = True
             for product in product:
                 product.product_value = True
                 product.save()
-            print('vendor is unblocked')
         user.save()
 
         return redirect('manage-vendor')
@@ -203,10 +189,8 @@ def block_unblock_user(request, pk):
         user = User.objects.get(id=pk)
         if user.is_active == True:
             user.is_active = False
-            print('user is blocked')
         else:
             user.is_active = True
-            print('user is unblocked')
         user.save()
 
         return redirect('manage-user')

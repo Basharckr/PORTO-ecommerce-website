@@ -35,7 +35,6 @@ def veIndex(request):
             }
             return render(request, 'vendor/ve-index.html', context)
     else: 
-        print('helloo')    
         return render(request, 'vendor/ve-login.html')
 
 
@@ -46,19 +45,15 @@ def veSignup(request):
         number = request.POST['number']
         password = request.POST['password']
         if User.objects.filter(username=username).exists():
-            print('username is alredy is taken')
             return JsonResponse('false1', safe=False)
         elif User.objects.filter(email=email).exists():
-            print('email is already taken')
             return JsonResponse('false2', safe=False)
         elif Profile.objects.filter(phone=number).exists():
-            print('mobile number is already exists')
             return JsonResponse('false3', safe=False)
         else:
             user = User.objects.create_user(
                 username=username, email=email, password=password, is_staff=True)
             Profile.objects.create(user=user, phone=number)
-            print('Vendor is created')
             return JsonResponse('true', safe=False)
     return render(request, 'vendor/ve-signup.html')
 
@@ -75,11 +70,9 @@ def veLogin(request):
                 if user.is_active:        
                     user = auth.authenticate(username=username, password=password)
                     if user is not None:     
-                        print('goto vendor home')
                         auth.login(request, user)
                         return JsonResponse('true', safe=False)             
                     else:
-                        print("incorrect password")
                         return JsonResponse('false', safe=False)
                 else:
                     return JsonResponse('blocked', safe=False)
@@ -98,7 +91,6 @@ def manage_product(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
             product = Products.objects.filter(vendor=request.user)
-            # print(product.image1)
             context = {
                 'products': product
             }
@@ -136,7 +128,6 @@ def add_product(request):
                 Products.objects.create(vendor=request.user, product_id=product_id, product_name=product_name, category=obj_category,
                                     product_price=product_price, product_quantity=quantity, product_weight=product_weight,
                                     proudct_description=product_description, image1=pic1, image2=pic2, image3=pic3)
-                print('product added successfully')
                 messages.success(request, 'Product added successfully')
                 return redirect('add-product')
 
@@ -180,7 +171,6 @@ def edit_product(request, pk):
                     return redirect('edit-product', pk)
                 else:
                     edit.save()
-                    print('the product successfully updated')
                     return redirect('manage-product')
             category = Category.objects.all()
             context = {
@@ -212,10 +202,8 @@ def block_unblock_product(request, pk):
             product = Products.objects.get(id=pk)
             if product.product_value == True:
                 product.product_value = False
-                print('vendor is blocked')
             else:
                 product.product_value = True
-                print('vendor is unblocked')
             product.save()
             return redirect('manage-product')
 
@@ -272,9 +260,7 @@ def vendor_orders(request):
 def ship_status(request, pk):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
-            print(request.user.id)
             order = Order.objects.get(id=pk)
-            print(order)
             if order.shipped == False:
                 order.shipped = True         
                 order.save()
@@ -293,7 +279,6 @@ def ship_status(request, pk):
 def delete_orders(request, pk):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
-            print(request.user.id)
             order = Order.objects.get(id=pk)
             order.delete()
             return redirect('vendor-orders')
@@ -307,7 +292,6 @@ def purchased_customers(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
             customer = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
-            print(customer)
             context = {
                 'customer': customer
             }
@@ -338,9 +322,7 @@ def report_customer(request, id):
         if request.user.is_authenticated and request.user.is_staff == True:
             user = Profile.objects.get(user=id)
             if request.method == 'POST':
-                print(request.POST)
                 user.message = request.POST['message']
-                print(user.message)
                 user.report = True
                 user.save()
                 return JsonResponse('true', safe=False)
