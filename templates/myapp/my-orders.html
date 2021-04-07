@@ -8,9 +8,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'landing' %}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Men</a></li>
-                <li class="breadcrumb-item"><a href="#">Accessories</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Classic Crew Neck Sweatshirt</li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">My orders</li>
             </ol>
         </div><!--  End .container -->
     </nav>
@@ -45,9 +44,9 @@
                                                 src="{{item.user_cart.user_product.image1url}}" alt="product">
                                         </a>
                                     </figure>
-                                    <h2 class="product-title">
+                                    <h4 class="product-title">
                                         <a href="{% url 'product' pk=item.user_cart.user_product.id %}">{{item.user_cart.user_product.product_name}}</a>
-                                    </h2>
+                                    </h4>
                                 </td>
                                 {% if item.shipped == True %}
                                 <td>Shipped</td>

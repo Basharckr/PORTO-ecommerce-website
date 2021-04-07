@@ -7,9 +7,8 @@
 	<nav aria-label="breadcrumb" class="breadcrumb-nav mb-md-4">
 		<div class="container">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Men</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Accessories</li>
+				<li class="breadcrumb-item"><a href="{% url 'landing' %}"><i class="icon-home"></i></a></li>
+				<li class="breadcrumb-item active" aria-current="page">search product</li>
 			</ol>
 		</div><!-- End .container -->
 	</nav>
@@ -96,17 +95,11 @@
 												</div><!-- End .product-single-gallery -->
 
 												<div class="col-lg-6 product-single-details">
+													<span>{{product.category.category_name}}</span><br>
+
 													<h1 class="product-title">{{product.product_name}}</h1>
 
-													<div class="ratings-container">
-														<div class="product-ratings">
-															<span class="ratings" style="width:60%"></span>
-															<!-- End .ratings -->
-														</div><!-- End .product-ratings -->
-
-														<a href="#" class="rating-link">( 6 Reviews )</a>
-													</div><!-- End .product-container -->
-
+													
 													<div class="price-box">
 														{% if product.category.valid == True %}
 
@@ -124,25 +117,12 @@
 														<p>{{product.proudct_description}}</p>
 													</div><!-- End .product-desc -->
 
-													<div class="product-filters-container">
-														<div class="product-single-filter">
-															<label>Colors:</label>
-															<ul class="config-swatch-list">
-																<li class="active">
-																	<a href="#" style="background-color: #0188cc;"></a>
-																</li>
-																<li>
-																	<a href="#" style="background-color: #ab6e6e;"></a>
-																</li>
-																<li>
-																	<a href="#" style="background-color: #ddb577;"></a>
-																</li>
-																<li>
-																	<a href="#" style="background-color: #6085a5;"></a>
-																</li>
-															</ul>
-														</div><!-- End .product-single-filter -->
-													</div><!-- End .product-filters-container -->
+													<ul class="single-info-list">
+														<li>product id: <strong>{{product.product_id}}</strong></li>
+														<li>product weight: <strong>{{product.product_weight}} gram</strong></li>
+														<li>Available: <strong>{{product.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
+						
+													</ul>	
 
 													<hr class="divider">
 
@@ -160,15 +140,7 @@
 
 													<hr class="divider">
 
-													<div class="product-single-share">
-														<label class="sr-only">Share:</label>
-
-														<!-- www.addthis.com share plugin-->
-														<div class="addthis_inline_share_toolbox"></div>
-
-														<a href="#" class="add-wishlist" title="Add to Wishlist">Add to
-															Wishlist</a>
-													</div><!-- End .product single-share -->
+													
 												</div><!-- End .product-single-details -->
 											</div><!-- End .row -->
 										</div><!-- End .product-single-container -->
@@ -188,12 +160,7 @@
 						<h3 class="product-title">
 							<a href="{% url 'product' pk=product.id %}">{{product.product_name}}</a>
 						</h3>
-						<div class="ratings-container">
-							<div class="product-ratings">
-								<span class="ratings" style="width:100%"></span><!-- End .ratings -->
-								<span class="tooltiptext tooltip-top"></span>
-							</div><!-- End .product-ratings -->
-						</div><!-- End .product-container -->
+						
 						<div class="price-box">
 							{% if product.category.valid == True %}
 

@@ -7,9 +7,8 @@
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
 		<div class="container">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Pages</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+				<li class="breadcrumb-item"><a href="{% url 'landing' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</a></li>
 			</ol>
 		</div><!-- End .container -->
 	</nav>
@@ -54,9 +53,13 @@
 									</p>
 								
 								</div>
+								{% if profile.imageurl == '' %}
+								<a href="{% url 'edit-user-account' %}">Add Photo</a>
+								{% else %}
 								<div class="col-xs-4" style="float: left; margin-left: 30px;">
 									<img style="height: 80px;width: 80px;border-radius: 50%;" src="{{profile.imageurl}}" />
 								</div>
+								{%endif%}
 							
 							</div><!-- End .card-body -->
 						</div><!-- End .card -->

@@ -44,6 +44,24 @@ def login(request):
     if request.user.is_authenticated:
         return redirect("landing")
     else:
+        product = Products.objects.filter(product_value=True)
+        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+        count = Cart.objects.filter(
+            user=request.user.id, checkedout=False).count()
+        brands = User.objects.filter(is_active=True, is_staff=True)
+        category = Category.objects.all()
+        total = 0.00
+        for item in cart:
+            total = total + \
+                int(item.user_product.offer_price) * \
+                int(item.product_count)
+        tot = []
+        tot.append(total)
+        tot[0] = tot[0] - discount_price
+        request.session['total'] = tot
+        context = {
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+        }
         if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
@@ -61,8 +79,7 @@ def login(request):
                     return JsonResponse('blocked', safe=False)
             else:
                 return JsonResponse('nouser', safe=False)
-        return render(request, 'myapp/login.html')
-    return render(request, 'myapp/login.html')
+        return render(request, 'myapp/login.html', context)
 
 
 phone_number = 0
@@ -73,6 +90,24 @@ def otp_login(request):
     if request.user.is_authenticated:
         return redirect("landing")
     else:
+        product = Products.objects.filter(product_value=True)
+        cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+        count = Cart.objects.filter(
+            user=request.user.id, checkedout=False).count()
+        brands = User.objects.filter(is_active=True, is_staff=True)
+        category = Category.objects.all()
+        total = 0.00
+        for item in cart:
+            total = total + \
+                int(item.user_product.offer_price) * \
+                int(item.product_count)
+        tot = []
+        tot.append(total)
+        tot[0] = tot[0] - discount_price
+        request.session['total'] = tot
+        context = {
+            'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+        }
         if request.method == 'POST':
             global phone_number
             phone_number = request.POST['number']
@@ -95,7 +130,7 @@ def otp_login(request):
                     return JsonResponse('blocked', safe=False)
             else:
                 return JsonResponse('nouser', safe=False)
-    return render(request, 'myapp/otp-login.html')
+    return render(request, 'myapp/otp-login.html', context)
 
 
 def enter_otp(request):
@@ -115,6 +150,24 @@ def enter_otp(request):
 
 
 def signup(request):
+    product = Products.objects.filter(product_value=True)
+    cart = Cart.objects.filter(user=request.user.id, checkedout=False)
+    count = Cart.objects.filter(
+        user=request.user.id, checkedout=False).count()
+    brands = User.objects.filter(is_active=True, is_staff=True)
+    category = Category.objects.all()
+    total = 0.00
+    for item in cart:
+        total = total + \
+            int(item.user_product.offer_price) * \
+            int(item.product_count)
+    tot = []
+    tot.append(total)
+    tot[0] = tot[0] - discount_price
+    request.session['total'] = tot
+    context = {
+        'products': product, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+    }
     if request.method == 'POST':
         firstname = request.POST['firstname']
         lastname = request.POST['lastname']
@@ -133,7 +186,7 @@ def signup(request):
                 first_name=firstname, last_name=lastname, username=username, email=email, password=password)
             Profile.objects.create(user=user, phone=number)
             return JsonResponse('true', safe=False)
-    return render(request, 'myapp/signup.html')
+    return render(request, 'myapp/signup.html', context)
 
 
 def landing(request):
@@ -212,15 +265,9 @@ def user_cart(request):
                 if Coupons.objects.filter(coupon_code=coupon_code, active=False).exists():
                     coupon_offer = Coupons.objects.get(
                         coupon_code=coupon_code, active=False)
-                    discount_price = coupon_offer.coupon_offer
-                    total = 0.00
-                    for item in cart:
-                        total = total + \
-                            int(item.user_product.offer_price) * \
-                            int(item.product_count)
-                    tot = []
-                    tot.append(total)
-                    request.session['total'] = tot[0] - discount_price
+                    discount_price = discount_price + coupon_offer.coupon_offer
+                    total = request.session['total']
+                    request.session['total'] = total[0] - discount_price
                     coupon_offer.active = True
                     coupon_offer.save()
                     return JsonResponse('true', safe=False)
@@ -241,10 +288,11 @@ def user_cart(request):
                         int(item.product_count)
                 tot = []
                 tot.append(total)
+                subtotal = tot[0]
                 tot[0] = tot[0] - discount_price
                 request.session['total'] = tot
                 context = {
-                    'cart': cart, 'grant': tot, 'grant': tot, 'count': count, 'category': category, 'brands': brands
+                    'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands, 'discount': discount_price, 'subtotal': subtotal
                 }
                 return render(request, 'myapp/cart.html', context)
         else:
@@ -592,7 +640,10 @@ def edit_user_account(request):
                             request, 'This username already taken!!')
                         return redirect('edit-user-account')
                     elif User.objects.filter(email=edit.email).exclude(id=request.user.id).exists():
-                        messages.error(request, 'The email is already taken!!')
+                        messages.error(request, 'The email already taken!!')
+                        return redirect('edit-user-account')
+                    elif Profile.objects.filter(phone=profile.phone).exclude(id=request.user.id).exists():
+                        messages.error(request, 'The phone number already taken!!')
                         return redirect('edit-user-account')
                     else:
                         edit.save()

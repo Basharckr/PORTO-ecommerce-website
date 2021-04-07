@@ -7,10 +7,10 @@
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
 		<div class="container">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Men</a></li>
-				<li class="breadcrumb-item"><a href="#">Accessories</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Classic Crew Neck Sweatshirt</li>
+				<li class="breadcrumb-item"><a href="{% url 'landing' %}">Home</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'cart' %}">My cart</a></li>
+				<li class="breadcrumb-item"><a href="{% url 'checkout' %}">checkout</a></li>
+				<li class="breadcrumb-item active" aria-current="page">placeorder</li>
 			</ol>
 		</div><!-- End .container -->
 	</nav>

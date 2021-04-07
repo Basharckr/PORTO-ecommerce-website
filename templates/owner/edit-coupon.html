@@ -26,13 +26,13 @@
 
                 </div>
             </div>
-            <span id="error1"></span>
+            <span id="error1" class="ml-3"></span>
 
             <!-- Button -->
             <div class="form-group">
                 <div class="col-md-6">
-                    <a class="btn btn-dark" href="{% url 'manage-coupon' %}">Back</a>
-                    <button type="button" id="editcouponbtn" name="singlebutton" class="btn btn-primary mt-4">Edit
+                    <a class="btn btn-sm btn-dark" href="{% url 'manage-coupon' %}">Back</a>
+                    <button type="button" id="editcouponbtn" name="singlebutton" class="btn btn-sm btn-primary ">Edit
                         Coupon</button>
                 </div>
             </div>
@@ -44,7 +44,6 @@
 
 <script>
     $("#editcouponbtn").click(function () {
-        console.log('jjj')
         var couponcode = $("#couponcode").val()
         var couponcode_len = $("#couponcode").val().length
         var couponoffer = $("#couponoffer").val()
@@ -56,10 +55,17 @@
             'couponoffer': couponoffer
         }
         if (couponcode_len < 3) {
-            $("#error1").html('category should be 3 characters')
+            $("#error1").html('coupon should be 3 characters')
         }
         if (couponoffer_len == '') {
             $("#error1").html('Enter offer in price')
+        }
+       
+        if (couponoffer > 40) {
+            $("#error1").html('maximum coupon offer is 40')
+        }
+        else if (couponoffer < 5) {
+            $("#error1").html('minimum coupon offer is 5')
         }
         else {
             // create an AJAX call

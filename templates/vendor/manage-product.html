@@ -33,19 +33,19 @@
                         <td><img class="product-vend-img" src="{{product.image1url}}" alt="product image  "></td>
 
 
-                        <td class="text-center"><a class='btn btn-info btn-xs'
+                        <td class="text-center"><a class='btn btn-info btn-sm ml-2 mt-2'
                                 href="{% url 'edit-product' pk=product.id %}"><span
                                     class="glyphicon glyphicon-edit"></span> Edit</a>
 
                             <a href="{% url 'delete-product' pk=product.id %}"
                                 onclick="return confirm('Are you sure you want to delete this?')"
-                                class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                                class="btn btn-danger btn-sm ml-2 mt-2"><span class="glyphicon glyphicon-remove"></span> Del</a>
                             {% if product.product_value == True %}
                             <a href="{% url 'block-unblock-product' pk=product.id %}"
-                            class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Block</a>
+                            class="btn btn-danger btn-sm ml-2 mt-2"><span class="glyphicon glyphicon-remove"></span>Block</a>
                             {% else %}
                             <a href="{% url 'block-unblock-product' pk=product.id %}"
-                            class="btn btn-success btn-xs"><span class="glyphicon glyphicon-remove"></span>UnBlock</a>
+                            class="btn btn-success btn-sm ml-2 mt-2"><span class="glyphicon glyphicon-remove"></span>UnBlock</a>
                             {% endif %}
                         </td>
                     </tr>

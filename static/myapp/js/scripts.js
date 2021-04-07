@@ -270,7 +270,7 @@ function removeProduct(id) {
         method: 'get',
         success: function (response) {
             if (response == 'true') {
-                window.location.replace('/cart')
+                window.location.reload()
             }
 
         }
@@ -615,7 +615,7 @@ $().ready(function () {
                     if (response == 'true') {
                         window.location.replace('cart')
                         $('#fail').remove()
-                        $("#success1").html('Valid Coupon..Discount added to total amount')
+                        $("#success1").html('<strong>Yaass!!Valid Coupon</strong>Check total amount')
 
                     }
                     if (response == 'false') {

@@ -2,43 +2,45 @@
 {% load static %}
 {% block title %}Create category{% endblock %}
 {% block content %}
-<form class="col-md-6 ml-auto mr-auto" id="addcategory">{% csrf_token %}
-    <div class="form-group">
-        <input type="text" name="category" class="form-control" placeholder="Enter your category..">
-        <input type="number" name="offer" class="form-control mt-1" placeholder="Category offer in %">
-
-        <span id="error1"></span>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Add Category</button>
-</form>
-<!--Category DataTales  -->
 <div class="container">
-<div class="card shadow mb-2 mt-4 col-md-12">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary text-center">Categories</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Category name</th>
-                        <th>Category offer in percentage</th>
-                    </tr>
-                </thead>
-                <tbody class="search_here">{% for category in category %}
-                    <tr>
-                        <td>{{category.category_name}}</td>
-                        <td>{{category.category_offer}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+    <form class="col-md-6 ml-auto mr-auto" id="addcategory">{% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="category" class="form-control" placeholder="Enter your category..">
+            <input type="number" name="offer" class="form-control mt-1" placeholder="Category offer in %">
 
-            </table>
+            <span id="error1"></span>
+        </div>
+
+        <button type="submit" class="btn btn-sm btn-primary ">Add Category</button>
+    </form>
+    <!--Category DataTales  -->
+    <div class="container">
+        <div class="card shadow mb-2 mt-4 col-md-12">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Categories</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Category name</th>
+                                <th>Category offer in percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody class="search_here">{% for category in category %}
+                            <tr class="text-center">
+                                <td>{{category.category_name}}</td>
+                                <td >{{category.category_offer}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <script src="{% static 'owner/vendor/jquery/jquery.min.js'%}"></script>
 
@@ -49,7 +51,7 @@
         $('.search_here tr').each(function () {
             $(this).attr('data-search-term',
                 $(this).text().toLowerCase());
-                console.log('hiii')
+            console.log('hiii')
 
 
         });

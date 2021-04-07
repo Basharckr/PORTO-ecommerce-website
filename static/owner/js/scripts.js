@@ -122,17 +122,18 @@ $().ready(function () {
                 required: true, minlength: 4, maxlength: 6
             },
             couponoffer: {
-                required: true
+                required: true, max: 40
             }
         },
         messages: {
             couponcode: {
                 required: "Enter Coupon code..",
-            
+
 
             },
             couponoffer: {
                 required: "Enter Coupon offer in price",
+                max: "maximum coupon offer is 40"
             },
         },
         submitHandler: (addcoupon, e) => {
@@ -161,15 +162,15 @@ $().ready(function () {
 // ================================Change coupon validity=================================================== -->
 function couponValidity(id) {
     $.ajax({
-        url: 'change-couponvalidity/'+ id +'/',
+        url: 'change-couponvalidity/' + id + '/',
         method: 'get',
         success: function (response) {
             if (response == 'true') {
                 $("#valid" + id).removeClass("btn-success")
-                $("#valid" + id).addClass("btn-danger")           
+                $("#valid" + id).addClass("btn-danger")
 
             }
-            if (response == 'false') {           
+            if (response == 'false') {
                 $("#valid" + id).removeClass("btn-danger")
                 $("#valid" + id).addClass("btn-success")
 
@@ -177,14 +178,23 @@ function couponValidity(id) {
         }
     })
 }
+//  ===========================================================================================
+//  ================================message-hide===================================================
+
+
+var message_ele = document.getElementById("success1");
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
+
 
 
 //  ===========================================================================================
 //  ================================message-hide===================================================
 
 
-                $("#valid" + id).addClass("btn-success")
-                var message_ele = document.getElementById("success1");
+$("#valid" + id).addClass("btn-success")
+var message_ele = document.getElementById("success1");
 setTimeout(function () {
     message_ele.style.display = "none";
 }, 3000);

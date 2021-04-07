@@ -3,7 +3,7 @@
     <fieldset>
 
         <!-- Form Name -->
-        <legend class="ml-3">ADD PRODUCTS</legend>
+        <legend class="ml-3">EDIT PRODUCTS</legend>
         {% if messages %} {% for message in messages %}
         <span id="error1" class="ml-3">{{message}}</span> {% endfor %} {% endif %}
 
@@ -109,7 +109,7 @@
         <!-- Button -->
         <div class="form-group">
             <div class="col-md-6">
-                <button type="submit" name="singlebutton" class="btn btn-primary">Add Product</button>
+                <button type="submit" name="singlebutton" class="btn btn-sm btn-primary">Add Product</button>
             </div>
         </div>
 
@@ -136,11 +136,11 @@
 
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">
                     Close
                 </button>
 
-                    <button type="button" id="load" class="btn save btn-primary">
+                    <button type="button" id="load" class="btn save btn-sm btn-primary ">
                     Save changes
                 </button>
                 </div>
