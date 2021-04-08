@@ -142,7 +142,7 @@
 
                     <div class="header-search header-search-popup header-search-category d-none d-sm-block">
                         <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                        <form action="search-product" method="post" id="productsearch">{% csrf_token %}
+                        <form action="/search-product" method="post" id="productsearch">{% csrf_token %}
                             <div class="header-search-wrapper ">
                                 <input type="search" class="form-control " name="q" id="q" placeholder="Search productname..." required="">
                                 <div class="select-custom">
