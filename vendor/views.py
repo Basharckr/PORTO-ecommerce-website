@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, response, HttpResponse
 from django.contrib.auth.models import User, auth
 from .models import Products
+from django.db.models import Sum
 # from django.core.files import File
 from owner.models import Category
 from myapp.models import Cart, ShipAddress, Order, Profile
@@ -11,6 +12,11 @@ import base64
 from django.core.files.base import ContentFile
 import datetime
 import xlwt
+from django.db.models.functions import TruncDate
+from django.db.models import F
+from django.db import models
+import json
+from django.core import serializers
 
 
 # Create your views here.
@@ -18,20 +24,38 @@ import xlwt
 def veIndex(request):
     if request.user.is_active == True:
         if request.user.is_authenticated and request.user.is_staff == True:
-            data = Order.objects.filter(user_cart__user_product__vendor=request.user.id)
-            count = Order.objects.filter(user_cart__user_product__vendor=request.user.id).distinct('user').count()
+
+            data = Order.objects.filter(user_cart__user_product__vendor=request.user.id).order_by('ordered_date')
             products = Products.objects.filter(vendor=request.user).count()
+            # data = Order.objects.filter(user_cart__user_product__vendor=request.user.id).annotate(date=TruncDate('ordered_date')).values('date').order_by('date').annotate(total_price=Sum(F('amount')*F('quantity'), output_field=models.FloatField()))
+            
             total = 0
             orders = 0
-            price = []
-            date = []
+            dist_users=set()
+            date_price_dict = {}
+            dates = []
+            prices = []
+
             for item in data:
-                total = total + item.amount * item.quantity
-                orders = orders + 1
-                price.append(item.amount * item.quantity)
-                date.append(item.ordered_date.day)
+                price = item.amount * item.quantity
+                date = item.ordered_date.date()
+                total += price
+                orders += 1
+
+                dist_users.add(item.user)
+                if date in date_price_dict.keys():
+                    date_price_dict[date] += price
+                else:
+                    date_price_dict[date] = price
+
+            count = len(dist_users)
+
+            for date, price in date_price_dict.items():
+                dates.append(str(date))
+                prices.append(price)
+
             context = {
-                'date': date, 'price': price, 'products': products, 'total': total, 'count': count, 'orders': orders
+                'price': prices, 'date': dates, 'products': products, 'total': total, 'count': count, 'orders': orders
             }
             return render(request, 'vendor/ve-index.html', context)
     else: 
@@ -372,4 +396,17 @@ def vendor_report(request):
             return redirect('ad-login')
     else:
         return redirect('ad-login')
+
+
+def search_by_date(request):
+    if request.method == 'GET':
+        start = request.GET['start_date']
+        end = request.GET['end_date']      
+        order = Order.objects.filter(user_cart__user_product__vendor=request.user.id, ordered_date__range=[start, end]).only('user__username', 'user_cart__user_product__product_name',
+                                                                                                        'amount', 'quantity', 'ordered_date', 'payment_status',
+                                                                                                        'shipped')
+        
+        orders = serializers.serialize('json', order)
+        print('lllllllllll', orders)
+        return JsonResponse(orders, safe=False)
     

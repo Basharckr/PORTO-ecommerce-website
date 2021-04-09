@@ -3,11 +3,11 @@
 {% block title %}Vendor Report{% endblock %}
 {% block content %}
 <div class="ml-2">
-    <form action="{% url 'vendor-report' %}" method="POST">{% csrf_token %}
+    <form action="{% url 'vendor-report' %}"  method="POST">{% csrf_token %}
         <label for="start">Start date:</label>
-        <input type="date" id="start" name="start" value="2021-03-01" min="2021-03-01" max="2021-10-01">
+        <input type="date" id="start" name="start" onchange="changeDate()" value="2021-03-01" min="2021-03-01" max="2021-10-01">
         <label for="start">End date:</label>
-        <input type="date" id="end" name="end" value="2021-03-01" min="2021-03-01" max="2021-10-01">
+        <input type="date" id="end" name="end" value="2021-03-01"  onchange="searchData()" max="2021-10-01">
         <button type="submit" class=" btn btn-sm btn-primary ml-2"><i class="fas fa-download fa-sm text-white-50"></i>
             Generate Report</button>
     </form>
@@ -38,7 +38,7 @@
                         <td>{{item.user_cart.user_product.product_name}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.user_cart.subtotal}}</td>
-                        <td>{{item.ship_id.firstname}}{{item.ship_id.firstname}},
+                        <td>{{item.ship_id.firstname}}{{item.ship_id.lastname}},
                             {{item.ship_id.organization}},{{item.ship_id.streetaddress}},
                             {{item.ship_id.pincode}},{{item.ship_id.city}},
                             {{item.ship_id.state}},{{item.ship_id.country}},
@@ -59,7 +59,54 @@
 
 <!-- ------------search-------------- -->
 <script src="{% static 'vendor/vendor/jquery/jquery.min.js'%}"></script>
+<script>
+    function changeDate(){
+        var start_date = document.getElementById("start").value;
+        document.getElementById("end").setAttribute("min", start_date);
+        var end_date = document.getElementById("end").value;
 
+      
+    }
+    function searchData(){
+    var start_date = document.getElementById("start").value;
+    document.getElementById("end").setAttribute("min", start_date);
+    var end_date = document.getElementById("end").value;
+    var data = {
+        'start_date': start_date,
+        'end_date': end_date       
+    }
+    $.ajax({
+        url:'search-by-date',
+        data: data,
+        method: 'get',
+        success: function(response){
+            if(response){
+                console.log('aa',response)
+                response = $.parseJSON(response);
+                console.log('second',response)
+
+                $.each(response, function(i, item){
+                    console.log('iii',i)
+                    var $tr = $('<tr>').append(
+                        $('<td>').text(i),
+                        console.log('itemmmm',item.user),
+
+                        $('<td>').text(item.user_cart.user_product.product_name),
+                        $('<td>').text(item.quantity),
+                        $('<td>').text(item.user_cart.subtotal),
+                        $('<td>').text(item.ship_id.firstname, item.ship_id.number),
+                        $('<td>').text(item.ordered_date),
+                        $('<td>').text(item.payment_status),
+                        $('<td>').text(item.shipped),
+
+                    ); //.appendTo('#records_table');
+                    console.log($tr.wrap('<p>').html());
+                })
+            }
+        }
+    })
+    }
+</script>
 <script>
     $(document).ready(function ($) {
         $('.search_here tr').each(function () {
@@ -78,6 +125,7 @@
                 }
             });
         });
+        
     });
 </script>
 {% endblock %}

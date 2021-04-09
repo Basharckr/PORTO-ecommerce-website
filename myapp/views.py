@@ -10,6 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
 from twilio.rest import Client
+import base64
+
+from django.core.files.base import ContentFile
+
+
 
 
 # Create your views here.
@@ -630,8 +635,11 @@ def edit_user_account(request):
                 edit.username = request.POST['username']
                 edit.email = request.POST['email']
                 profile.phone = request.POST['number']
-                profile.image1 = request.FILES.get('image1')
                 orginalpassword = request.POST['orginalpassword']
+                image1 = request.POST['text']
+                format, img1 = image1.split(';base64,')
+                ext = format.split('/')[-1]
+                profile.image1 = ContentFile(base64.b64decode(img1), name=edit.firstname+ '.' + ext)
                 checkpassword = check_password(
                     orginalpassword, request.user.password)
                 if checkpassword:
@@ -642,7 +650,7 @@ def edit_user_account(request):
                     elif User.objects.filter(email=edit.email).exclude(id=request.user.id).exists():
                         messages.error(request, 'The email already taken!!')
                         return redirect('edit-user-account')
-                    elif Profile.objects.filter(phone=profile.phone).exclude(id=request.user.id).exists():
+                    elif Profile.objects.filter(phone=profile.phone).exclude(user=request.user.id).exists():
                         messages.error(request, 'The phone number already taken!!')
                         return redirect('edit-user-account')
                     else:
@@ -652,7 +660,7 @@ def edit_user_account(request):
                             request, 'Profile information updated..')
                         return redirect('edit-user-account')
                 else:
-                    messages.error(request, 'Old password is incorrect')
+                    messages.error(request, 'password is incorrect')
                     return redirect('edit-user-account')
             return render(request, 'myapp/edit-user-account.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count, 'category': category, 'brands': brands})
         else:

@@ -300,6 +300,39 @@ function editQuantity(id, cou) {
     })
 };
 
+//  ===========================================================================================
+//  ================================Edit product Quantity cart===================================================
+function editQuantitycart(id) {
+    var newquantity = $('#nquantity-'+ id).val()
+    var newprice = $('#lprice-'+ id).text()
+    var newoffer = $('#loffer-'+ id).text()
+    
+    data = {
+        'quantity': newquantity,
+    }
+    $.ajax({
+        url: '/edit-quantity/' + id + '/',
+        data: data,
+        method: 'post',
+        success: function (response) {
+            if (response == 'true') {
+
+                document.getElementById("nquantity-"+id).innerHTML = newquantity
+                var subtotal = parseInt(newquantity*(newprice-(newprice*(newoffer/100))))
+                document.getElementById("subtotal-"+ id).innerHTML = subtotal
+                $( "#newsummary" ).load(window.location.href + " #newsummary" );
+
+                
+
+            }
+            if (response == 'nothing') {
+                console.log('no change in quantity')
+            }
+        }
+    })
+};
+
+
 
 
 //  ===========================================================================================
@@ -484,8 +517,9 @@ $().ready(function () {
                 minlength: 10,
                 maxlength: 12
             },
-            image1: {
-                extension: "jpg|jpeg|png"
+            thumbnail: {
+                required: true,
+                extension: " jpg|jpeg|png "
             },
             orginalpassword: {
                 required: true
@@ -507,7 +541,7 @@ $().ready(function () {
                 maxlength: "At most 12 digit",
 
             },
-            image1: {
+            thumbnail: {
                 extension: "Only accept jpg/jpeg/png formats!!"
             },
         },
@@ -637,5 +671,9 @@ $().ready(function () {
 //  ===========================================================================================
 //  ================================message-hide===================================================
 
+var message_ele = document.getElementById("success1");
+setTimeout(function () {
+    message_ele.style.display = "none";
+}, 3000);
 
 

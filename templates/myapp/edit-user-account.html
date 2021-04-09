@@ -71,10 +71,13 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="filebutton">Profile picture</label>
 						<div class="col-md-6">
-							<input type="file" name="image1"
-								onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-							<img id="blah" alt="your image" width="100" height="100" value="{{profile.imageurl}}" />
+							<img id="cropped" class="cropped" onclick="openImage()" value="{{Profile.imageurl}}"onchange="preview()" id="frame1"
+								style="height: 10rem; width: 10rem;">
 
+
+							<input type="file" name="thumbnail" value="{{Profile.imageurl}}" id="thumbnail"
+								oninput="frame.src=window.URL.createObjectURL(this.files[0])" accept="image/*">
+							<textarea name="text" hidden id="text" cols="30"value="{{Profile.imageurl}}" rows="10"></textarea>
 						</div>
 					</div>
 					<div class="form-group required-field">
@@ -113,4 +116,94 @@
 	<div class="mb-5"></div><!-- margin -->
 </main><!-- End .main -->
 
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="box-2">
+                    <div class="result"></div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+
+                    <button type="button" id="load" class="btn save btn-primary">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- first image -->
+	
+    <script>
+        var imgSrc;
+        let result = document.querySelector(".result"),
+            save = document.querySelector(".save"),
+            cropped = document.querySelector(".cropped"),
+            upload = document.querySelector("#thumbnail"),
+            cropper = "";
+
+        upload.addEventListener("change", (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement("img");
+                        img.id = "image";
+                        img.src = e.target.result;
+
+                        // clean result before
+                        result.innerHTML = "";
+                        // append new image
+
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 6 / 9,
+                            autoCropArea: 1,
+                            crop: function (e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+                        });
+
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        save.addEventListener("click", (e) => {
+            e.preventDefault();
+            // get result to data uri
+            imgSrc = cropper
+                .getCroppedCanvas({
+                    width: 300, // img disp value
+                })
+                .toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+            $("#text").val(cropped.src)
+
+        });
+    </script>
 {% endblock %}

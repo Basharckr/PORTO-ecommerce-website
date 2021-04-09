@@ -4,50 +4,48 @@
 {% block content %}
 
 <main class="main">
-	<div class="home-slider owl-carousel owl-theme show-nav-hover nav-big">
+	<div class="home-slider owl-carousel owl-theme show-nav-hover nav-big " data-interval="3000">
 
 		<div class="home-slide home-slide1 banner">
 			<img class="slide-bg owl-lazy" src="{% static '/myapp/images/lazy.png' %}"
-				data-src="{% static '/myapp/images/slider/slide1.jpg' %}" alt="home banner">
-			<div class="banner-layer banner-layer-middle">
-				<h2>Winter Fashion Trends</h2>
-				<h3 class="text-uppercase mb-0">Get up to 30% off</h3>
-				<h4 class="m-b-4">on Jackets</h4>
-
-				<h5 class="text-uppercase">Starting at<span class="coupon-sale-text"><sup>$</sup>199<sup>99</sup></span>
-				</h5>
-				<a href="category.html" class="btn btn-dark btn-xl" role="button">Shop Now</a>
-			</div><!-- End .banner-layer -->
+				data-src="{% static '/myapp/images/slider/wall3.jpg' %}" alt="home banner">
+		
 		</div><!-- End .home-slide -->
 
 		<div class="home-slide home-slide2 banner">
 			<img class="slide-bg owl-lazy" src="{% static 'myapp/images/lazy.png' %}"
-				data-src="{% static 'myapp/images/slider/slide2.jpg' %}" alt="home banner">
-			<div class="banner-layer banner-layer-middle">
-				<h2 class="m-b-1">New Season Hats </h2>
-				<h3 class="text-uppercase rotated-upto-text mb-0"><small>Up to</small>20% off</h3>
-
-				<hr class="short-thick-divider">
-
-				<h5 class="text-uppercase d-inline-block mb-0">Starting at <span class="ml-2">$<em>19</em>99</span></h5>
-				<a href="category.html" class="btn btn-dark btn-xl btn-icon-right" role="button">Shop Now <i
-						class="fas fa-long-arrow-alt-right"></i></a>
-			</div><!-- End .banner-layer -->
+				data-src="{% static 'myapp/images/slider/wall1.jpg' %}" alt="home banner">
+		
 		</div><!-- End .home-slide -->
 	</div><!-- End .home-slider -->
 
 	<section class="container">
-		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4">Shop By Category</h2>
+		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4" style="font-size: x-large;">Shop By Category</h2>
 
 		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
 			{% for item in category%}
 			<div class="product-category">
 				<a href="{% url 'categorywise' pk=item.id %}">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-4.jpg'%}">
-					</figure>
+				
 					<div class="category-content">
-						<h3>{{item.category_name}}</h3>
+						<h3 >{{item.category_name}}</h3>
+					</div>
+				</a>
+			</div>
+			{%endfor%}
+
+		</div>
+	</section>
+	<section class="container">
+		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4" style="font-size: x-large;">Shop By Brands</h2>
+
+		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
+			{% for item in brands%}
+			<div class="product-category">
+				<a href="{% url 'brandwise' pk=item.id %}">
+				
+					<div class="category-content">
+						<h3>{{item.username}}</h3>
 					</div>
 				</a>
 			</div>
@@ -56,7 +54,7 @@
 		</div>
 	</section>
 
-	<section class="bg-gray banners-section text-center">
+	<!-- <section class="bg-gray banners-section text-center">
 		<div class="container py-2">
 			<div class="row">
 				<div class="col-sm-6 col-lg-3">
@@ -101,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<section class="container pb-3 mb-1">
 		<h2 class="section-title ls-n-10 text-center pb-2 m-b-4">Featured Products</h2>

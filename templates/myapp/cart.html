@@ -30,7 +30,7 @@
 							<tr>
 								<th class="product-col">Product</th>
 								<th class="price-col">Price</th>
-								<th class="price-col">Offer</th>
+								<th class="price-col">Offer%</th>
 
 								<th class="qty-col">Qty</th>
 								<th>Subtotal</th>
@@ -51,147 +51,29 @@
 											href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
 									</h2>
 								</td>
-								<td>{{item.user_product.product_price}}</td>
+								<td id="lprice-{{item.id}}">{{item.user_product.product_price}}</td>
 								{% if item.user_product.category.valid == True %}
-								<td>{{item.user_product.category.category_offer}}%</td>
+								<td value="{{item.user_product.category.category_offer}}" id="loffer-{{item.id}}" >{{item.user_product.category.category_offer}}</td>
 								{% else %}
-								<td>0%</td>
+								<td id="loffer-{{item.id}}">0</td>
 
 								{% endif %}
 
 								<td>
-									<div class="product-single-qty">
-										<h3 id="count">{{item.product_count}}</h3>
-									</div>
+									<!-- <div class="product-single-qty"> -->
+										<!-- <h3 id="count">{{item.product_count}}</h3> -->
+										<input class="vertical-quantity form-control" id="nquantity-{{item.id}}" value="{{item.product_count}}" onchange="editQuantitycart('{{item.id}}')" type="text">
+
+									<!-- </div> -->
 								</td>
-								<td>{{item.subtotal}}</td>
+								<td id="subtotal-{{item.id}}">{{item.subtotal}}</td>
 							</tr>
 							<tr class="product-action-row">
 								<td colspan="4" class="clearfix">
 	
 
-									<div class="float-right">
-										<span title="Edit product" class="btn-quickview mr-3" data-toggle="modal"
-											data-target="#exampleModal-{{item.id}}" class="btn-edit"><span
-												class="sr-only">Edit</span><i class="icon-pencil"></i></span>
-										<!-- ---------------------------------------------------------------------------------------- -->
-
-										<!-- Modal -->
-										<div class="modal fade" id="exampleModal-{{item.id}}" tabindex="-1"
-											role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<button type="button" class="close ml-auto mr-4 mt-1"
-														data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-													<div class="modal-body">
-														<div
-															class="product-single-container product-single-default product-quick-view">
-															<div class="row row-sparse">
-																<div class="col-lg-6 product-single-gallery">
-																	<div class="product-slider-container">
-																		<div
-																			class="product-single-carousel owl-carousel owl-theme">
-																			<div class="product-item">
-																				<img class="product-single-image"
-																					src="{{item.user_product.image1url}}"
-																					data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-1-big.jpg" />
-																			</div>
-																			<div class="product-item">
-																				<img class="product-single-image"
-																					src="{{item.user_product.image2url}}"
-																					data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-2-big.jpg" />
-																			</div>
-																			<div class="product-item">
-																				<img class="product-single-image"
-																					src="{{item.user_product.image3url}}"
-																					data-zoom-image="https://www.portotheme.com/html/porto_ecommerce/demo_1/ajax/assets/images/products/zoom/product-3-big.jpg" />
-																			</div>
-
-																		</div>
-																		<!-- End .product-single-carousel -->
-																	</div>
-																	<div class="prod-thumbnail owl-dots"
-																		id='carousel-custom-dots'>
-																		<div class="owl-dot">
-																			<img
-																				src="{{item.user_product.image1url}}" />
-																		</div>
-																		<div class="owl-dot">
-																			<img
-																				src="{{item.user_product.image2url}}" />
-																		</div>
-																		<div class="owl-dot">
-																			<img
-																				src="{{item.user_product.image3url}}" />
-																		</div>
-
-																	</div>
-																</div><!-- End .product-single-gallery -->
-
-																<div class="col-lg-6 product-single-details">
-																	<span>{{item.user_product.category.category_name}}</span><br>
-																	
-																	<h1 class="product-title">
-																		{{item.user_product.product_name}}
-																	</h1>
-
-
-																	<div class="price-box">
-																		{% if item.user_product.category.valid == True %}
-
-																		<span
-																			class="old-price">₹{{item.user_product.product_price}}</span>
-																		<span
-																			class="product-price">₹{{item.user_product.offer_price}}</span>
-
-																		<span
-																			class="ml-4">{{item.user_product.category.category_offer}}%</span>
-																		{% else %}
-																		<span
-																			class="product-price">₹{{item.user_product.offer_price}}</span>
-
-																		{% endif %}
-																	</div><!-- End .price-box -->
-
-																	<div class="product-desc">
-																		<p>{{item.user_product.proudct_description}}</p>
-																	</div><!-- End .product-desc -->
-																	<ul class="single-info-list">
-																		<li>product id: <strong>{{item.user_product.product_id}}</strong></li>
-																		<li>product weight: <strong>{{item.user_product.product_weight}} gram</strong></li>
-																		<li>Available: <strong>{{item.user_product.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
+									<div  class="float-right">
 										
-																	</ul>	
-															
-
-																	<hr class="divider">
-
-																	<div class="product-action">
-																		<div class="product-single-qty">
-																			<input
-																				class="horizontal-quantity form-control"
-																				id="newquantity-{{item.id}}" value="{{item.product_count}}"
-																				type="text">
-																		</div><!-- End .product-single-qty -->
-
-																		<button class="btn btn-dark add-cart"
-																			onclick="editQuantity('{{item.id}}','{{item.id}}')"
-																			title="Add to Cart">Change
-																		</button>
-																	</div><!-- End .product-action -->
-
-																	<hr class="divider">
-
-																</div><!-- End .product-single-details -->
-															</div><!-- End .row -->
-														</div><!-- End .product-single-container -->
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- End-modal -->
 
 										<span title="Remove product" onclick="removeProduct('{{item.id}}')"
 											onclick="return confirm('Are you sure you want to delete this product?');"
@@ -229,10 +111,10 @@
 			
 
 			<div class="col-lg-4">
-				<div class="cart-summary">
+				<div class="cart-summary" >
 					<h3>Summary</h3>
 
-					<table class="table table-totals">
+					<table id="newsummary" class="table table-totals">
 						<tbody>
 				
 							<tr>
@@ -245,7 +127,7 @@
 								<td class="float-left">Coupon Discount</td>
 								{% if discount %}
 
-								<td>-{{discount}}</td>
+								<td>-{{discount}} </td>
 								{%else%}
 								<td>0</td>
 								{%endif%}

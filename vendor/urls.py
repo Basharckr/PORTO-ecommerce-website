@@ -43,6 +43,11 @@ urlpatterns = [
 
     path('vendor-report', views.vendor_report, name='vendor-report'),
 
+    path('search-by-date', views.search_by_date, name='search-by-date'),
+
+
+
+
 
 
 

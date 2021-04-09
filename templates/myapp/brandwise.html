@@ -18,16 +18,9 @@
 		<div class="row row-sparse">
 			<div class="col-lg-9 main-content">
 				<div class="category-banner">
-					<img class="slide-bg" src="assets/images/banners/banner-1.jpg" alt="banner" width="1500"
-						height="320">
-					<div class="category-slide-content">
-						<h2 class="m-b-3">Winter Fashion Trends</h2>
-						<h3 class="text-uppercase m-b-4">Up to 30% off on Jackets</h3>
-
-						<h5 class="text-uppercase d-inline-block mb-0">Starting at<span
-								class="coupon-sale-text"><sup>$</sup>199<sup>99</sup></span></h5>
-						<a href="category.html" class="btn btn-dark btn-xl" role="button">Shop Now</a>
-					</div><!-- End .category-slide-content -->
+					<img class="slide-bg" src="{% static 'myapp/images/categories/catewall6.jpg' %}" alt="banner"  style="height: 320px; width: 1500px;"width="1500"
+						height="220">
+					
 				</div><!-- End .category-slide -->
 
 				
@@ -35,7 +28,7 @@
 				<div class="row product-ajax-grid mt-3">
 
 					{% for product in products%}
-					<div class="col-md-3">
+					<div class="col-md-3 col-sm-6">
 						<div class="product-default inner-quickview inner-icon">
 							<figure>
 								<a href="{% url 'product' pk=product.id %}">
