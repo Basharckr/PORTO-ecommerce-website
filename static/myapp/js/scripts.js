@@ -299,6 +299,7 @@ function editQuantity(id, cou) {
             if (response == 'nothing') {
                 console.log('no change in quantity')
             }
+            
         }
     })
 };
@@ -325,11 +326,13 @@ function editQuantitycart(id) {
                 document.getElementById("subtotal-"+ id).innerHTML = subtotal
                 $( "#newsummary" ).load(window.location.href + " #newsummary" );
 
-                
-
             }
             if (response == 'nothing') {
                 console.log('no change in quantity')
+            }
+            if (response == 'outstock') {
+                console.log('edittttt')
+                $('#noproduct').modal('show');
             }
         }
     })

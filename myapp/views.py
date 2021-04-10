@@ -368,12 +368,17 @@ def edit_quantity(request, id):
         if request.user.is_authenticated:
             quantity = request.POST['quantity']
             edit = Cart.objects.get(id=id)
-            if edit.product_count == quantity:
-                return JsonResponse('nothing', safe=False)
+            if edit.user_product.product_quantity >= int(quantity):
+                print(edit.user_product.product_quantity)
+                if edit.product_count == quantity:
+                    return JsonResponse('nothing', safe=False)
+                else:
+                    edit.product_count = quantity
+                    edit.save()
+                    return JsonResponse('true', safe=False)
             else:
-                edit.product_count = quantity
-                edit.save()
-                return JsonResponse('true', safe=False)
+                print('hhhhhhhh')
+                return JsonResponse('outstock', safe=False)
         else:
             return redirect('login')
     else:

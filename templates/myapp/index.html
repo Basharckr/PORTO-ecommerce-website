@@ -19,18 +19,17 @@
 		</div><!-- End .home-slide -->
 	</div><!-- End .home-slider -->
 
+
 	<section class="container">
-		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4">Shop By Category</h2>
+		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4" style="font-size: x-large;">Shop By Category</h2>
 
 		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
 			{% for item in category%}
 			<div class="product-category">
 				<a href="{% url 'categorywise' pk=item.id %}">
-					<figure>
-						<img src="{% static 'myapp/images/categories/category-4.jpg'%}">
-					</figure>
+				
 					<div class="category-content">
-						<h3>{{item.category_name}}</h3>
+						<h3 >{{item.category_name}}</h3>
 					</div>
 				</a>
 			</div>
@@ -38,6 +37,24 @@
 
 		</div>
 	</section>
+	<section class="container">
+		<h2 class="section-title ls-n-10 text-center pt-2 m-b-4" style="font-size: x-large;">Shop By Brands</h2>
+
+		<div class="owl-carousel owl-theme nav-image-center show-nav-hover nav-outer cats-slider">
+			{% for item in brands%}
+			<div class="product-category">
+				<a href="{% url 'brandwise' pk=item.id %}">
+				
+					<div class="category-content">
+						<h3>{{item.username}}</h3>
+					</div>
+				</a>
+			</div>
+			{%endfor%}
+
+		</div>
+	</section>
+
 
 	<!-- <section class="bg-gray banners-section text-center">
 		<div class="container py-2">
