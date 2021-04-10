@@ -45,7 +45,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">PRICE</label>
             <div class="col-md-6">
-                <input name="product_price" value="{{products.product_price}}" class="form-control input-md" type="number">
+                <input name="product_price" value="{{products.product_price}}" class="form-control input-md" type="number" min="1" >
 
             </div>
         </div>
@@ -54,14 +54,14 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="available_quantity">QUANTITY</label>
             <div class="col-md-6">
-                <input name="quantity" value="{{products.product_quantity}}" class="form-control input-md" type="number">
+                <input name="quantity" value="{{products.product_quantity}}" class="form-control input-md" type="number" min="1" >
 
             </div>
         </div>
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="product_weight">PRODUCT WEIGHT (weight in gram)</label>
+            <label class="col-md-4 control-label" for="product_weight" min="1" >PRODUCT WEIGHT (weight in gram)</label>
             <div class="col-md-6">
 
                 <input name="product_weight" value="{{products.product_weight}}" class="form-control input-md" type="number">
@@ -109,7 +109,7 @@
         <!-- Button -->
         <div class="form-group">
             <div class="col-md-6">
-                <button type="submit" name="singlebutton" class="btn btn-sm btn-primary">Add Product</button>
+                <button type="submit" name="singlebutton" class="btn btn-sm btn-primary">Edit Product</button>
             </div>
         </div>
 

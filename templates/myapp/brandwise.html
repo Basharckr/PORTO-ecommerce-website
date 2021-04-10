@@ -142,7 +142,11 @@
 															<ul class="single-info-list">
 																<li>product id: <strong>{{product.product_id}}</strong></li>
 																<li>product weight: <strong>{{product.product_weight}} gram</strong></li>
+																{% if product.product_quantity == 0 %}
+																<li>Available: <strong><span style="color: red;">SORRY, THIS PRODUCT IS OUTSTOCK!!</span></strong></li>
+																{%else%}
 																<li>Available: <strong>{{product.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
+																{%endif%}
 								
 															</ul>
 

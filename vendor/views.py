@@ -174,7 +174,7 @@ def edit_product(request, pk):
                 edit.product_name = request.POST['product_name']
                 edit.product_categorie = request.POST['product_categorie']
                 edit.product_price = request.POST['product_price']
-                edit.quantity = request.POST['quantity']
+                edit.product_quantity = request.POST['quantity']
                 edit.product_weight = request.POST['product_weight']
                 edit.product_description = request.POST['product_description']
                 image1 = request.POST['text']
@@ -195,6 +195,7 @@ def edit_product(request, pk):
                     return redirect('edit-product', pk)
                 else:
                     edit.save()
+
                     return redirect('manage-product')
             category = Category.objects.all()
             context = {

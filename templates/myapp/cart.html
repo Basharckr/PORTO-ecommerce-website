@@ -42,14 +42,14 @@
 								<td class="product-col">
 									<figure class="product-image-container">
 										<a href="{% url 'product' pk=item.user_product.id %}" class="product-image">
-											<img src="{{item.user_product.image1url}}" style="height: 100px;width:100px"
+											<img src="{{item.user_product.image1url}}" style="height: 150px;width:150px"
 												alt="product">
 										</a>
 									</figure>
-									<h2 class="product-title">
+									<h3 class="product-title">
 										<a
 											href="{% url 'product' pk=item.user_product.id %}">{{item.user_product.product_name}}</a>
-									</h2>
+									</h3>
 								</td>
 								<td id="lprice-{{item.id}}">{{item.user_product.product_price}}</td>
 								{% if item.user_product.category.valid == True %}

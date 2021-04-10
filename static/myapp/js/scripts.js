@@ -250,8 +250,11 @@ function addToCart(id) {
             if (response == 'true') {
                 window.location.reload()
             }
-            if (response == 'nothing') {
-                window.location.replace('/')
+            if (response == 'cart') {
+                window.location.replace('/cart')
+            }
+            if (response == 'outstock') {
+                $('#noproduct').modal('show');
             }
         }
     })

@@ -81,8 +81,12 @@
 							<ul class="single-info-list">
 								<li>product id: <strong>{{products.product_id}}</strong></li>
 								<li>product weight: <strong>{{products.product_weight}} gram</strong></li>
+								<li>product brand: <strong>{{products.vendor.username}} </strong></li>
+								{% if products.product_quantity == 0 %}
+								<li>Available: <strong><span style="color: red;">SORRY, THIS PRODUCT IS OUTSTOCK!!</span></strong></li>
+								{%else%}
 								<li>Available: <strong>{{products.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
-
+								{%endif%}
 							</ul>
 
 							
@@ -139,8 +143,11 @@
 								<ul>
 									<li><i class="fa fa-check-circle"></i>product id: <strong>{{products.product_id}}</strong></li>
 								    <li><i class="fa fa-check-circle"></i>product weight: <strong>{{products.product_weight}} gram</strong></li>
-									<li><i class="fa fa-check-circle"></i>Available: <strong>{{products.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
-
+									{% if products.product_quantity == 0 %}
+									<li>Available: <strong><span style="color: red;">SORRY, THIS PRODUCT IS OUTSTOCK!!</span></strong></li>
+									{%else%}
+									<li>Available: <strong>{{products.product_quantity}}</strong><strong> <span style="color: red;">only left</span></strong></li>
+									{%endif%}
 
 								
 								</ul>

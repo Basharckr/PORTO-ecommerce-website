@@ -313,16 +313,22 @@ def add_to_cart(request, id):
             if request.method == 'POST':
                 count = request.POST['count']
                 obj_product = Products.objects.get(id=id)
-                if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
+                if obj_product.product_quantity != 0:
+                    if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
+                        try:
+                            add = Cart.objects.get(user_product=obj_product)
+                            add.product_count = add.product_count + int(count)
+                            add.save()
+                            return JsonResponse('true', safe=False)
+                        except:
+                            return JsonResponse('cart', safe=False)
 
-                    add = Cart.objects.get(user_product=obj_product)
-                    add.product_count = add.product_count + int(count)
-                    add.save()
-                    return JsonResponse('true', safe=False)
+                    else:
+                        cart = Cart.objects.create(
+                            user_product=obj_product, user=request.user, product_count=count)
+                        return JsonResponse('true', safe=False)
                 else:
-                    cart = Cart.objects.create(
-                        user_product=obj_product, user=request.user, product_count=count)
-                    return JsonResponse('true', safe=False)
+                    return JsonResponse('outstock', safe=False)
             else:
                 return JsonResponse('false', safe=False)
         else:
@@ -559,6 +565,8 @@ def place_order(request):
                                          quantity=item.product_count, amount=item.user_product.offer_price,
                                          ship_id=ship_id, payment_status=True)
                     item.checkedout = True
+                    item.user_product.product_quantity -= item.product_count
+                    item.user_product.save()
                     item.save()
                     del request.session['total']
                     discount_price = 0
@@ -569,6 +577,13 @@ def place_order(request):
                                          quantity=item.product_count, amount=item.user_product.offer_price,
                                          ship_id=ship_id, payment_status=False)
                     item.checkedout = True
+                    print('product q',item.user_product.product_quantity)
+                    print('product cart count',item.product_count)
+
+
+                    item.user_product.product_quantity -= item.product_count
+                    print('product after',item.user_product.product_quantity)
+                    item.user_product.save()
                     item.save()
                     del request.session['total']
                     discount_price = 0
