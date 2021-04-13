@@ -17,7 +17,6 @@ dbus-python==1.2.16
 defusedxml==0.6.0
 distlib==0.3.1
 distro==1.4.0
-distro-info===0.23ubuntu1
 Django==2.2.2
 django-allauth==0.41.0
 django-anymail==7.1.0
