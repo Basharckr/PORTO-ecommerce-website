@@ -2,13 +2,47 @@
 {% load static %}
 {% block title %}PORTO|Dashboard{% endblock %}
 {% block content %}
+<style>
 
+.p-xl {
+	padding: 40px;
+  }
+  
+  .lazur-bg {
+	background-color: #23c6c8;
+	color: #ffffff;
+  }
+  
+  .red-bg {
+	background-color: #4fcf6f;
+	color: #ffffff;
+  }
+  
+  .navy-bg {
+	background-color: #1ab394;
+	color: #ffffff;
+  }
+  
+  .yellow-bg {
+	background-color: #f8ac59;
+	color: #ffffff;
+  }
+  
+  .widget1 {
+	border-radius: 5px;
+	padding: 15px 20px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
+  
+</style>
 <main class="main">
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
 		<div class="container">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{% url 'landing' %}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Dashboard</a></li>
 			</ol>
 		</div><!-- End .container -->
 	</nav>
@@ -51,53 +85,90 @@
 
 										<a href="{% url 'change-user-password' %}" class="mt-4">Change Password</a>
 									</p>
-								
+
 								</div>
 								{% if profile.imageurl == '' %}
 								<a href="{% url 'edit-user-account' %}">Add Photo</a>
 								{% else %}
 								<div class="col-xs-4" style="float: left; margin-left: 30px;">
-									<img style="height: 80px;width: 80px;border-radius: 50%;" src="{{profile.imageurl}}" />
+									<img style="height: 80px;width: 80px;border-radius: 50%;"
+										src="{{profile.imageurl}}" />
 								</div>
 								{%endif%}
-							
+
 							</div><!-- End .card-body -->
+
 						</div><!-- End .card -->
+
+
 					</div><!-- End .col-md-6 -->
-				
-
-
-				</div><!-- End .row -->
 					<div class="col-md-6">
 						<div class="card">
-							<div class="card-header">
-								Address Book
+							<div class="card-header" >
+								Available Coupons
 							</div><!-- End .card-header -->
 
 							<div class="card-body">
-								<div class="col-md-6">
-									{% if address%}
-									<Strong>Saved Address</Strong><br>
-									<br>
-									{% for address in address %}
-									<address>
-										{{address.firstname}} <br>
-										{{address.organization}}<br>
-										{{address.streetaddress}}<br>
-										{{address.city}} <br>
-										{{address.state}} <br>
-										{{address.country}} <br>
-										{{address.number}} <br>
-									</address>
-									{% endfor %}
-									{% else %}
-									<strong>No saved address</strong>
+								<div class="col-md-6 ">
+									{% if coupon %}
+									{% for coupon in coupon %}
+									<div class="widget1 red-bg p-xl">
+										<h5 >Welcome Coupon</h5>
+										<ul class="list-unstyled m-t-md">
+											<li>
+												{{coupon.coupon_code}}
+											</li>
+									
+										</ul>
+									</div>  
+									{% endfor%}
+									{% else%}
+									<h5>You have no coupon</h5>
 									{%endif%}
 								</div>
-							
+
 							</div><!-- End .card-body -->
+
 						</div><!-- End .card -->
+
 					</div><!-- End .col-md-6 -->
+
+
+
+
+				</div><!-- End .row -->
+				<div class="col-md-6">
+					<div class="card ">
+						<div class="card-header">
+							Address Book
+						</div><!-- End .card-header -->
+
+						<div class="card-body">
+							<div class="col-md-6">
+								{% if address%}
+								<Strong>Saved Address</Strong><br>
+								<br>
+								{% for address in address %}
+								<address>
+									{{address.firstname}} <br>
+									{{address.organization}}<br>
+									{{address.streetaddress}}<br>
+									{{address.city}} <br>
+									{{address.state}} <br>
+									{{address.country}} <br>
+									{{address.number}} <br>
+								</address>
+								{% endfor %}
+								{% else %}
+								<strong>No saved address</strong>
+								{%endif%}
+							</div>
+
+						</div><!-- End .card-body -->
+					</div><!-- End .card -->
+
+				</div><!-- End .col-md-6 -->
+
 
 
 			</div><!-- End .col-lg-9 -->
@@ -113,7 +184,7 @@
 						<li><a href="{% url 'my-orders' %}">My Orders</a></li>
 						<li><a href="{% url 'logout' %}">Logout</a></li>
 
-					
+
 					</ul>
 				</div><!-- End .widget -->
 			</aside><!-- End .col-lg-3 -->

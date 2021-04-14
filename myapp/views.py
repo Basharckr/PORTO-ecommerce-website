@@ -11,8 +11,9 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
 from twilio.rest import Client
 import base64
-
 from django.core.files.base import ContentFile
+import string
+import random
 
 
 
@@ -20,11 +21,12 @@ from django.core.files.base import ContentFile
 # Create your views here.
 
 
+# Guest user view
 def guest(request):
     if request.user.is_authenticated:
         return redirect("landing")
     else:
-        product = Products.objects.filter(product_value=True)
+        product = Products.objects.filter(product_value=True)[:12]
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
@@ -44,7 +46,7 @@ def guest(request):
         }
     return render(request, 'myapp/index.html', context)
 
-
+# Login view
 def login(request):
     if request.user.is_authenticated:
         return redirect("landing")
@@ -91,6 +93,7 @@ phone_number = 0
 otp = 0
 
 
+# Otp login
 def otp_login(request):
     if request.user.is_authenticated:
         return redirect("landing")
@@ -138,6 +141,7 @@ def otp_login(request):
     return render(request, 'myapp/otp-login.html', context)
 
 
+
 def enter_otp(request):
     if request.method == 'POST':
         otp1 = request.POST['otp']
@@ -161,6 +165,7 @@ def signup(request):
         user=request.user.id, checkedout=False).count()
     brands = User.objects.filter(is_active=True, is_staff=True)
     category = Category.objects.all()
+
     total = 0.00
     for item in cart:
         total = total + \
@@ -190,13 +195,17 @@ def signup(request):
             user = User.objects.create_user(
                 first_name=firstname, last_name=lastname, username=username, email=email, password=password)
             Profile.objects.create(user=user, phone=number)
+            coupon_code = ''.join(random.choices(string.ascii_uppercase +
+                             string.digits, k = 7))
+            Coupons.objects.create(coupon_code=coupon_code, coupon_offer=30, user=user)
+
             return JsonResponse('true', safe=False)
     return render(request, 'myapp/signup.html', context)
 
 
 def landing(request):
     if request.user.is_authenticated:
-        product = Products.objects.filter(product_value=True)
+        product = Products.objects.filter(product_value=True)[:12]
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
@@ -604,6 +613,7 @@ def dashbaord(request):
     if request.user.is_active == True:
         if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user.id)
+            coupon = Coupons.objects.filter(user=request.user.id, active=False)
             cart = Cart.objects.filter(user=request.user.id, checkedout=False)
             count = Cart.objects.filter(
                 user=request.user.id, checkedout=False).count()
@@ -622,7 +632,7 @@ def dashbaord(request):
             tot[0] = tot[0] - discount_price
             request.session['total'] = tot
             return render(request, 'myapp/dashboard.html', {'profile': profile, 'cart': cart, 'grant': tot, 'count': count,
-                                                            'category': category, 'brands': brands, 'address': address})
+                                                            'category': category, 'brands': brands, 'address': address, 'coupon': coupon})
         else:
             return redirect('login')
     else:
