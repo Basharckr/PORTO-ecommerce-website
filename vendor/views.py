@@ -408,6 +408,5 @@ def search_by_date(request):
                                                                                                         'shipped')
         
         orders = serializers.serialize('json', order)
-        print('lllllllllll', orders)
         return JsonResponse(orders, safe=False)
     

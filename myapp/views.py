@@ -322,7 +322,7 @@ def add_to_cart(request, id):
             if request.method == 'POST':
                 count = request.POST['count']
                 obj_product = Products.objects.get(id=id)
-                if obj_product.product_quantity != 0:
+                if obj_product.product_quantity >= int(count):
                     if Cart.objects.filter(user_product=obj_product, user=request.user, checkedout=False).exists():
                         try:
                             add = Cart.objects.get(user_product=obj_product)
@@ -378,7 +378,6 @@ def edit_quantity(request, id):
             quantity = request.POST['quantity']
             edit = Cart.objects.get(id=id)
             if edit.user_product.product_quantity >= int(quantity):
-                print(edit.user_product.product_quantity)
                 if edit.product_count == quantity:
                     return JsonResponse('nothing', safe=False)
                 else:
@@ -386,7 +385,6 @@ def edit_quantity(request, id):
                     edit.save()
                     return JsonResponse('true', safe=False)
             else:
-                print('hhhhhhhh')
                 return JsonResponse('outstock', safe=False)
         else:
             return redirect('login')
@@ -575,28 +573,28 @@ def place_order(request):
             ship_id = ShipAddress.objects.get(id=id)
             if request.method == 'POST':
                 for item in cart:
-                    Order.objects.create(user=request.user, user_cart=item,
-                                         quantity=item.product_count, amount=item.user_product.offer_price,
-                                         ship_id=ship_id, payment_status=True)
-                    item.checkedout = True
-                    item.user_product.product_quantity -= item.product_count
-                    item.user_product.save()
-                    item.save()
-                    del request.session['total']
-                    discount_price = 0
-                return JsonResponse('true', safe=False)
+                    if item.user_product.product_quantity >= item.product_count:
+                        Order.objects.create(user=request.user, user_cart=item,
+                                            quantity=item.product_count, amount=item.user_product.offer_price,
+                                            ship_id=ship_id, payment_status=True)
+                        item.checkedout = True
+                        item.user_product.product_quantity -= item.product_count
+                        item.user_product.save()
+                        item.save()
+                        del request.session['total']
+                        discount_price = 0
+                        return JsonResponse('true', safe=False)
+                    else:
+                        return JsonResponse('false', safe=False)
+
             else:
                 for item in cart:
                     Order.objects.create(user=request.user, user_cart=item,
                                          quantity=item.product_count, amount=item.user_product.offer_price,
                                          ship_id=ship_id, payment_status=False)
                     item.checkedout = True
-                    print('product q',item.user_product.product_quantity)
-                    print('product cart count',item.product_count)
-
-
+                   
                     item.user_product.product_quantity -= item.product_count
-                    print('product after',item.user_product.product_quantity)
                     item.user_product.save()
                     item.save()
                     del request.session['total']

@@ -196,6 +196,9 @@
 								if (response == 'true') {
 									window.location.replace('success')
 								}
+								if (response == 'false') {
+									alert("Product is out stock!! please check the available quantity")
+								}
 							}
 
 						})
@@ -214,6 +217,9 @@
 				success: function (response) {
 					if (response == 'cod') {
 						window.location.replace('success')
+					}
+					if (response == 'false') {
+						alert("Product is out stock!! please check the available quantity")
 					}
 				}
 
