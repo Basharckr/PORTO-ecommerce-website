@@ -109,15 +109,16 @@
 							</div><!-- End .card-header -->
 
 							<div class="card-body">
-								<div class="col-md-6 ">
+								<div class="col-md-9 ">
 									{% if coupon %}
 									{% for coupon in coupon %}
 									<div class="widget1 red-bg p-xl">
 										<h5 >Welcome Coupon</h5>
 										<ul class="list-unstyled m-t-md">
-											<li>
-												{{coupon.coupon_code}}
-											</li>
+											<input type="text" id="myInput1" value="{{coupon.coupon_code}}">
+										
+											<button class="fa fa-clone copy" id="copybutton" onclick="copyText()" style="float: right;" aria-hidden="true"></button>
+
 									
 										</ul>
 									</div>  
@@ -193,4 +194,6 @@
 
 	<div class="mb-5"></div><!-- margin -->
 </main><!-- End .main -->
+
+
 {% endblock %}

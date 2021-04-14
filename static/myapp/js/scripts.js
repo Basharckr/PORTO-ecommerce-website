@@ -683,3 +683,18 @@ setTimeout(function () {
 }, 3000);
 
 
+
+//  ===========================================================================================
+//  ================================copy clipboard===================================================
+
+function copyText() {
+    /* Get the text field */
+    var copyText = document.getElementById("myInput1");
+  
+    /* Select the text field */
+    copyText.select();
+  
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+   
+  }
