@@ -655,7 +655,9 @@ $().ready(function () {
                 method: "post",
 
                 success: function (response) {
+                    console.log(response)
                     if (response == 'true') {
+
                         $('#fail').remove()
                         $("#success1").html('<strong>Yaass!!Valid Coupon</strong>Check total amount')
                         $( "#newsummary" ).load(window.location.href + " #newsummary" );
