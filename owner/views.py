@@ -287,7 +287,7 @@ def manage_coupon(request):
 
 def change_coupon_validity(request, id):
     if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
+        if request.user.is_authenticated and request.user.is_superuser == True:
             coupon = Coupons.objects.get(id=id)
             if coupon.active == False:
                 coupon.active = True
@@ -305,7 +305,7 @@ def change_coupon_validity(request, id):
 
 def edit_coupon(request, id):
     if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
+        if request.user.is_authenticated and request.user.is_superuser == True:
             coupon = Coupons.objects.get(id=id)
             if request.method == 'POST':
                 coupon.coupon_code = request.POST['couponcode']
@@ -325,7 +325,7 @@ def edit_coupon(request, id):
 
 def delete_coupon(request, id):
     if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
+        if request.user.is_authenticated and request.user.is_superuser == True:
             coupon = Coupons.objects.get(id=id)
             coupon.delete()
             return redirect('manage-coupon')

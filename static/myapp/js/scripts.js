@@ -134,7 +134,7 @@ $().ready(function () {
 
                     }
                     if (response == 'nouser') {
-                        $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This mobile number not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
+                        $("#block").html('<div class="alert alert-warning text-center" id="block">Sorry!!This user not exist!! <strong>You dont have an account..? Please SignUp!!</strong> </div>')
 
                     }
                 },
