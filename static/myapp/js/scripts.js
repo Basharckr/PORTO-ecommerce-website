@@ -655,15 +655,11 @@ $().ready(function () {
                 method: "post",
 
                 success: function (response) {
-                    console.log(response)
-                    if (response == 'true') {
-
+                    if (response) {
                         $('#fail').remove()
-                        $("#success1").html('<strong>Yaass!!Valid Coupon</strong>Check total amount')
                         $( "#newsummary" ).load(window.location.href + " #newsummary" );
 
                     }                       
-
                     if (response == 'false') {
                         $("#fail").html('Invalid coupon..Try again..')
                         
