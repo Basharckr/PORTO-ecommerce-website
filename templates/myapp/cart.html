@@ -138,19 +138,15 @@
 
 							<tr>
 								<div class="checkout-discount">
-									<h4>
-										<strong><a data-toggle="collapse" href="#checkout-discount-section" class="collapsed" role="button"
-											aria-expanded="false" aria-controls="checkout-discount-section">Apply Discount Code</a></strong>
-									</h4>
+								
 				
-									<div class="collapse" id="checkout-discount-section">
+									<div  id="checkout-discount-section">
 										<form id="applycoupon1">{% csrf_token %}
 											<input type="text" name="coupon_code"class="form-control form-control-sm" placeholder="Enter discount code"
-													required>
+													>
 											<button class="btn btn-sm btn-outline-secondary" type="submit">Apply Discount</button>
 										</form>
 									
-												<span id="success1"></span>
 												<span id="fail"></span>
 										
 									</div>

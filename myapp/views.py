@@ -87,6 +87,7 @@ def login(request):
             else:
                 return JsonResponse('nouser', safe=False)
         return render(request, 'myapp/login.html', context)
+    return render(request, 'myapp/login.html', context)
 
 
 phone_number = 0
@@ -229,6 +230,8 @@ def landing(request):
 
 
 def userlogout(request):
+    global discount_price
+    discount_price = 0
     logout(request)
     return redirect('login')
 
@@ -343,7 +346,7 @@ def add_to_cart(request, id):
         else:
             return redirect('login')
     else:
-        return redirect("login")
+        return JsonResponse('notuser', safe=False)
 
 
 def remove_from_cart(request, id):

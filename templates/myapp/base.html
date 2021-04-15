@@ -118,7 +118,7 @@
                                     </li>
                                     <li><a href="{% url 'dashboard' %}">Dashboard</a>
                                     </li>
-                                    <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
+                                    <li><a href="{% url 'login' %}" >Login</a></li>
                                     <li><a href="{% url 'change-user-password' %}">Change Password</a></li>
                                 </ul>
                             </li>
@@ -161,6 +161,8 @@
                     </div>
 
                     <div class="dropdown cart-dropdown">
+                    {% if request.user.is_authenticated %}
+
                         <a href="#" class="dropdown-toggle dropdown-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                             <i class="icon-shopping-cart"></i>
                             <span class="cart-count badge-circle">{{count}}</span>
@@ -219,13 +221,15 @@
                             </div>
                             <!-- End .dropdownmenu-wrapper -->
                             {% else %}
-                            <strong><h5 class="text-center">No product in cart</h5></strong>
+                            <strong><h5 class="text-center">Zero products in cart</h5></strong>
                             <div class="dropdown-cart-action">
                                 <a href="{% url 'landing' %}" class="btn btn-primary btn-block">Goto purchase</a>
                             </div>
                             {%endif%}
                         </div>
                         <!-- End .dropdown-menu -->
+                    {%endif%}
+
                     </div>
                     <!-- End .dropdown -->
                 </div>
@@ -372,7 +376,7 @@
                             <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
                             <li><a href="{% url 'dashboard' %}">Dashboard</a>
                             </li>
-                            <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
                             <li><a href="{% url 'change-user-password' %}">Change Password</a></li>
                         </ul>
                     </li>

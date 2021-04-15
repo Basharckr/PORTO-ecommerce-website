@@ -239,6 +239,8 @@ $().ready(function () {
 
 function addToCart(id) {
     let qty = $('#quantity').val()
+    console.log(qty)
+
     data = {
         'count': qty,
     }
@@ -255,6 +257,9 @@ function addToCart(id) {
             }
             if (response == 'outstock') {
                 $('#noproduct').modal('show');
+            }
+            if (response == 'notuser') {
+                window.location.replace('/login')
             }
         }
     })
@@ -328,10 +333,8 @@ function editQuantitycart(id) {
 
             }
             if (response == 'nothing') {
-                console.log('no change in quantity')
             }
             if (response == 'outstock') {
-                console.log('edittttt')
                 $('#noproduct').modal('show');
             }
         }
@@ -631,7 +634,6 @@ function cancelOrder(id) {
 //  ===========================================================================================
 //  ================================Apply coupon===================================================
 $().ready(function () {
-    console.log('hiiiiiiiiiiiiii')
     $("#applycoupon1").validate({
         rules: {
             coupon_code: {
@@ -644,6 +646,7 @@ $().ready(function () {
             }
         },
         submitHandler: (applycoupon1, e) => {
+            console.log('hooo')
 
             e.preventDefault()
             $.ajax({
@@ -653,17 +656,15 @@ $().ready(function () {
 
                 success: function (response) {
                     if (response == 'true') {
-                        window.location.replace('cart')
                         $('#fail').remove()
                         $("#success1").html('<strong>Yaass!!Valid Coupon</strong>Check total amount')
+                        $( "#newsummary" ).load(window.location.href + " #newsummary" );
 
-                    }
+                    }                       
+
                     if (response == 'false') {
                         $("#fail").html('Invalid coupon..Try again..')
-                        var message_ele = document.getElementById("#fail");
-                        setTimeout(function () {
-                            message_ele.style.display = "none";
-                        }, 3000);
+                        
                     }
 
                 },
