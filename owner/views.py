@@ -251,7 +251,7 @@ def all_report(request):
 
 def add_coupon(request):
     if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
+        if request.user.is_authenticated and request.user.is_superuser == True:
             if request.method == 'POST':
                 coupon_code = request.POST['couponcode']
                 couponoffer = request.POST['couponoffer']
@@ -273,7 +273,7 @@ def add_coupon(request):
 
 def manage_coupon(request):
     if request.user.is_active == True:
-        if request.user.is_authenticated and request.user.is_staff == True:
+        if request.user.is_authenticated and request.user.is_superuser == True:
             coupons = Coupons.objects.all()
             context = {
                 'coupons': coupons
