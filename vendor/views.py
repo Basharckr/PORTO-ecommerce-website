@@ -292,7 +292,7 @@ def ship_status(request, pk):
                 return JsonResponse('shipped', safe=False)
             else:
                 order.shipped = False
-                order.save()
+                order.save()``
                 return JsonResponse('ship', safe=False)
             return render(request, 'vendor/vendor-orders.html')
         else:
