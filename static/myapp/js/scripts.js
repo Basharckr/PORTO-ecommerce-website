@@ -655,14 +655,14 @@ $().ready(function () {
                 method: "post",
 
                 success: function (response) {
-                    if (response) {
+                    if (response == 'true') {
                         $('#fail').remove()
                         $( "#newsummary" ).load(window.location.href + " #newsummary" );
 
                     }                       
                     if (response == 'false') {
                         $("#fail").html('Invalid coupon..Try again..')
-                        
+      
                     }
 
                 },
