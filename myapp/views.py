@@ -491,7 +491,14 @@ def success(request):
                 user=request.user.id, checkedout=False).count()
             brands = User.objects.filter(is_active=True, is_staff=True)
 
-            tot = request.session['total']
+            total = 0.00
+            for item in cart:
+                total = total + \
+                    int(item.user_product.offer_price) * \
+                    int(item.product_count)
+            tot = []
+            tot.append(total)
+            request.session['total'] = tot
 
             context = {
                 'category': category, 'brands': brands, 'grant': tot, 'cart': cart, 'count': count,
