@@ -26,7 +26,7 @@ def guest(request):
     if request.user.is_authenticated:
         return redirect("landing")
     else:
-        product = Products.objects.filter(product_value=True)[:12]
+        product = Products.objects.filter(product_value=True)[:6]
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
@@ -171,7 +171,7 @@ def signup(request):
 
 def landing(request):
     if request.user.is_authenticated:
-        product = Products.objects.filter(product_value=True)[:12]
+        product = Products.objects.filter(product_value=True)[:6]
         cart = Cart.objects.filter(user=request.user.id, checkedout=False)
         count = Cart.objects.filter(
             user=request.user.id, checkedout=False).count()
