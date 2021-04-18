@@ -62,12 +62,10 @@
         $('.search_here tr').each(function () {
             $(this).attr('data-search-term',
                 $(this).text().toLowerCase());
-                console.log('hiii')
 
 
         });
         $('.search_key').on('keyup', function () {
-            console.log('jjjjjj')
             var searchTerm = $(this).val().toLowerCase();
             $('.search_here tr').each(function () {
                 if ($(this).filter('[data-search-term *= ' +

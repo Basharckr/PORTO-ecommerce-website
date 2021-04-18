@@ -166,8 +166,6 @@
 		if (pay == 'paypal') {
 	
 			var tot = '{{grant|first}}'
-			console.log(tot)
-	
 			//Include the PayPal JavaScript SDK
 
 			// Render the PayPal button into #paypal-button-container
@@ -210,7 +208,6 @@
 			}).render('#paypal-button-container');
 		}
 		if (pay == 'cod') {
-			console.log('cod')
 			$.ajax({
 				url: 'order',
 				method: 'get',

@@ -634,6 +634,8 @@ function cancelOrder(id) {
 //  ===========================================================================================
 //  ================================Apply coupon===================================================
 $().ready(function () {
+    var finalprice = $('#finalprice').text()
+    console.log('final',finalprice)
     $("#applycoupon1").validate({
         rules: {
             coupon_code: {
@@ -650,22 +652,22 @@ $().ready(function () {
 
             e.preventDefault()
             $.ajax({
-                url: "cart",
+                url: "checkout",
                 data: $("#applycoupon1").serialize(),
                 method: "post",
 
                 success: function (response) {
-                    if (response == 'true') {
-                        $('#fail').remove()
-                        $( "#newsummary" ).load(window.location.href + " #newsummary" );
+                    if (response == 'false'){
+                        $("#fail").html('Invalid coupon')
 
-                    }                       
-                    if (response == 'false') {
-                        $("#fail").html('Invalid coupon..Try again..')
-      
                     }
-
-                },
+                    else{
+                   
+                        $('#fail').remove()
+                        document.getElementById("disp").innerHTML = response.discount_price
+                        document.getElementById("finalprice").innerHTML = finalprice-response.discount_price
+                    }
+                }    
 
             })
         }

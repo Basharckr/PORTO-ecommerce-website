@@ -5,9 +5,9 @@
 <div class="ml-2">
     <form action="{% url 'all-report' %}" method="POST">{% csrf_token %}
         <label for="start">Start date:</label>
-        <input type="date" id="start" name="start" value="2021-03-01" min="2021-03-01" max="2021-10-01">
+        <input type="date" id="start" name="start" value="2021-03-01" onchange="changeDate()"min="2021-03-01" max="2021-10-01">
         <label for="start">End date:</label>
-        <input type="date" id="end" name="end" value="2021-03-01" min="2021-03-01"  max="2021-10-01">
+        <input type="date" id="end" name="end" value="2021-03-01"  max="2021-10-01">
         <button type="submit" class=" btn btn-sm btn-primary ml-2"><i
                class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
     </form>
@@ -67,16 +67,19 @@
 
 
 <script>
+    function changeDate(){
+        var start_date = document.getElementById("start").value;
+        document.getElementById("end").setAttribute("min", start_date);
+        var end_date = document.getElementById("end").value;   
+    }
     $(document).ready(function ($) {
         $('.search_here tr').each(function () {
             $(this).attr('data-search-term',
                 $(this).text().toLowerCase());
-                console.log('hiii')
 
 
         });
         $('.search_key').on('keyup', function () {
-            console.log('jjjjjj')
             var searchTerm = $(this).val().toLowerCase();
             $('.search_here tr').each(function () {
                 if ($(this).filter('[data-search-term *= ' +
