@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('myapp.urls')),
     path('vendor/', include('vendor.urls')),
     path('owner/', include('owner.urls')),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
